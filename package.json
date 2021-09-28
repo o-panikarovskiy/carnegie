@@ -20,9 +20,10 @@
     "lint": "eslint . --ext .ts",
     "tsc": "tsc",
     "docs": "rm -rf ./doc || true && npx apidoc -f \".*\\.ts$\" -i ./src -o ./doc",
+    "clear": " find ./src -type f \\( -name \"*.map\" -or -name \"*.js\" \\) -delete",
+    "deploy": "./deploy.sh",
     "pretest": "tsc && export NODE_ENV=test && node src/tests/init.js",
     "test": "ava",
-    "clear": " find ./src -type f \\( -name \"*.map\" -or -name \"*.js\" \\) -delete",
     "posttest": "node src/tests/clear.js"
   },
   "dependencies": {

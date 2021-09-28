@@ -8,7 +8,7 @@ export { parseError };
 
 const isDevelopEnv = NODE_ENV === 'develop' || NODE_ENV === 'local';
 const parseError = (e: any): AppError => {
-  let error = errorToObject(e);
+  let error: any = errorToObject(e);
   error.status = error.status || error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
 
   if (!isDevelopEnv) {

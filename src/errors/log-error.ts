@@ -10,6 +10,6 @@ const logError = (error: Error): void => {
   }
 };
 
-const isLogError = (error: any) => {
+const isLogError = (error: Error | number): boolean => {
   return !isTrustedError(error) || error >= 500;
 };

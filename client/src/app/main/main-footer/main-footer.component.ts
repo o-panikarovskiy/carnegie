@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'crng-main-footer',
   templateUrl: './main-footer.component.html',
-  styleUrls: ['./main-footer.component.scss']
+  styleUrls: ['./main-footer.component.scss'],
 })
-export class MainFooterComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class MainFooterComponent {
+  constructor() {}
 }

@@ -5,7 +5,7 @@ import { parseError } from './utils/parse-error.js';
 
 export { catchError, catchUncaughtException, catchUnhandledRejection };
 
-const catchError = (ctx: Context, e: any): void => {
+const catchError = (ctx: Context, e: unknown): void => {
   const error = parseError(e);
   ctx.app.emit('error', error, ctx);
 
@@ -15,13 +15,13 @@ const catchError = (ctx: Context, e: any): void => {
   ctx.body = { error };
 };
 
-const catchUncaughtException = (error: Error) => {
+const catchUncaughtException = (error: Error): void => {
   logError(error);
   if (!isTrustedError(error)) {
     process.exit(1);
   }
 };
 
-const catchUnhandledRejection = (reason: Error) => {
+const catchUnhandledRejection = (reason: Error): void => {
   logError(reason);
 };

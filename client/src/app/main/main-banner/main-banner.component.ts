@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'crng-main-banner',
   templateUrl: './main-banner.component.html',
-  styleUrls: ['./main-banner.component.scss']
+  styleUrls: ['./main-banner.component.scss'],
 })
-export class MainBannerComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class MainBannerComponent {
+  constructor() {}
 }

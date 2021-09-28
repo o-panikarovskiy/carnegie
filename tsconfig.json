@@ -17,5 +17,5 @@
     "noImplicitThis": true,
     "alwaysStrict": true
   },
-  "include": ["src/**/*", "tests/**/*", "./server.ts", "./test.ts"]
+  "include": ["./src/**/*", "./tests/**/*", "./server.ts", "./test.ts"]
 }
