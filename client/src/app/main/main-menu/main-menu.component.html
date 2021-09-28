@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+  <a mat-button class="logo-btn" [routerLink]="['/']" routerLinkActive>Logo</a>
+
+  <button mat-icon-button [matMenuTriggerFor]="about" class="menu">About</button>
+  <mat-menu #about="matMenu">
+    <a mat-menu-item [routerLink]="['about', 'mission']" routerLinkActive>Mission</a>
+    <a mat-menu-item [routerLink]="['about', 'people']" routerLinkActive>People</a>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="data" class="menu">Data</button>
+  <mat-menu #data="matMenu">
+    <a mat-menu-item [routerLink]="['data', 'search']" routerLinkActive>Search</a>
+    <a mat-menu-item [routerLink]="['data', 'browse']" routerLinkActive>Browse</a>
+    <a mat-menu-item [routerLink]="['data', 'bulk']" routerLinkActive>Bulk download</a>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="software" class="menu">Software</button>
+  <mat-menu #software="matMenu">
+    <a mat-menu-item [routerLink]="['software', 'guides']" routerLinkActive>Guides</a>
+    <a mat-menu-item [routerLink]="['software', 'api']" routerLinkActive>API</a>
+  </mat-menu>
+</mat-toolbar>

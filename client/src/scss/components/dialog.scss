@@ -1,0 +1,90 @@
+mat-dialog-container.mat-dialog-container {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  color: $black;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  > ng-component {
+    display: contents;
+  }
+}
+
+.cdk-global-overlay-wrapper {
+  overflow: auto;
+}
+
+.dialog-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 48px 32px;
+  border-radius: 4px;
+  background-color: $white;
+  min-width: 300px;
+  @include media('>xs') {
+    min-width: 450px;
+    min-height: 200px;
+  }
+}
+
+.dialog-title {
+  font-size: 28px;
+  line-height: 32px;
+  margin-bottom: 7px;
+  font-weight: 400;
+}
+
+.dialog-subtitle {
+  margin-bottom: 12px;
+}
+
+.dialog-desc {
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 27px;
+}
+
+.dialog-content {
+  margin-bottom: 20px;
+  overflow: visible;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
+  flex-grow: 1;
+  .btn.mat-button {
+    padding: 0;
+    line-height: normal;
+    .mat-button-ripple,
+    .mat-button-focus-overlay {
+      display: none;
+    }
+  }
+
+  .gray-radio-button {
+    font-weight: 500;
+    color: $dark-gray;
+    &:hover {
+      color: $active-blue;
+    }
+  }
+}
+
+.dialog-actions {
+  justify-content: center;
+}
+
+.btn.dialog-btn {
+  &.btn-cancel {
+    color: $active-blue;
+    margin-right: 8px;
+  }
+}
+
+.night-backdrop {
+  background: rgba(0, 0, 0, 0.32);
+}

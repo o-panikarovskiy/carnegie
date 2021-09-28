@@ -1,0 +1,173 @@
+button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  &:hover,
+  &.active,
+  .checked,
+  &[aria-expanded='true'] {
+    color: $active-blue;
+  }
+  &[disabled]:not(.clear-disable) {
+    background: $devider-gray;
+    color: $white;
+  }
+  &.btn-gray {
+    color: $dark-gray;
+    &:hover,
+    &.active,
+    .checked,
+    &[aria-expanded='true'] {
+      color: $active-blue;
+    }
+  }
+  &.btn-blue {
+    min-height: 36px;
+    min-width: 110px;
+    background: $active-blue;
+    color: $white;
+    border-radius: 2px;
+    font-weight: 500;
+    padding: 0 34px;
+    &[disabled] {
+      background: $silver;
+      color: $white;
+    }
+    &:hover {
+      background: #1565c0;
+    }
+  }
+
+  &.btn-white {
+    min-height: 36px;
+    background: $white;
+    color: $black;
+    border-radius: 4px;
+    border: 1px solid $devider-gray;
+    font-weight: 500;
+    padding: 0 12px;
+    &[disabled] {
+      background: $silver;
+      color: $white;
+    }
+    &:hover {
+      color: $active-blue;
+    }
+  }
+
+  &.btn-text-blue {
+    font-weight: 500;
+    color: $active-blue;
+    &:hover {
+      color: $sky-blue;
+    }
+  }
+  &.btn-border {
+    border: 1px solid $active-blue;
+    color: $active-blue;
+    border-radius: 4px;
+    &:hover {
+      background-color: $active-blue;
+      color: $white;
+    }
+  }
+  &.btn-rounded {
+    font-size: 15px;
+    height: 33px;
+    padding: 0 16px;
+    background: #fff;
+    border: 1px solid $devider-gray;
+    border-radius: 24.5px;
+    color: $active-blue;
+    margin-left: 20px;
+    &:hover {
+      background: $active-blue;
+      border: 1px solid $active-blue;
+      color: #fff;
+    }
+    &.btn-rounded-square {
+      border-radius: 3px;
+      font-weight: 500;
+    }
+  }
+  &.btn-rounded-blue {
+    height: 32px;
+    padding: 0 19px 0 17px;
+    border-radius: 24px;
+    background: $active-blue;
+    color: $white;
+    &:hover {
+      background: #1565c0;
+    }
+  }
+  &.btn-plus-idea {
+    width: 150px;
+    height: 34px;
+    border-radius: 2px;
+    font-weight: 600;
+    background: $active-blue;
+    color: $white;
+    &:hover {
+      background: #1565c0;
+    }
+  }
+  &.btn-show-more {
+    font-weight: 500;
+    font-size: 15px;
+    color: $gray;
+    &:hover {
+      color: $active-blue;
+    }
+  }
+  &.btn-del {
+    color: $attention-red;
+    font-size: 15px;
+  }
+}
+
+.close {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  top: 20px;
+  font-size: 15px;
+  width: 15px;
+  line-height: 1;
+  &:hover {
+    color: $active-blue;
+  }
+}
+
+.idea-add-btn {
+  font-weight: 600;
+  line-height: 17px;
+  color: $sky-blue;
+  display: inline-flex;
+  align-items: center;
+  &:hover {
+    color: $active-blue;
+  }
+}
+
+.btn.dialog-btn {
+  &:disabled {
+    opacity: 0.6;
+    background: $active-blue;
+    color: $white;
+  }
+  &.btn-cancel {
+    color: $dark-gray;
+    &:hover {
+      color: $active-blue;
+    }
+  }
+}
+
+.tooltip-error {
+  background: $attention-red;
+}

@@ -1,0 +1,97 @@
+.craft-tags-field {
+  &.mat-form-field {
+    cursor: pointer;
+
+    &.mat-focused {
+      .mat-input-element {
+        border-bottom-color: $active-blue;
+      }
+      .mat-form-field-label {
+        display: none !important;
+      }
+    }
+
+    &.mat-form-field-should-float {
+      .mat-form-field-label {
+        display: none !important;
+      }
+    }
+
+    .mat-input-element {
+      margin: 0 !important;
+      border-bottom: 1px solid transparent;
+    }
+
+    .mat-chip-list {
+      .mat-chip.mat-standard-chip.mat-chip-selected.mat-primary {
+        color: $dark-gray;
+        background-color: #0000;
+        .mat-chip-remove {
+          color: $dark-gray;
+        }
+      }
+    }
+
+    .mat-form-field-label-wrapper {
+      cursor: pointer;
+      z-index: 2;
+      padding: 0;
+      top: 4px;
+      &:hover {
+        .mat-form-field-label {
+          color: $active-blue;
+        }
+      }
+      .mat-form-field-label {
+        top: 0;
+        transform: none !important;
+      }
+    }
+
+    .mat-form-field-infix {
+      width: auto;
+      padding: 0;
+      border: 0;
+    }
+
+    .mat-form-field-wrapper {
+      padding: 0;
+    }
+
+    .mat-chip-input {
+      height: 21px;
+    }
+
+    .mat-form-field-underline,
+    .mat-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+
+  .mat-chip-list-wrapper {
+    margin: 0 !important;
+    flex-wrap: wrap;
+    gap: 4px;
+    .mat-chip.mat-standard-chip {
+      display: flex;
+      align-items: center;
+      min-height: 23px;
+      color: $dark-gray;
+      background-color: transparent;
+      border: 1px solid $devider-gray;
+      padding: 0 6px 0 8px;
+      font-weight: 500;
+      border-radius: 3px;
+      box-shadow: none;
+      margin: 0;
+
+      .mat-chip-trailing-icon {
+        width: 11px;
+        height: 11px;
+        margin: 0 3px 0 0;
+        color: $dark-gray;
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "server.js",
+  "main": "dist/server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/o-panikarovskiy/carnegie.git"
@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/o-panikarovskiy/carnegie#readme",
   "scripts": {
+    "start": "tsc && export NODE_ENV=develop && node ./dist/server.js",
     "build": "tsc && npm run lint",
     "lint": "eslint . --ext .ts",
     "tsc": "tsc",

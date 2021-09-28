@@ -1,0 +1,190 @@
+.mat-radio-button.mat-accent.mat-radio-checked {
+  .mat-radio-outer-circle {
+    border-color: $active-blue;
+  }
+}
+
+.mat-radio-button.mat-accent {
+  .mat-radio-inner-circle {
+    background-color: $active-blue;
+  }
+}
+
+.mat-radio-button,
+.mat-radio-button.mat-accent.mat-radio-checked {
+  &.mat-radio-disabled {
+    .mat-radio-inner-circle {
+      background-color: rgba(0, 0, 0, 0.38);
+    }
+    .mat-radio-outer-circle {
+      border-color: rgba(0, 0, 0, 0.38);
+    }
+  }
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple),
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple,
+.mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+  background-color: $active-blue;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: $active-blue;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: rgba($active-blue, 0.54);
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-ripple-element {
+  background-color: $active-blue;
+}
+
+.mat-radio-group {
+  &.mat-radio-group-sm {
+    .mat-radio-container,
+    .mat-radio-inner-circle {
+      width: 11px;
+      height: 11px;
+    }
+    .mat-radio-outer-circle {
+      width: 11px;
+      height: 11px;
+      border-color: $black;
+      border-width: 1px;
+    }
+    .mat-radio-ripple {
+      left: calc(50% - 11px);
+      top: calc(50% - 11px);
+      width: 22px;
+      height: 22px;
+    }
+  }
+}
+
+.mat-checkbox {
+  .mat-checkbox-inner-container {
+    .mat-checkbox-ripple {
+      left: calc(50% - 12px);
+      top: calc(50% - 12px);
+      height: 24px;
+      width: 24px;
+    }
+  }
+  .mat-checkbox-frame {
+    border: 1px solid $dark-gray;
+  }
+  &.checkbox-black {
+    .mat-checkbox-frame {
+      border: 1px solid $black;
+    }
+  }
+  &.checkbox-silver {
+    .mat-checkbox-frame {
+      border: 1px solid $silver;
+    }
+  }
+  &.checkbox-circle {
+    .mat-checkbox-frame {
+      border-radius: 50%;
+    }
+    .mat-checkbox-background {
+      border-radius: 50%;
+      border: 1px solid transparent;
+      &:after {
+        content: '';
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        top: 2px;
+        bottom: 2px;
+        border-radius: 50%;
+        background-color: $active-blue;
+        opacity: 0;
+      }
+      .mat-checkbox-checkmark {
+        display: none;
+      }
+    }
+    &.mat-checkbox-checked {
+      .mat-checkbox-background {
+        background-color: $white;
+        border-color: $active-blue;
+        &:after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &:not(.mat-checkbox-disabled).mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    background-color: $active-blue;
+  }
+
+  &.mat-checkbox-button-sm {
+    .mat-checkbox-inner-container {
+      width: 11px;
+      height: 11px;
+    }
+  }
+  &.mat-checkbox-button-md {
+    .mat-checkbox-inner-container {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: $active-blue;
+}
+
+.mat-radio-button {
+  &:not(.mat-radio-checked) {
+    .mat-radio-inner-circle {
+      transform: scale(0.0001);
+    }
+  }
+
+  &.mat-radio-button-sm,
+  &.mat-radio-button-md {
+    .mat-radio-outer-circle {
+      border-width: 1px;
+    }
+    .mat-radio-ripple {
+      display: none;
+    }
+  }
+  &.mat-radio-button-sm {
+    .mat-radio-container,
+    .mat-radio-outer-circle,
+    .mat-radio-inner-circle {
+      width: 11px;
+      height: 11px;
+    }
+  }
+  &.mat-radio-button-md {
+    font-weight: 600;
+    font-size: 15px;
+
+    .mat-radio-container,
+    .mat-radio-outer-circle,
+    .mat-radio-inner-circle {
+      width: 15px;
+      height: 15px;
+    }
+
+    .mat-radio-container {
+      margin: 0 4px 0 0;
+    }
+  }
+}
+
+.mat-slide-toggle-thumb-container {
+  cursor: pointer !important;
+}
+.mat-slide-toggle-thumb-container.mat-dragging,
+.mat-slide-toggle-thumb-container:active {
+  cursor: pointer !important;
+}

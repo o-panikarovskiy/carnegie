@@ -1,0 +1,118 @@
+@import 'mixins/index';
+
+.auth-wrap {
+  position: relative;
+  background: #fff;
+  min-height: 100%;
+  @media (min-height: 600px) {
+    align-items: center;
+  }
+  .flex-wrap {
+    width: 100%;
+    color: $black;
+    font-size: 18px;
+    padding: 50px 10px;
+    @media (min-width: 768px) {
+      width: 510px;
+      padding: 20px 0 50px;
+    }
+  }
+  .logo {
+    max-height: 96px;
+    object-fit: cover;
+  }
+  .form {
+    margin-top: 16px;
+    @include media('>=sm') {
+      margin-top: 46px;
+      padding: 0 48px;
+    }
+  }
+  .btn-blue {
+    margin-top: 52px;
+    height: 47px;
+    width: 130px;
+  }
+  .mat-form-field {
+    margin: 30px 0 0;
+    padding: 0 16px;
+    @media (min-height: 880px) {
+      margin-top: 36px;
+    }
+    .mat-form-field-underline {
+      height: 2px;
+      background-color: $devider-gray;
+    }
+    &.mat-form-field-invalid:not(.mat-focused) {
+      .mat-form-field-underline {
+        .mat-form-field-ripple {
+          height: 2px;
+        }
+      }
+    }
+  }
+  .forgot-password {
+    width: 100%;
+    padding-right: 16px;
+    margin-top: -18px;
+    text-align: right;
+    z-index: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: $dark-gray;
+    &:hover {
+      color: $active-blue;
+    }
+  }
+  .powered {
+    position: absolute;
+    bottom: 13px;
+    left: 35px;
+    font-weight: 500;
+    color: $black;
+    &:hover {
+      color: $active-blue;
+    }
+  }
+  a {
+    color: $active-blue;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.auth-header {
+  > craft-portal-logo {
+    display: block;
+    height: 46px;
+    img {
+      height: 100%;
+    }
+  }
+}
+
+.auth-title {
+  font-size: 30px;
+  line-height: 40px;
+}
+
+.auth-subtitle {
+  line-height: 25px;
+  &:not(:empty) {
+    margin: 9px 0 0;
+  }
+  &.auth-subtitle-reset {
+    text-align: center;
+    @media (min-width: 768px) {
+      margin: 10px -48px 0;
+    }
+  }
+}
+
+.auth-footer {
+  font-size: 14px;
+  line-height: 21px;
+  color: $dark-gray;
+  margin-top: 22px;
+}

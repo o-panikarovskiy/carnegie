@@ -1,0 +1,30 @@
+.craft-switcher {
+  &.mat-checked {
+    .mat-slide-toggle-thumb-container {
+      transform: translate3d(8px, 0, 0) !important;
+    }
+  }
+  &:not(.mat-checked) {
+    .mat-slide-toggle-bar {
+      background: $dark-gray !important;
+    }
+    .mat-slide-toggle-thumb {
+      border: 1px solid $dark-gray;
+    }
+  }
+  .mat-slide-toggle-bar {
+    width: 23px;
+    height: 3px;
+    background: $active-blue !important;
+  }
+  .mat-slide-toggle-thumb {
+    width: 15px;
+    height: 15px;
+    box-shadow: none;
+    position: relative;
+    top: -3px;
+  }
+  .mat-slide-toggle-ripple {
+    display: none;
+  }
+}
