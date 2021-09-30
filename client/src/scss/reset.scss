@@ -216,7 +216,6 @@ textarea {
   resize: none;
 }
 
-// Remove outline on the forms and links
 :active,
 :hover,
 :focus {
@@ -224,22 +223,17 @@ textarea {
   outline-offset: 0;
 }
 
-// Remove click on the disabled state
 :disabled {
   pointer-events: none;
-
-  // Fix disabled text color
   -webkit-text-fill-color: inherit;
 }
 
-// Remove border and padding in Firefox
 ::-moz-focus-outer,
 ::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
 
-// Fix placeholder color
 ::placeholder {
   opacity: 1;
   color: $silver;
@@ -255,28 +249,15 @@ textarea {
   }
 }
 
-// Remove default spacing
 table {
   border-spacing: 0;
   border-collapse: collapse;
 }
 
-// Remove default padding
 td,
 th {
   padding: 0;
   text-align: center;
-}
-
-// Change tooltip
-.mat-tooltip {
-  background: $active-blue !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
-  margin-top: 4px !important;
-  margin-bottom: 4px !important;
 }
 
 .svg-icon {
@@ -292,17 +273,9 @@ th {
   height: 100%;
 }
 
-.mat-form-field.mat-focused .mat-form-field-underline .mat-form-field-ripple {
-  background-color: $active-blue;
-}
-
-.mat-form-field.mat-form-field-invalid .mat-form-field-underline .mat-form-field-ripple {
-  background-color: $attention-red;
-}
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px white inset !important;
+  box-shadow: 0 0 0 30px white inset;
 }

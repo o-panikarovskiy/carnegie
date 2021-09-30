@@ -1,22 +1,73 @@
-<mat-toolbar color="primary">
-  <a mat-button class="logo-btn" [routerLink]="['/']" routerLinkActive>Logo</a>
+<mat-toolbar class="nav">
+  <a class="logo-btn" [routerLink]="['/']" routerLinkActive>Logo</a>
+  <ul class="menu">
+    <li>
+      <a [routerLink]="['about']" routerLinkActive>About</a>
+      <ul class="dropdown" aria-label="submenu">
+        <li>
+          <a [routerLink]="['about', 'mission']" routerLinkActive>Mission</a>
+        </li>
+        <li>
+          <a [routerLink]="['about', 'people']" routerLinkActive>People</a>
+        </li>
+      </ul>
+    </li>
 
-  <button mat-icon-button [matMenuTriggerFor]="about" class="menu">About</button>
-  <mat-menu #about="matMenu">
-    <a mat-menu-item [routerLink]="['about', 'mission']" routerLinkActive>Mission</a>
-    <a mat-menu-item [routerLink]="['about', 'people']" routerLinkActive>People</a>
-  </mat-menu>
+    <li>
+      <a [routerLink]="['data']" routerLinkActive>Data</a>
+      <ul class="dropdown" aria-label="submenu">
+        <li>
+          <a [routerLink]="['data', 'search']" routerLinkActive>Search</a>
+        </li>
+        <li>
+          <a [routerLink]="['data', 'browse']" routerLinkActive>Browse</a>
+        </li>
+        <li>
+          <a [routerLink]="['data', 'bulk']" routerLinkActive>Bulk download</a>
+        </li>
+      </ul>
+    </li>
 
-  <button mat-icon-button [matMenuTriggerFor]="data" class="menu">Data</button>
-  <mat-menu #data="matMenu">
-    <a mat-menu-item [routerLink]="['data', 'search']" routerLinkActive>Search</a>
-    <a mat-menu-item [routerLink]="['data', 'browse']" routerLinkActive>Browse</a>
-    <a mat-menu-item [routerLink]="['data', 'bulk']" routerLinkActive>Bulk download</a>
-  </mat-menu>
+    <li>
+      <a [routerLink]="['software']" routerLinkActive>Software</a>
+      <ul class="dropdown" aria-label="submenu">
+        <li>
+          <a [routerLink]="['software', 'guides']" routerLinkActive>Guides</a>
+        </li>
+        <li>
+          <a [routerLink]="['software', 'api']" routerLinkActive>API</a>
+        </li>
+      </ul>
+    </li>
 
-  <button mat-icon-button [matMenuTriggerFor]="software" class="menu">Software</button>
-  <mat-menu #software="matMenu">
-    <a mat-menu-item [routerLink]="['software', 'guides']" routerLinkActive>Guides</a>
-    <a mat-menu-item [routerLink]="['software', 'api']" routerLinkActive>API</a>
-  </mat-menu>
+    <li>
+      <a [routerLink]="['resources']" routerLinkActive>Resources + Reagents</a>
+      <ul class="dropdown" aria-label="submenu">
+        <li>
+          <a [routerLink]="['resources', 'protocols']" routerLinkActive>Protocols</a>
+        </li>
+        <li>
+          <a [routerLink]="['resources', 'vectors']" routerLinkActive>Vectors</a>
+        </li>
+        <li>
+          <a [routerLink]="['resources', 'markers']" routerLinkActive>Organelles markers</a>
+        </li>
+        <li>
+          <a [routerLink]="['resources', 'publications']" routerLinkActive>Publications</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a [routerLink]="['help']" routerLinkActive>Help</a>
+      <ul class="dropdown" aria-label="submenu">
+        <li>
+          <a [routerLink]="['help', 'tutorials']" routerLinkActive>Tutorials</a>
+        </li>
+        <li>
+          <a [routerLink]="['help', 'contact']" routerLinkActive>Contact</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </mat-toolbar>

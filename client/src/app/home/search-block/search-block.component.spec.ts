@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeSearchBlockComponent } from './home-search-block.component';
+import { HomeSearchBlockComponent } from './search-block.component';
 
 describe('HomeSearchBlockComponent', () => {
   let component: HomeSearchBlockComponent;

@@ -1,17 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { HomeBannerComponent } from 'src/app/home/banner/banner.component';
 import { HomeRoutingModule } from 'src/app/home/home-routing.module';
-import { MainModule } from 'src/app/main/main.module';
-import { HomeSearchBlockComponent } from './home-search-block/home-search-block.component';
 import { HomeComponent } from './home/home.component';
+import { HomeSearchBlockComponent } from './search-block/search-block.component';
 
 @NgModule({
-  declarations: [HomeComponent, HomeSearchBlockComponent],
+  declarations: [
+    HomeComponent, //
+    HomeBannerComponent,
+    HomeSearchBlockComponent,
+  ],
   imports: [
     CommonModule, //
     MatButtonModule,
-    MainModule,
     HomeRoutingModule,
   ],
 })

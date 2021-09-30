@@ -1,19 +1,8 @@
-$white: #fff;
+@import 'theme';
+$primary: mat-color(map-get($theme, primary));
+$accent: mat-color(map-get($theme, accent));
+
 $black: #212121;
-$sky-blue: hsl(206, 100%, 50%);
-$light-blue: #dceeff;
-$active-blue: #0064ff;
-$blue-gray: #9194b7;
+$silver: #bdbdbd;
 $dark-gray: #65778b;
 $sub-gray: #7e80a8;
-$gray: #acacac;
-$devider-gray: #e5e5e5;
-$light-gray: #f6f6f6;
-$silver: #bdbdbd;
-$purple: #9d00ef;
-$rose: #ea3ac1;
-$attention-red: #e91e63;
-$warn: #e91e63;
-$cyan: #00c6c5;
-$orange: #f59d00;
-$default-border: #f1f1f1;
