@@ -21,6 +21,11 @@ node_modules/
 # Optional eslint cache
 .eslintcache
 
+# server config files
+/local.json
+/develop.json
+/production.json
+/pre-production.json
 
 # App
 src/**/*.js

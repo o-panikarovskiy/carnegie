@@ -1,1 +1,3 @@
-console.log('Tests finished.', new Date());
+import { logger } from '../log/index.js';
+
+logger.log('Tests finished.', new Date());

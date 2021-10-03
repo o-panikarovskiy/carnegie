@@ -1,6 +1,7 @@
 import * as http from 'http';
 import { app } from './src/app.js';
 import { appConfig, NODE_ENV } from './src/config/index.js';
+import * as db from './src/db/index.js';
 import { catchUncaughtException, catchUnhandledRejection } from './src/errors/index.js';
 import { logger } from './src/log/index.js';
 
@@ -11,7 +12,7 @@ process.on('uncaughtException', catchUncaughtException);
 
 const onAbortSignal = async (server: http.Server) => {
   try {
-    // TO DO: stop DB
+    await db.stop();
     server.close((e) => process.exit(e ? 1 : 0));
   } catch (error) {
     process.exit(1);
@@ -24,7 +25,7 @@ const main = async () => {
   }
 
   logger.info(`Connect to databases...`);
-  // TO DO
+  await db.init();
 
   logger.info(`Start web server...`);
   const server = http.createServer(app.callback());

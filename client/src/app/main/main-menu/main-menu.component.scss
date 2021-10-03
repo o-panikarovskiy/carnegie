@@ -12,6 +12,7 @@
   height: auto;
 }
 
+
 .menu,
 .dropdown {
   font-size: 14px;
@@ -35,15 +36,12 @@
     position: relative;
     cursor: pointer;
     text-align: center;
+    padding: 0.33em 1em;
 
     a {
       padding: 0 1em;
       width: 100%;
       display: block;
-    }
-
-    > a {
-      padding: 0.33em 1em;
     }
 
     &:hover {
