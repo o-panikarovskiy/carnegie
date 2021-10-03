@@ -11,7 +11,7 @@ const parseListReqOptions = <T>(
 ): ParsedListRequest => {
   let { sort = '', skip = 0, limit = defaultLimit } = options || {};
 
-  let orderBy = sort;
+  let orderBy = sort || (allowedFileds[0] as string);
   let orderDirection: 'ASC' | 'DESC' = 'ASC';
 
   if (sort && sort[0] === '-') {
