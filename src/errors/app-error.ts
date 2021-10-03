@@ -7,8 +7,8 @@ import {
 
 export type IAppError = {
   message: string;
-  code: string;
-  status: number;
+  code?: string;
+  status?: number;
   expose?: boolean;
   name?: string;
   desctiption?: string;
@@ -18,8 +18,8 @@ export type IAppError = {
 
 export class AppError extends Error implements IAppError {
   public readonly message: string;
-  public readonly code: string;
-  public readonly status: number;
+  public readonly code?: string;
+  public readonly status?: number;
   public readonly expose?: boolean;
   public readonly stack?: string;
   public readonly details?: unknown;
@@ -37,7 +37,12 @@ export class AppError extends Error implements IAppError {
     this.message = message;
     this.details = details;
     this.desctiption = desctiption;
-    this.expose = typeof expose === 'boolean' ? expose : status < 500;
+
+    if (typeof expose === 'boolean') {
+      this.expose = expose;
+    } else if (typeof status === 'number') {
+      this.expose = status < 500;
+    }
   }
 }
 

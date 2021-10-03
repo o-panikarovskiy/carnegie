@@ -16,9 +16,14 @@ export type NumberBooleanMap = INumberTMap<boolean>;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type PickRequired<T, TRequired extends keyof T> = Partial<T> & Pick<T, TRequired>;
 
-export interface ListRequest {
+export type ListRequest = {
   search?: string;
-  sort: string;
+  sort?: string;
   skip: number;
   limit: number;
-}
+};
+
+export type ParsedListRequest = ListRequest & {
+  orderBy: string;
+  orderDirection: 'ASC' | 'DESC';
+};

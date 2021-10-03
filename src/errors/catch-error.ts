@@ -11,7 +11,10 @@ const catchError = (ctx: Context, e: unknown): void => {
 
   if (!ctx.writable) return;
 
-  ctx.status = error.status;
+  if (error.status !== void 0) {
+    ctx.status = error.status;
+  }
+
   ctx.body = { error };
 };
 

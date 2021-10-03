@@ -1,12 +1,12 @@
 import { DbClient } from '../../../db/sql-storage/models.js';
 import { pool } from '../../../db/sql-storage/pool.js';
-import { Gene } from '../models.js';
+import { Family } from '../models.js';
 
-export { findGeneById, findGeneByName };
+export { findFamilyById, findFamilyByName };
 
-const findGeneById = async (id: string, client?: DbClient): Promise<Gene | null> => {
+const findFamilyById = async (id: string, client?: DbClient): Promise<Family | null> => {
   const text = `SELECT *
-                FROM "public"."genes"
+                FROM "public"."families"
                 WHERE "id" = $1
                 LIMIT 1;`;
 
@@ -14,12 +14,12 @@ const findGeneById = async (id: string, client?: DbClient): Promise<Gene | null>
 
   const res = await (client || pool).query({ text, values });
 
-  return (res.rows[0] as Gene) || null;
+  return (res.rows[0] as Family) || null;
 };
 
-const findGeneByName = async (name: string, client?: DbClient): Promise<Gene | null> => {
+const findFamilyByName = async (name: string, client?: DbClient): Promise<Family | null> => {
   const text = `SELECT *
-                FROM "public"."genes"
+                FROM "public"."families"
                 WHERE "name" = $1
                 LIMIT 1;`;
 
@@ -27,5 +27,5 @@ const findGeneByName = async (name: string, client?: DbClient): Promise<Gene | n
 
   const res = await (client || pool).query({ text, values });
 
-  return (res.rows[0] as Gene) || null;
+  return (res.rows[0] as Family) || null;
 };

@@ -6,7 +6,7 @@ export { findDomainById, findDomainByName };
 
 const findDomainById = async (id: string, client?: DbClient): Promise<Domain | null> => {
   const text = `SELECT *
-                FROM "public"."domain"
+                FROM "public"."domains"
                 WHERE "id" = $1
                 LIMIT 1;`;
 
@@ -19,7 +19,7 @@ const findDomainById = async (id: string, client?: DbClient): Promise<Domain | n
 
 const findDomainByName = async (name: string, client?: DbClient): Promise<Domain | null> => {
   const text = `SELECT *
-                FROM "public"."domain"
+                FROM "public"."domains"
                 WHERE "name" = $1
                 LIMIT 1;`;
 
