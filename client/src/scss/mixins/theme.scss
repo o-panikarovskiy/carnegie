@@ -1,6 +1,6 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
-@include mat-core();
+@include mat.core();
 
 $md-primary: (
   50: #e2ebec,
@@ -68,9 +68,28 @@ $md-accent: (
   ),
 );
 
-$primary: mat-palette($md-primary);
-$accent: mat-palette($md-accent);
-$warn: mat-palette($mat-red);
-$theme: mat-light-theme($primary, $accent, $warn);
+$app-primary: mat.define-palette($md-primary);
+$app-accent: mat.define-palette($md-accent);
+$app-warn: mat.define-palette(mat.$red-palette);
 
-@include angular-material-theme($theme);
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $app-primary,
+      accent: $app-accent,
+      warn: $app-warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($theme);
+
+:root {
+  --color-primary: #{mat.get-color-from-palette($app-primary)};
+  --color-accent: #{mat.get-color-from-palette($app-accent)};
+  --color-warn: #{mat.get-color-from-palette($app-warn)};
+  --color-black: #212121;
+  --color-silver: #bdbdbd;
+  --color-dark-gray: #65778b;
+  --color-sub-gray: #7e80a8;
+}

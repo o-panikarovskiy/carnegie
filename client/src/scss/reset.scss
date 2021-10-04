@@ -13,7 +13,7 @@ body {
 
 // Fix height and scrollbars
 body {
-  color: $black;
+  color: var(--color-black);
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   position: relative;
 
@@ -236,14 +236,14 @@ textarea {
 
 ::placeholder {
   opacity: 1;
-  color: $silver;
+  color: var(--color-silver);
   &:active {
     opacity: 0;
   }
 }
 ::-moz-placeholder {
   opacity: 1;
-  color: $silver;
+  color: var(--color-silver);
   &:active {
     opacity: 0;
   }

@@ -5,8 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { MainMenuComponent } from 'src/app/main/main-menu/main-menu.component';
 import { MainFooterComponent } from './main-footer/main-footer.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
@@ -26,4 +26,4 @@ import { MainFooterComponent } from './main-footer/main-footer.component';
     RouterModule,
   ],
 })
-export class MainModule {}
+export class SharedModule {}

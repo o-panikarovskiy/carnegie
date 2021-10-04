@@ -1,5 +1,3 @@
-@import 'mixins/index';
-
 :host {
   width: 100%;
 }
@@ -8,10 +6,9 @@
   display: flex;
   gap: 2em;
   color: #fff;
-  background: $primary;
+  background: var(--color-primary);
   height: auto;
 }
-
 
 .menu,
 .dropdown {
@@ -46,7 +43,7 @@
 
     &:hover {
       color: #fff;
-      background: $accent;
+      background: var(--color-accent);
       .dropdown {
         display: flex;
         opacity: 1;
@@ -67,7 +64,7 @@
   display: none;
   flex-direction: column;
 
-  background: $accent;
+  background: var(--color-accent);
   text-align: left;
   min-width: 10em;
   width: 100%;
@@ -75,7 +72,7 @@
 
   > li {
     &:hover {
-      background: $dark-gray;
+      background: var(--color-dark-gray);
     }
 
     &:last-child {
