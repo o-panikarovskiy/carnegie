@@ -1,4 +1,5 @@
 import { init as dictionariesInit } from '../../components/dictionaries/service.js';
+import { init as proteinsInit } from '../../components/proteins/service.js';
 import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
 
@@ -14,6 +15,10 @@ export async function init(): Promise<void> {
 
     await Promise.all([
       dictionariesInit(client), //
+    ]);
+
+    await Promise.all([
+      proteinsInit(client), //
     ]);
 
     logger.info('Database inited.');
