@@ -1,0 +1,21 @@
+.mat-checkbox {
+  &.full-w {
+    .mat-checkbox-layout {
+      width: 100%;
+    }
+  }
+  &.full-h {
+    .mat-checkbox-layout {
+      height: 100%;
+    }
+  }
+
+  .mat-checkbox-layout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    .mat-checkbox-inner-container {
+      margin: 0;
+    }
+  }
+}

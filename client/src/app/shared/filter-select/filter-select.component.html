@@ -6,7 +6,6 @@
   (menuOpened)="onMenuOpened()"
   (menuClosed)="onMenuClosed()"
   [matMenuTriggerFor]="multiSelectMenu"
-  [ngClass]="{ active: selectedSet.size > 0 }"
 >
   {{ selectedSet.size | i18nPlural: buttonText }}
   <mat-icon class="icon-arrow">expand_more</mat-icon>
@@ -23,12 +22,11 @@
     <div class="menu-scroll">
       <div
         mat-menu-item=""
-        class="item-checkbox"
         *ngFor="let item of filteredItems | async | slice: 0:100; trackBy: identify"
         (click)="$event.stopPropagation()"
         craftDisableFocus=""
       >
-        <mat-checkbox [checked]="selectedSet.has(item[idFieldName])" (change)="clickOnItem(item)" class="checkbox-sm">
+        <mat-checkbox [checked]="selectedSet.has(item[idFieldName])" (change)="clickOnItem(item)" class="checkbox full-h full-w">
           {{ item[labelFieldName] }}
         </mat-checkbox>
       </div>

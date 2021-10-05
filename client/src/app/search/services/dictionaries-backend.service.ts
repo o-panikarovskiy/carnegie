@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Gene } from 'src/app/typings/gene';
 
 @Injectable()
-export class DictionariesService {
+export class DictionariesBackendService {
   constructor(private readonly http: HttpClient) {}
 
   getGenes(): Observable<readonly Gene[]> {

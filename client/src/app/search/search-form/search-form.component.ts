@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ActiveFilter, SearchService } from 'src/app/search/search/search.service';
-import { DataSource } from 'src/app/shared/filter-select/filter-select.component';
-import { StringAnyMap } from 'src/app/typings';
+import { ActiveFilter, FilterParams } from 'src/app/search/models';
+import { FiltersService } from 'src/app/search/services/filters.service';
+import { StoreService } from 'src/app/search/store/store.service';
 
 @Component({
   selector: 'crng-search-form',
@@ -9,19 +9,16 @@ import { StringAnyMap } from 'src/app/typings';
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent {
-  @Input() params: StringAnyMap = {};
-  @Input() filters: readonly ActiveFilter[] = [];
+  @Input() filtersParams: FilterParams = {};
+  @Input() filtersList: readonly ActiveFilter[] = [];
 
   constructor(
-    private readonly searchService: SearchService, //
+    public readonly store: StoreService, //
+    private readonly filtersService: FiltersService, //
   ) {}
 
-  applyParam(key: string, value: string) {
-    this.searchService.applyParams({ ...this.params, [key]: value });
-  }
-
-  getDataSource(name: string): DataSource {
-    return (this.searchService as any)[name];
+  applyParam(key: string, value: string | readonly string[]) {
+    this.filtersService.applyParams({ ...this.filtersParams, [key]: value });
   }
 
   identify(index: number, item?: ActiveFilter): string | number {

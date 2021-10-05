@@ -15,7 +15,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { getSortByString } from 'src/app/shared/utils/sort-utils';
-import { StringAnyMap } from 'src/app/typings';
+import { StringAnyMap } from 'src/app/typings/common';
 
 type SortPriority = { selected: any[]; other: any[] };
 
@@ -23,28 +23,28 @@ type SortPriority = { selected: any[]; other: any[] };
   template: '',
 })
 export abstract class BaseMultiSelectComponent implements OnChanges, ControlValueAccessor {
-  @Input() public items: readonly any[] | Readonly<StringAnyMap> = [];
-  @Input() public idFieldName = '';
-  @Input() public labelFieldName = '';
-  @Input() public selectedIds: readonly string[] = [];
-  @Input() public searchVisibleCount = 10;
-  @Input() public disabled = false;
-  @Input() public disableRipple = false;
-  @Input() public searchPlaceholder = 'Search';
+  @Input() items: readonly any[] | Readonly<StringAnyMap> = [];
+  @Input() idFieldName = '';
+  @Input() labelFieldName = '';
+  @Input() selectedIds: readonly string[] = [];
+  @Input() searchVisibleCount = 10;
+  @Input() disabled = false;
+  @Input() disableRipple = false;
+  @Input() searchPlaceholder = 'Search';
 
-  @Output() public opened = new EventEmitter<void>();
-  @Output() public closed = new EventEmitter<void>();
-  @Output() public selectItem = new EventEmitter<any>();
-  @Output() public unselect = new EventEmitter<any>();
+  @Output() opened = new EventEmitter<void>();
+  @Output() closed = new EventEmitter<void>();
+  @Output() selectItem = new EventEmitter<any>();
+  @Output() unselect = new EventEmitter<any>();
 
-  @ViewChild('searchInput') public searchInput?: ElementRef;
+  @ViewChild('searchInput') searchInput?: ElementRef;
 
-  public itemsCount = 0;
-  public selectedText = '';
-  public filteredItems: Observable<any[]>;
-  public selectedSet = new Set<string>();
+  itemsCount = 0;
+  selectedText = '';
+  filteredItems: Observable<any[]>;
+  selectedSet = new Set<string>();
 
-  public searchControl = new FormControl();
+  searchControl = new FormControl();
 
   protected onTouched: () => void = () => {};
   protected onChange: (_: any) => void = (_) => {};
@@ -57,11 +57,11 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
     );
   }
 
-  public get hasSearch(): boolean {
+  get hasSearch(): boolean {
     return this.itemsCount >= this.searchVisibleCount;
   }
 
-  public ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes.items) {
       this.setItemsCount();
     }
@@ -71,40 +71,40 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
     }
   }
 
-  public identify(index: number, item: any): string | number {
+  identify(index: number, item: any): string | number {
     return item?.[this.idFieldName] || index;
   }
 
-  public clickOnItem(item: any, event?: MouseEvent) {
+  clickOnItem(item: any, event?: MouseEvent) {
     event?.stopPropagation();
     this.changeSelectedItems(item);
     this.onChange(Array.from(this.selectedSet.keys()));
   }
 
-  public onMenuOpened() {
+  onMenuOpened() {
     this.onTouched();
     this.opened.next();
   }
 
-  public onMenuClosed() {
+  onMenuClosed() {
     this.searchControl.setValue('');
     this.closed.next();
   }
 
-  public writeValue(value: any): void {
+  writeValue(value: any): void {
     this.selectedIds = value || [];
     this.setSelectedSet();
   }
 
-  public registerOnChange(fn: (_: any) => void): void {
+  registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  public setDisabledState(isDisabled: boolean): void {
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 

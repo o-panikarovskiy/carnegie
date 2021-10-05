@@ -1,13 +1,14 @@
 <mat-icon class="icon-search">search</mat-icon>
 <input
+  #input
   type="text"
   [disabled]="disabled"
   [attr.maxlength]="maxlength"
   [placeholder]="placeholder"
   [value]="value"
-  (blur)="onTouched()"
-  (keydown.enter)="onKeyEnter($any($event.target))"
-  (input)="onInput($any($event.target))"
+  (blur)="blured.next(input.value)"
+  (keydown.enter)="onKeyEnter(input)"
+  (input)="write(input.value)"
   class="input-search"
 />
 

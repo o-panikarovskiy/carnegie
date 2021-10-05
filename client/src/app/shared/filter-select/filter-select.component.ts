@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { debounce, delay, distinctUntilChanged, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { BaseMultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
-import { StringAnyMap, StringStringMap } from 'src/app/typings';
+import { StringAnyMap, StringStringMap } from 'src/app/typings/common';
 
 export type ItemsType = any[] | StringAnyMap;
 export type DataSourceFn = (_: string) => Observable<ItemsType>;
@@ -23,54 +23,51 @@ export type DataSource = Observable<ItemsType> | DataSourceFn | null;
   ],
 })
 export class FilterSelectComponent extends BaseMultiSelectComponent implements OnInit, OnDestroy {
-  @Input() public buttonText: StringStringMap = {};
-  @Input() public dataSource?: DataSource;
+  @Input() buttonText: StringStringMap = {};
+  @Input() dataSource?: DataSource;
 
-  @Output() public apply = new EventEmitter<readonly string[]>();
+  @Output() apply = new EventEmitter<readonly string[]>();
 
   private isApplied = false;
-  private isPreloaderShow = false;
 
   constructor(changeDetectorRef: ChangeDetectorRef) {
     super(changeDetectorRef);
   }
 
   @HostBinding('class.active')
-  public get isAnySelect() {
-    return this.selectedIds.length > 0;
+  get isAnySelect() {
+    return this.selectedSet.size > 0;
   }
 
-  public ngOnInit() {
+  ngOnInit() {
     if (this.dataSource) {
       this.setItems([], this.selectedIds);
 
       this.filteredItems = this.searchControl.valueChanges.pipe(
-        startWith(null),
-        debounce((val) => (this.isPreloaderShow ? of(val).pipe(delay(300)) : of(val))),
+        startWith(''),
+        debounceTime(300),
         distinctUntilChanged(),
-        tap(() => (this.isPreloaderShow = true)),
         switchMap((searchText) => this.filterSource(searchText)),
-        tap(() => (this.isPreloaderShow = false)),
       );
     }
   }
 
-  public ngOnDestroy() {
+  ngOnDestroy() {
     this.dataSource = null;
   }
 
-  public clearSelected(e: MouseEvent) {
+  clearSelected(e: MouseEvent) {
     e.stopPropagation();
     this.selectedSet.clear();
   }
 
-  public clearAndApply(e: MouseEvent) {
+  clearAndApply(e: MouseEvent) {
     e.stopPropagation();
     this.selectedSet.clear();
     this.applyFilters();
   }
 
-  public applyFilters() {
+  applyFilters() {
     this.isApplied = true;
     this.selectedIds = Array.from(this.selectedSet.keys());
 
@@ -78,17 +75,17 @@ export class FilterSelectComponent extends BaseMultiSelectComponent implements O
     this.onChange(this.selectedIds);
   }
 
-  public clickOnItem(item: any, event?: MouseEvent) {
+  clickOnItem(item: any, event?: MouseEvent) {
     event?.stopPropagation();
     this.changeSelectedItems(item);
   }
 
-  public onMenuOpened() {
+  onMenuOpened() {
     super.onMenuOpened();
     this.isApplied = false;
   }
 
-  public onMenuClosed() {
+  onMenuClosed() {
     super.onMenuClosed();
 
     if (!this.isApplied) {

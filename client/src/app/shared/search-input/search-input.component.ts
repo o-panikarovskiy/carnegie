@@ -22,6 +22,7 @@ export class SearchInputComponent implements ControlValueAccessor {
   @Output() clear = new EventEmitter<void>();
   @Output() edit = new EventEmitter<string>();
   @Output() enter = new EventEmitter<string>();
+  @Output() blured = new EventEmitter<string>();
 
   disabled = false;
 
@@ -34,10 +35,6 @@ export class SearchInputComponent implements ControlValueAccessor {
     el?.blur?.();
     this.write(el.value);
     this.enter.next(this.value);
-  }
-
-  onInput(el: HTMLInputElement): void {
-    this.write(el.value);
   }
 
   clearClick(): void {
@@ -61,7 +58,7 @@ export class SearchInputComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  private write(value: string): void {
+  write(value: string): void {
     this.value = value;
 
     this.onTouched();

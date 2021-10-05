@@ -1,3 +1,5 @@
+import { StringStringMap, StringTMap } from 'src/app/typings/common';
+
 export type Protein = {
   id: string;
   geneId: string;
@@ -14,3 +16,13 @@ export type Protein = {
 };
 
 export type NewProtein = Omit<Protein, 'id'>;
+
+export type ActiveFilter = {
+  readonly idFieldName: string;
+  readonly labelFieldName: string;
+  readonly dataSourceName: string;
+  readonly selectedIdsName: string;
+  readonly buttonText: StringStringMap;
+};
+
+export type FilterParams = StringTMap<string | readonly string[]>;
