@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class HomeSearchBlockComponent {
   constructor(private router: Router) {}
 
-  goToSearch() {
-    this.router.navigate(['search']);
+  goToSearch(term: string) {
+    this.router.navigate(['search', term]);
   }
 }

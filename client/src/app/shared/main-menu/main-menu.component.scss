@@ -57,6 +57,7 @@
   border-bottom-right-radius: 4px;
   padding: 0;
   position: absolute;
+  z-index: 1;
   transition: opacity 0.5s;
   opacity: 0;
   top: 100%;

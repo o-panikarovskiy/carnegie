@@ -1,0 +1,14 @@
+<mat-icon class="svg-icon icon-search">search</mat-icon>
+<input
+  type="text"
+  [disabled]="disabled"
+  [attr.maxlength]="maxlength"
+  [placeholder]="placeholder"
+  [value]="value"
+  (blur)="onTouched()"
+  (keydown.enter)="onKeyEnter($any($event.target))"
+  (input)="onInput($any($event.target))"
+  class="input-search"
+/>
+
+<mat-icon *ngIf="!!value" class="svg-icon icon-clear" (click)="clearClick()" matTooltip="Clear search" matTooltipPosition="above">close</mat-icon>

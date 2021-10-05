@@ -7,15 +7,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MainFooterComponent } from './main-footer/main-footer.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
+import { SearchInputComponent } from './search-input/search-input.component';
 
 @NgModule({
   declarations: [
     MainMenuComponent, //
     MainFooterComponent,
+    SearchInputComponent,
   ],
   exports: [
     MainMenuComponent, //
     MainFooterComponent,
+    SearchInputComponent,
   ],
   imports: [
     CommonModule, //

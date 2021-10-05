@@ -5,8 +5,7 @@ import { SearchComponent } from 'src/app/search/search/search.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '.',
-    pathMatch: 'full',
+    component: SearchComponent,
   },
   {
     path: ':term',
