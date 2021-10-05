@@ -32,7 +32,7 @@ input {
   border: 1px solid transparent;
   border-radius: 4px;
   line-height: 44px;
-  background: #f1f1f1;
+  background: var(--color-light-gray);
 
   &:focus {
     border: 1px solid var(--color-primary);

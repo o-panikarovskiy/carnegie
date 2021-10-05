@@ -8,5 +8,7 @@ import { SearchService } from 'src/app/search/search/search.service';
   providers: [SearchService],
 })
 export class SearchComponent {
-  constructor(public readonly searchService: SearchService) {}
+  constructor(
+    public readonly searchService: SearchService, //
+  ) {}
 }

@@ -1,0 +1,42 @@
+<button
+  type="button"
+  class="btn btn-menu"
+  mat-button=""
+  [disabled]="disabled"
+  (menuOpened)="onMenuOpened()"
+  (menuClosed)="onMenuClosed()"
+  [matMenuTriggerFor]="multiSelectMenu"
+  [ngClass]="{ active: selectedSet.size > 0 }"
+>
+  {{ selectedSet.size | i18nPlural: buttonText }}
+  <mat-icon class="icon-arrow">expand_more</mat-icon>
+  <mat-icon class="icon-clear" matTooltip="Clear filter" matTooltipPosition="above" (click)="clearAndApply($event)">close</mat-icon>
+</button>
+
+<mat-menu #multiSelectMenu="matMenu">
+  <ng-template matMenuContent="">
+    <div class="menu-search mat-menu-item">
+      <mat-icon class="icon-search">search</mat-icon>
+      <input type="text" #searchInput (click)="$event.stopPropagation()" [placeholder]="searchPlaceholder" [formControl]="searchControl" />
+    </div>
+
+    <div class="menu-scroll">
+      <div
+        mat-menu-item=""
+        class="item-checkbox"
+        *ngFor="let item of filteredItems | async | slice: 0:100; trackBy: identify"
+        (click)="$event.stopPropagation()"
+        craftDisableFocus=""
+      >
+        <mat-checkbox [checked]="selectedSet.has(item[idFieldName])" (change)="clickOnItem(item)" class="checkbox-sm">
+          {{ item[labelFieldName] }}
+        </mat-checkbox>
+      </div>
+    </div>
+
+    <div class="dropdown-footer">
+      <button (click)="clearSelected($event)" mat-button="" type="button" class="btn btn-cancel">Clear</button>
+      <button (click)="applyFilters()" mat-raised-button="" color="primary" type="button" class="btn">Apply</button>
+    </div>
+  </ng-template>
+</mat-menu>

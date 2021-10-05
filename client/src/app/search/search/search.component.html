@@ -1,4 +1,6 @@
-<ng-container *ngIf="searchService.params$ | async as params">
-  <crng-search-form [params]="params"></crng-search-form>
+<ng-container *ngIf="searchService.filters$ | async as filters">
+  <ng-container *ngIf="searchService.params$ | async as params">
+    <crng-search-form [params]="params" [filters]="filters"></crng-search-form>
+  </ng-container>
+  <!-- <crng-search-results></crng-search-results> -->
 </ng-container>
-<!-- <crng-search-results></crng-search-results> -->

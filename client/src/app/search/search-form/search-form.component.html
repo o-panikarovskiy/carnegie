@@ -1,1 +1,10 @@
 <crng-search-input [value]="params.term || ''" (enter)="applyParam('term', $event)" (clear)="applyParam('term', '')"></crng-search-input>
+<crng-filter-select
+  *ngFor="let filter of filters; trackBy: identify"
+  [idFieldName]="filter.idFieldName"
+  [labelFieldName]="filter.labelFieldName"
+  [dataSource]="getDataSource(filter.dataSourceName)"
+  [selectedIds]="params[filter.selectedIdsName] || []"
+  [buttonText]="filter.buttonText"
+>
+</crng-filter-select>
