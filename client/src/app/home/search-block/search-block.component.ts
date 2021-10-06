@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 export class HomeSearchBlockComponent {
   constructor(private router: Router) {}
 
-  goToSearch(term: string) {
-    this.router.navigate(['search', term]);
+  goToSearch(term: string, event: Event) {
+    event.preventDefault();
+    this.router.navigate(['/search'], { queryParams: { term } });
   }
 }

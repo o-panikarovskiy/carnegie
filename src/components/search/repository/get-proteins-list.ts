@@ -2,28 +2,21 @@ import { DbClient } from '../../../db/sql-storage/models.js';
 import { pool } from '../../../db/sql-storage/pool.js';
 import { StringAnyMap } from '../../../typings/index.js';
 import { parseListReqOptions } from '../../../utils/parse-list-req-options.js';
-import { ConditionParam, ProteinClient, ProteinRequest, WhereConditionResult } from '../models.js';
+import { FiltersSchema, ProteinClient, ProteinRequest, WhereConditionResult } from '../models.js';
 
 export { getProteinsList };
 
 const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Promise<readonly ProteinClient[]> => {
-  const { orderBy, skip, limit, orderDirection } = parseListReqOptions<ProteinClient>(filters, [
-    'name',
-    'alias',
-    'length',
-    'enzyme',
-    'gene',
-    'domain',
-    'family',
-  ]);
+  const allowedSort: (keyof ProteinClient)[] = ['name', 'alias', 'length', 'enzyme', 'gene', 'domain', 'family'];
 
-  const allowedFilters: ConditionParam[] = [
+  const allowedFilters: FiltersSchema[] = [
     { filterName: 'gene', columnName: 'g.id' }, //
     { filterName: 'domain', columnName: 'd.id' },
     { filterName: 'family', columnName: 'f.id' },
   ];
 
-  const { where, values } = createWhereCondition(allowedFilters, filters);
+  const { orderBy, skip, limit, orderDirection } = parseListReqOptions<ProteinClient>(filters, allowedSort);
+  const { where, values } = buildWhere(allowedFilters, filters || {});
 
   const text = `SELECT p.*,
                        g."name" as gene,
@@ -42,27 +35,27 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
   return res.rows;
 };
 
-const createWhereCondition = (allowedFilters: ConditionParam[], filters?: ProteinRequest): WhereConditionResult => {
-  const result: WhereConditionResult = { where: '', values: [] };
-  if (!filters) return result;
+const buildWhere = (schema: FiltersSchema[], filters: ProteinRequest): WhereConditionResult => {
+  const like = `(p."name" ILIKE $1 OR p."alias" ILIKE $1)`;
 
-  const values: string[] = filters.term ? [filters.term] : [];
-  const conditions: string[] = filters.term ? [`p.name ILIKE '%' || $1 || '%'`] : [];
+  const term = filters.term;
+  const values: string[] = term ? [`%${term}%`] : [];
+  const conditions: string[] = term ? [like] : [];
 
-  allowedFilters.reduce((acc, af) => {
+  schema.reduce((acc, af) => {
     const arr = (filters as StringAnyMap)?.[af.filterName];
     if (Array.isArray(arr) && arr.length > 0) {
-      const condition = createArrayCondition(af.columnName, arr, values);
+      const condition = buildInArrayCondition(af.columnName, arr, values);
       acc.push(condition);
     }
     return acc;
   }, conditions);
 
-  if (conditions.length === 0) return result;
+  if (conditions.length === 0) return { where: '', values: [] };
   return { where: 'WHERE ' + conditions.join(' AND '), values };
 };
 
-const createArrayCondition = (tableColumnName: string, array: readonly string[], values: string[]): string => {
+const buildInArrayCondition = (tableColumnName: string, array: readonly string[], values: string[]): string => {
   const expressions: string[] = [];
 
   array.forEach((id) => {

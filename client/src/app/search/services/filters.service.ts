@@ -21,8 +21,8 @@ export class FiltersService {
   applyParams(filterParams: FilterParams) {
     this.store.setFilters(filterParams);
 
-    const { term = '', ...queryParams } = filter2Route(filterParams);
-    const url = this.router.createUrlTree(['./', term], { relativeTo: this.route.parent, queryParams });
+    const queryParams = filter2Route(filterParams);
+    const url = this.router.createUrlTree(['./'], { relativeTo: this.route.parent, queryParams });
     this.router.navigateByUrl(url);
   }
 }

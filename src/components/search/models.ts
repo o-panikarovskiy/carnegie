@@ -30,7 +30,7 @@ export type ProteinRequest = ListRequest & {
 
 export type NewProtein = Omit<Protein, 'id'>;
 
-export type ConditionParam = {
+export type FiltersSchema = {
   readonly columnName: string;
   readonly filterName: string;
 };

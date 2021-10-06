@@ -9,22 +9,13 @@ import { GenesResolver } from 'src/app/search/services/genes.resolver';
 const routes: Routes = [
   {
     path: '',
+    component: SearchComponent,
     resolve: {
       genes: GenesResolver,
       domains: DomainsResolver,
       families: FamiliesResolver,
       filterParams: FilterParamsResolver,
     },
-    children: [
-      {
-        path: '',
-        component: SearchComponent,
-      },
-      {
-        path: ':term',
-        component: SearchComponent,
-      },
-    ],
   },
 ];
 

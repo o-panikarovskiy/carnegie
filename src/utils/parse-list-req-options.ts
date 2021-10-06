@@ -9,7 +9,7 @@ const parseListReqOptions = <T>(
   allowedSortFileds: (keyof T)[] = [],
   defaultLimit = 1000
 ): ParsedListRequest => {
-  let { sort = '', skip = 0, limit = defaultLimit } = options || {};
+  const { sort = '', skip = 0, limit = defaultLimit } = options || {};
 
   let orderDirection: 'ASC' | 'DESC' = 'ASC';
   let orderBy = sort || (allowedSortFileds[0] as string | undefined);

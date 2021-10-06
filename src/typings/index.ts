@@ -19,11 +19,13 @@ export type PickRequired<T, TRequired extends keyof T> = Partial<T> & Pick<T, TR
 export type ListRequest = {
   search?: string;
   sort?: string;
-  skip: number;
-  limit: number;
+  skip?: number;
+  limit?: number;
 };
 
 export type ParsedListRequest = ListRequest & {
+  skip: number;
+  limit: number;
   orderBy: string;
   orderDirection: 'ASC' | 'DESC';
 };
