@@ -1,6 +1,4 @@
-<ng-container *ngIf="fs.filtersList$ | async as filtersList">
-  <ng-container *ngIf="store.filtersParams$ | async as filtersParams">
-    <crng-search-form [filtersParams]="filtersParams" [filtersList]="filtersList"></crng-search-form>
-    <crng-search-results class="results"></crng-search-results>
-  </ng-container>
+<ng-container *ngIf="store.filtersParams$ | async as filtersParams">
+  <crng-search-form [filtersParams]="filtersParams" [filtersList]="filtersList"></crng-search-form>
+  <crng-search-results class="results"></crng-search-results>
 </ng-container>

@@ -36,7 +36,13 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
 };
 
 const buildWhere = (schema: FiltersSchema[], filters: ProteinRequest): WhereConditionResult => {
-  const like = `(p."name" ILIKE $1 OR p."alias" ILIKE $1)`;
+  const like = `(
+      p."name" ILIKE $1
+  OR  p."alias" ILIKE $1
+  OR  g."name" ILIKE $1
+  OR  d."name" ILIKE $1
+  OR  f."name" ILIKE $1
+  )`;
 
   const term = filters.term;
   const values: string[] = term ? [`%${term}%`] : [];
