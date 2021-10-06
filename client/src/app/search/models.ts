@@ -1,18 +1,21 @@
 import { StringStringMap, StringTMap } from 'src/app/typings/common';
 
 export type Protein = {
-  id: string;
-  geneId: string;
-  domainId: string;
-  familyId: string;
-  name: string;
-  length: number;
-  alias?: string | null;
-  sequence?: string | null;
-  pubmed?: string | null;
-  biochemicalFn?: string | null;
-  biologicalFn?: string | null;
-  enzyme?: boolean | null;
+  readonly id: string;
+  readonly geneId: string;
+  readonly gene: string;
+  readonly domainId: string;
+  readonly domain: string;
+  readonly familyId: string;
+  readonly family: string;
+  readonly name: string;
+  readonly length: number;
+  readonly alias?: string | null;
+  readonly sequence?: string | null;
+  readonly pubmed?: string | null;
+  readonly biochemicalFn?: string | null;
+  readonly biologicalFn?: string | null;
+  readonly enzyme?: boolean | null;
 };
 
 export type NewProtein = Omit<Protein, 'id'>;
@@ -25,4 +28,4 @@ export type ActiveFilter = {
   readonly buttonText: StringStringMap;
 };
 
-export type FilterParams = StringTMap<string | readonly string[]>;
+export type FilterParams = StringTMap<string | number | boolean | readonly string[]>;

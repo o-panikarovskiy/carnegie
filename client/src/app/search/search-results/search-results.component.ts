@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Protein } from 'src/app/search/models';
+import { ProteinsDataSource } from 'src/app/search/search-results/data-source';
 import { StoreService } from 'src/app/search/store/store.service';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
@@ -12,28 +12,29 @@ import { Destroyer } from 'src/app/shared/abstract/destroyer';
   styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent extends Destroyer implements AfterViewInit {
-  displayedColumns: (keyof Protein)[] = ['name', 'alias', 'length', 'enzyme'];
-  dataSource = new MatTableDataSource<Protein>();
+  displayedColumns: (keyof Protein)[] = ['name', 'alias', 'gene', 'domain', 'family', 'length', 'enzyme'];
+  readonly dataSource: ProteinsDataSource;
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  @ViewChild(MatSort) sort?: MatSort;
 
   constructor(private readonly store: StoreService) {
     super();
+    this.dataSource = new ProteinsDataSource(this.store);
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+    this.sort?.sortChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      const sortCol = this.sort?.active || 'name';
+      const sortDir = this.sort?.direction === 'desc' ? '-' : '';
+      const sort = sortDir + sortCol;
+      this.store.updateFilters({ sort, skip: 0 });
+    });
 
     this.store.filtersParams$
       .pipe(
         switchMap((params) => this.store.loadProteins(params)), //
         takeUntil(this.destroy$),
       )
-      .subscribe((proteins) => {
-        console.log(proteins);
-        this.dataSource = new MatTableDataSource<Protein>(proteins);
-      });
+      .subscribe();
   }
 }

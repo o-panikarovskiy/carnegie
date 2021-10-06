@@ -12,4 +12,18 @@ const DEFAULT_FILTERS_LIST: readonly ActiveFilter[] = [
     selectedIdsName: 'gene',
     buttonText: { '=0': 'No genes', '=1': '1 gene', other: '# genes' },
   },
+  {
+    idFieldName: 'id',
+    labelFieldName: 'name',
+    dataSourceName: 'domains$',
+    selectedIdsName: 'domain',
+    buttonText: { '=0': 'No domains', '=1': '1 domain', other: '# domains' },
+  },
+  {
+    idFieldName: 'id',
+    labelFieldName: 'name',
+    dataSourceName: 'families$',
+    selectedIdsName: 'family',
+    buttonText: { '=0': 'No families', '=1': '1 family', other: '# families' },
+  },
 ];

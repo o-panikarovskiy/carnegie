@@ -7,11 +7,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { SearchRoutingModule } from 'src/app/search/search-routing.module';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
+import { DomainsResolver } from 'src/app/search/services/domains.resolver';
+import { FamiliesResolver } from 'src/app/search/services/families.resolver';
 import { FilterParamsResolver } from 'src/app/search/services/filter-params.resolver';
 import { GenesResolver } from 'src/app/search/services/genes.resolver';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
@@ -38,6 +41,7 @@ import { SearchComponent } from './search/search.component';
     MatInputModule,
     MatIconModule,
     MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     SharedModule,
     HttpClientModule,
@@ -47,6 +51,8 @@ import { SearchComponent } from './search/search.component';
   providers: [
     StoreService, //
     GenesResolver,
+    DomainsResolver,
+    FamiliesResolver,
     FilterParamsResolver,
     SearchBackendService,
     DictionariesBackendService,

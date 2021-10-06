@@ -1,13 +1,17 @@
 import joi from 'joi';
 import { Context } from 'koa';
-import { ListRequest } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
+import { ProteinRequest } from '../models.js';
 import { getProteinsList } from '../repository/get-proteins-list.js';
 
 const schema = joi.object().keys({
   sort: joi.string().trim().max(50).default('name'),
   skip: joi.number().positive().allow(0).default(0),
   limit: joi.number().positive().min(1).max(1000).default(50),
+  term: joi.string().optional().allow('').trim().max(512),
+  gene: joi.array().optional().items(joi.string().trim().guid()).max(100),
+  domain: joi.array().optional().items(joi.string().trim().guid()).max(100),
+  family: joi.array().optional().items(joi.string().trim().guid()).max(100),
 });
 
 /**
@@ -46,7 +50,7 @@ const schema = joi.object().keys({
  * }
  */
 export async function proteinsList(ctx: Context): Promise<void> {
-  const req = await verifySchema<ListRequest>(schema, ctx.request.query);
+  const req = await verifySchema<ProteinRequest>(schema, ctx.request.body);
   const proteins = await getProteinsList(req);
 
   ctx.body = { proteins };

@@ -4,7 +4,7 @@ import { proteinsList } from './proteins-list.js';
 export function createRouter() {
   const router = new Router({ prefix: '/search' });
 
-  router.get('/proteins', proteinsList);
+  router.post('/proteins', proteinsList);
 
   return router;
 }
