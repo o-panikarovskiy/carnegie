@@ -10,6 +10,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     dataSourceName: 'genes$',
     filterParamName: 'gene',
     buttonText: { '=0': 'Genes', '=1': '1 gene', other: '# genes' },
+    dropdownItemName: 'Genes',
   },
   {
     idFieldName: 'id',
@@ -17,6 +18,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     dataSourceName: 'domains$',
     filterParamName: 'domain',
     buttonText: { '=0': 'Domains', '=1': '1 domain', other: '# domains' },
+    dropdownItemName: 'Domains',
   },
   {
     idFieldName: 'id',
@@ -24,6 +26,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     dataSourceName: 'families$',
     filterParamName: 'family',
     buttonText: { '=0': 'Families', '=1': '1 family', other: '# families' },
+    dropdownItemName: 'Families',
   },
 ] as const;
 

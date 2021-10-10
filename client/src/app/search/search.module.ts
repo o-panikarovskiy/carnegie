@@ -14,6 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { ActiveFiltersSelectComponent } from 'src/app/search/search-form/filter-select/active-filters-select.component';
+import { TableColumnsSelectComponent } from 'src/app/search/search-form/table-columns-select/table-columns-select.component';
 import { SearchRoutingModule } from 'src/app/search/search-routing.module';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { DomainsResolver } from 'src/app/search/services/domains.resolver';
@@ -34,6 +35,7 @@ import { SearchComponent } from './search/search.component';
     SearchComponent,
     SearchFormComponent,
     SearchResultsComponent, //
+    TableColumnsSelectComponent,
     ActiveFiltersSelectComponent,
   ],
   imports: [

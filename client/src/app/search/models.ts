@@ -20,17 +20,25 @@ export type Protein = {
 
 export type NewProtein = Omit<Protein, 'id'>;
 
+export type FilterParamValue = string | number | boolean | readonly string[] | null;
+export type FilterParams = StringTMap<FilterParamValue>;
+
 export type AppFilter = {
   readonly idFieldName: string;
   readonly labelFieldName: string;
   readonly dataSourceName: string;
   readonly filterParamName: string;
+  readonly dropdownItemName: string;
   readonly buttonText: StringStringMap;
 };
 
-export type FilterParamValue = string | number | boolean | readonly string[] | null;
-export type FilterParams = StringTMap<FilterParamValue>;
+export type TableColumn = {
+  readonly id: keyof Protein;
+  readonly friendlyName: string;
+  readonly dropdownItemName: string;
+};
 
 export type ViewParams = {
-  filters: FilterParams;
+  readonly filters: FilterParams;
+  readonly columns: readonly (keyof Protein)[];
 };
