@@ -10,7 +10,9 @@ const reducer = createReducer<SearchState>(
     domains: [],
     families: [],
     proteins: [],
-    filterParams: {},
+    viewParams: {
+      filters: {},
+    },
   },
 
   on(actions.setGenesList, (state, { genes }) => ({
@@ -28,14 +30,19 @@ const reducer = createReducer<SearchState>(
     families,
   })),
 
-  on(actions.setFiltersParams, (state, { filterParams }) => ({
-    ...state,
-    filterParams,
-  })),
-
   on(actions.loadProteinsListSuccess, (state, { proteins }) => ({
     ...state,
     proteins,
+  })),
+
+  on(actions.updateViewParams, (state, viewParams) => ({
+    ...state,
+    viewParams: {
+      filters: {
+        ...state.viewParams.filters,
+        ...viewParams.filters,
+      },
+    },
   })),
 );
 

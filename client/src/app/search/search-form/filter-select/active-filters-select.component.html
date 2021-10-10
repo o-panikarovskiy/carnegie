@@ -1,0 +1,24 @@
+<button
+  type="button"
+  class="btn btn-menu"
+  mat-button=""
+  [disabled]="disabled"
+  (menuOpened)="onMenuOpened()"
+  (menuClosed)="onMenuClosed()"
+  [matMenuTriggerFor]="multiSelectMenu"
+>
+  Filters
+  <mat-icon>menu</mat-icon>
+</button>
+
+<mat-menu #multiSelectMenu="matMenu">
+  <ng-template matMenuContent="">
+    <div class="menu-scroll">
+      <div mat-menu-item="" *ngFor="let item of items; trackBy: identify">
+        <mat-checkbox [checked]="selectedSet.has(item.filterParamName)" (change)="clickOnItem(item)" class="checkbox full-h full-w">
+          {{ 0 | i18nPlural: item.buttonText }}
+        </mat-checkbox>
+      </div>
+    </div>
+  </ng-template>
+</mat-menu>

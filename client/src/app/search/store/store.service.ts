@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
-import { FilterParams, Protein } from 'src/app/search/models';
+import { catchError, map, tap } from 'rxjs/operators';
+import { FilterParams, Protein, ViewParams } from 'src/app/search/models';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import {
@@ -11,10 +11,10 @@ import {
   loadProteinsListSuccess,
   setDomainsList,
   setFamiliesList,
-  setFiltersParams,
-  setGenesList
+  setGenesList,
+  updateViewParams
 } from 'src/app/search/store/actions';
-import { selectDomainsSelector, selectFamiliesSelector, selectFilterParams, selectGenesSelector, selectProteinsSelector } from 'src/app/search/store/selectors';
+import { selectDomainsSelector, selectFamiliesSelector, selectGenesSelector, selectProteinsSelector, selectViewParams } from 'src/app/search/store/selectors';
 import { ErrorResponse } from 'src/app/typings/common';
 import { Domain } from 'src/app/typings/domain';
 import { Family } from 'src/app/typings/family';
@@ -26,7 +26,7 @@ export class StoreService {
   public readonly domains$: Observable<readonly Domain[]>;
   public readonly families$: Observable<readonly Family[]>;
   public readonly proteins$: Observable<readonly Protein[]>;
-  public readonly filtersParams$: Observable<FilterParams>;
+  public readonly viewParams$: Observable<ViewParams>;
 
   constructor(
     private readonly store: Store, //
@@ -37,17 +37,11 @@ export class StoreService {
     this.domains$ = store.select(selectDomainsSelector);
     this.families$ = store.select(selectFamiliesSelector);
     this.proteins$ = store.select(selectProteinsSelector);
-    this.filtersParams$ = store.select(selectFilterParams);
+    this.viewParams$ = store.select(selectViewParams);
   }
 
-  setFilters(filterParams: FilterParams): void {
-    this.store.dispatch(setFiltersParams({ filterParams }));
-  }
-
-  updateFilters(updateParams: FilterParams): void {
-    this.filtersParams$.pipe(take(1)).subscribe((params) => {
-      this.store.dispatch(setFiltersParams({ filterParams: { ...params, ...updateParams } }));
-    });
+  updateFilters(filters: FilterParams): void {
+    this.store.dispatch(updateViewParams({ filters }));
   }
 
   loadGenes(): Observable<readonly Gene[]> {

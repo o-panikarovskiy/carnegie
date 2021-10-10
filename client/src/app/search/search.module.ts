@@ -3,14 +3,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { ActiveFiltersSelectComponent } from 'src/app/search/search-form/filter-select/active-filters-select.component';
 import { SearchRoutingModule } from 'src/app/search/search-routing.module';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { DomainsResolver } from 'src/app/search/services/domains.resolver';
@@ -31,6 +34,7 @@ import { SearchComponent } from './search/search.component';
     SearchComponent,
     SearchFormComponent,
     SearchResultsComponent, //
+    ActiveFiltersSelectComponent,
   ],
   imports: [
     CommonModule, //
@@ -41,7 +45,9 @@ import { SearchComponent } from './search/search.component';
     MatInputModule,
     MatIconModule,
     MatTableModule,
+    MatMenuModule,
     MatSortModule,
+    MatCheckboxModule,
     MatPaginatorModule,
     SharedModule,
     HttpClientModule,

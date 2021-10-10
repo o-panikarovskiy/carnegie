@@ -1,0 +1,30 @@
+import { AppFilter } from 'src/app/search/models';
+import { indexBy } from 'src/app/shared/utils/app-utils';
+
+export { APP_FILTERS_LIST, APP_FILTERS_MAP_BY_PARAM_NAME };
+
+const APP_FILTERS_LIST: readonly AppFilter[] = [
+  {
+    idFieldName: 'id',
+    labelFieldName: 'name',
+    dataSourceName: 'genes$',
+    filterParamName: 'gene',
+    buttonText: { '=0': 'Genes', '=1': '1 gene', other: '# genes' },
+  },
+  {
+    idFieldName: 'id',
+    labelFieldName: 'name',
+    dataSourceName: 'domains$',
+    filterParamName: 'domain',
+    buttonText: { '=0': 'Domains', '=1': '1 domain', other: '# domains' },
+  },
+  {
+    idFieldName: 'id',
+    labelFieldName: 'name',
+    dataSourceName: 'families$',
+    filterParamName: 'family',
+    buttonText: { '=0': 'Families', '=1': '1 family', other: '# families' },
+  },
+] as const;
+
+const APP_FILTERS_MAP_BY_PARAM_NAME = indexBy<AppFilter>(APP_FILTERS_LIST, 'filterParamName');

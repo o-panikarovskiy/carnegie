@@ -30,9 +30,9 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit {
       this.store.updateFilters({ sort, skip: 0 });
     });
 
-    this.store.filtersParams$
+    this.store.viewParams$
       .pipe(
-        switchMap((params) => this.store.loadProteins(params)), //
+        switchMap((viewParams) => this.store.loadProteins(viewParams.filters)),
         takeUntil(this.destroy$),
       )
       .subscribe();

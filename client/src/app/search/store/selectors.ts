@@ -7,4 +7,4 @@ export const selectGenesSelector = createSelector(getSchemeStateSelector, (state
 export const selectDomainsSelector = createSelector(getSchemeStateSelector, (state) => state.domains);
 export const selectFamiliesSelector = createSelector(getSchemeStateSelector, (state) => state.families);
 export const selectProteinsSelector = createSelector(getSchemeStateSelector, (state) => state.proteins);
-export const selectFilterParams = createSelector(getSchemeStateSelector, (state) => state.filterParams);
+export const selectViewParams = createSelector(getSchemeStateSelector, (state) => state.viewParams);

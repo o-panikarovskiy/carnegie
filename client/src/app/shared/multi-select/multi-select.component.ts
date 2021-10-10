@@ -35,7 +35,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
   @Output() selectItem = new EventEmitter<any>();
-  @Output() unselect = new EventEmitter<any>();
+  @Output() unselectItem = new EventEmitter<any>();
 
   @ViewChild('searchInput') searchInput?: ElementRef;
 
@@ -143,7 +143,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
       this.selectItem.next(item);
     } else {
       this.selectedSet.delete(itemId);
-      this.unselect.next(item);
+      this.unselectItem.next(item);
     }
   }
 
