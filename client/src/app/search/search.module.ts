@@ -19,9 +19,10 @@ import { SearchRoutingModule } from 'src/app/search/search-routing.module';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { DomainsResolver } from 'src/app/search/services/domains.resolver';
 import { FamiliesResolver } from 'src/app/search/services/families.resolver';
-import { FilterParamsResolver } from 'src/app/search/services/filter-params.resolver';
+import { ViewParamsResolver } from 'src/app/search/services/view-params.resolver';
 import { GenesResolver } from 'src/app/search/services/genes.resolver';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
+import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
 import { searchReducer } from 'src/app/search/store/reducers';
 import { searchFeatureKey } from 'src/app/search/store/state';
 import { StoreService } from 'src/app/search/store/store.service';
@@ -61,8 +62,9 @@ import { SearchComponent } from './search/search.component';
     GenesResolver,
     DomainsResolver,
     FamiliesResolver,
-    FilterParamsResolver,
+    ViewParamsResolver,
     SearchBackendService,
+    ViewSettingsBackendService,
     DictionariesBackendService,
   ],
 })

@@ -14,7 +14,8 @@ import {
   mergeFilters,
   setDomainsList,
   setFamiliesList,
-  setGenesList
+  setGenesList,
+  setViewParams
 } from 'src/app/search/store/actions';
 import {
   selectDomainsSelector,
@@ -55,6 +56,10 @@ export class StoreService {
     this.filters$ = store.select(selectViewFilters);
     this.columns$ = store.select(selectViewColumns);
     this.proteinsTotal$ = store.select(selectProteinsTotalSelector);
+  }
+
+  setViewParams(params: ViewParams): void {
+    this.store.dispatch(setViewParams(params));
   }
 
   mergeFilters(filters: FilterParams): void {
