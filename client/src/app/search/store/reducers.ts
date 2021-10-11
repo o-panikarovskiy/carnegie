@@ -11,6 +11,7 @@ const reducer = createReducer<SearchState>(
     domains: [],
     families: [],
     proteins: [],
+    proteinsTotal: 0,
     viewParams: {
       filters: {},
       columns: DEFAULT_TABLE_COLUMNS,
@@ -32,19 +33,36 @@ const reducer = createReducer<SearchState>(
     families,
   })),
 
-  on(actions.loadProteinsListSuccess, (state, { proteins }) => ({
+  on(actions.loadProteinsListSuccess, (state, { proteins, total }) => ({
     ...state,
     proteins,
+    proteinsTotal: total,
   })),
 
-  on(actions.updateViewParams, (state, { filters, columns }) => ({
+  on(actions.mergeFilters, (state, { filters }) => ({
     ...state,
     viewParams: {
+      ...state.viewParams,
       filters: {
         ...state.viewParams.filters,
         ...filters,
       },
-      columns: columns ? Array.from(new Set([...state.viewParams.columns, ...columns])) : state.viewParams.columns,
+    },
+  })),
+
+  on(actions.addTableColumn, (state, { column }) => ({
+    ...state,
+    viewParams: {
+      ...state.viewParams,
+      columns: Array.from(new Set([...state.viewParams.columns, column])),
+    },
+  })),
+
+  on(actions.delTableColumn, (state, { column }) => ({
+    ...state,
+    viewParams: {
+      ...state.viewParams,
+      columns: state.viewParams.columns.filter((c) => c !== column),
     },
   })),
 );

@@ -89,6 +89,7 @@ $theme: mat.define-light-theme(
   --color-accent: #{mat.get-color-from-palette($app-accent)};
   --color-warn: #{mat.get-color-from-palette($app-warn)};
   --color-black: #212121;
+  --color-white: #fff;
   --color-silver: #bdbdbd;
   --color-dark-gray: #65778b;
   --color-sub-gray: #7e80a8;

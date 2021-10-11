@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FilterParamValue } from 'src/app/search/models';
+import { FilterParamValue, TableColumn } from 'src/app/search/models';
 import { APP_FILTERS_MAP_BY_PARAM_NAME } from 'src/app/search/store/filters-list';
 import { StoreService } from 'src/app/search/store/store.service';
 
@@ -29,7 +29,15 @@ export class SearchFormComponent {
   }
 
   applyFilterParam(key: string, value: FilterParamValue) {
-    this.store.updateFilters({ [key]: value });
+    this.store.mergeFilters({ [key]: value });
+  }
+
+  showColumn(column: TableColumn) {
+    this.store.showColumn(column.id);
+  }
+
+  hideColumn(column: TableColumn) {
+    this.store.hideColumn(column.id);
   }
 
   identify(index: number, item?: string): string | number {

@@ -20,7 +20,7 @@ export class TableColumnsSelectComponent extends BaseMultiSelectComponent {
 
   constructor(changeDetectorRef: ChangeDetectorRef) {
     super(changeDetectorRef);
-    this.idFieldName = 'filterParamName';
+    this.idFieldName = 'id';
   }
 
   clickOnItem(item: TableColumn) {

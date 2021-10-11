@@ -1,7 +1,8 @@
 <button
   type="button"
   class="btn btn-menu"
-  mat-button=""
+  mat-raised-button=""
+  color="primary"
   [disabled]="disabled"
   (menuOpened)="onMenuOpened()"
   (menuClosed)="onMenuClosed()"
@@ -15,7 +16,12 @@
   <ng-template matMenuContent="">
     <div class="menu-scroll">
       <div mat-menu-item="" *ngFor="let item of items; trackBy: identify">
-        <mat-checkbox [checked]="selectedSet.has(item.id)" (change)="clickOnItem(item)" class="checkbox full-h full-w">
+        <mat-checkbox
+          [checked]="selectedSet.has(item.id)"
+          (change)="clickOnItem(item)"
+          [disabled]="selectedSet.has(item.id) && selectedSet.size <= 1"
+          class="checkbox full-h full-w"
+        >
           {{ item.dropdownItemName }}
         </mat-checkbox>
       </div>

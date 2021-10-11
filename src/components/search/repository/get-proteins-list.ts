@@ -4,9 +4,14 @@ import { StringAnyMap } from '../../../typings/index.js';
 import { parseListReqOptions } from '../../../utils/parse-list-req-options.js';
 import { FiltersSchema, ProteinClient, ProteinRequest, WhereConditionResult } from '../models.js';
 
-export { getProteinsList };
+export { getProteinsList, ProteinsListResult };
 
-const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Promise<readonly ProteinClient[]> => {
+type ProteinsListResult = {
+  proteins: readonly ProteinClient[];
+  total: number;
+};
+
+const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
   const allowedSort: (keyof ProteinClient)[] = ['name', 'alias', 'length', 'enzyme', 'gene', 'domain', 'family'];
 
   const allowedFilters: FiltersSchema[] = [
@@ -21,18 +26,22 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
   const text = `SELECT p.*,
                        g."name" as gene,
                        d."name" as domain,
-                       f."name" as family
+                       f."name" as family,
+                       COUNT(*) OVER() AS total
                 FROM "public"."proteins" as p
                 INNER JOIN "public"."genes" as g ON g."id" = p."geneId"
                 INNER JOIN "public"."domains" as d ON d."id" = p."domainId"
                 INNER JOIN "public"."families" as f ON f."id" = p."familyId"
                 ${where}
                 ORDER BY "${orderBy}" ${orderDirection}
-                LIMIT ${limit | 0} OFFSET ${skip | 0};`;
+                LIMIT ${limit | 0}
+                OFFSET ${skip | 0};`;
 
   const res = await (client || pool).query({ text, values });
+  const rows = res.rows;
+  const total: number = rows.length > 0 ? Number.parseFloat(rows[0].total) : -1;
 
-  return res.rows;
+  return { proteins: rows, total };
 };
 
 const buildWhere = (schema: FiltersSchema[], filters: ProteinRequest): WhereConditionResult => {

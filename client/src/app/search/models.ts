@@ -19,6 +19,8 @@ export type Protein = {
 };
 
 export type NewProtein = Omit<Protein, 'id'>;
+export type ProteinColumn = keyof Protein;
+export type ProteinsListResult = { proteins: readonly Protein[]; total: number };
 
 export type FilterParamValue = string | number | boolean | readonly string[] | null;
 export type FilterParams = StringTMap<FilterParamValue>;
@@ -40,5 +42,5 @@ export type TableColumn = {
 
 export type ViewParams = {
   readonly filters: FilterParams;
-  readonly columns: readonly (keyof Protein)[];
+  readonly columns: readonly ProteinColumn[];
 };

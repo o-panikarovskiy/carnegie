@@ -7,10 +7,13 @@
 
 .results-table ::ng-deep {
   width: 100%;
-  .mat-sort-header-container {
-    justify-content: center;
-    .mat-sort-header-content {
-      text-transform: capitalize;
+  .mat-header-cell {
+    text-align: center;
+    .mat-sort-header-container {
+      justify-content: center;
+      .mat-sort-header-content {
+        text-transform: capitalize;
+      }
     }
   }
 }

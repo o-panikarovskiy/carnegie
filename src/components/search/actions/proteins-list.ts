@@ -34,6 +34,7 @@ const schema = joi.object().keys({
  * @apiSuccessExample Success Response:
  * 200 OK
  * {
+ *   "total": 100,
  *   "proteins": [
  *     {
  *       "id": "...",
@@ -51,7 +52,7 @@ const schema = joi.object().keys({
  */
 export async function proteinsList(ctx: Context): Promise<void> {
   const req = await verifySchema<ProteinRequest>(schema, ctx.request.body);
-  const proteins = await getProteinsList(req);
+  const { proteins, total } = await getProteinsList(req);
 
-  ctx.body = { proteins };
+  ctx.body = { proteins, total };
 }

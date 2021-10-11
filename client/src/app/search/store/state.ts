@@ -11,4 +11,5 @@ export interface SearchState {
   readonly domains: readonly Domain[];
   readonly families: readonly Family[];
   readonly proteins: readonly Protein[];
+  readonly proteinsTotal: number;
 }

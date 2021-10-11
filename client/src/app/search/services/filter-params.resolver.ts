@@ -9,7 +9,7 @@ export class FilterParamsResolver implements Resolve<FilterParams> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): FilterParams {
     const params = route.queryParams;
-    this.store.updateFilters(route.queryParams);
+    this.store.mergeFilters(route.queryParams);
     return params;
   }
 }

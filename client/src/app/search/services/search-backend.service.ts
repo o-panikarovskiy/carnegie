@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { FilterParams, Protein } from 'src/app/search/models';
+import { FilterParams, ProteinsListResult } from 'src/app/search/models';
 import { omitEmptyProps } from 'src/app/shared/utils/app-utils';
 import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 
@@ -10,12 +10,10 @@ import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 export class SearchBackendService {
   constructor(private readonly http: HttpClient) {}
 
-  getProteins(params: FilterParams): Observable<Protein[]> {
+  getProteinsList(params: FilterParams): Observable<ProteinsListResult> {
     return this.http.post('/api/search/proteins', omitEmptyProps(params)).pipe(
-      map((res: any) => {
-        return res.proteins;
-      }),
-      catchError((res): never => {
+      map((res: any) => res),
+      catchError((res: HttpErrorResponse): never => {
         throw parseHttpError(res);
       }),
     );

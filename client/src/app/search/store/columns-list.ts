@@ -1,6 +1,7 @@
-import { Protein, TableColumn } from 'src/app/search/models';
+import { ProteinColumn, TableColumn } from 'src/app/search/models';
+import { indexBy } from 'src/app/shared/utils/app-utils';
 
-export { TABLE_COLUMNS_LIST, DEFAULT_TABLE_COLUMNS };
+export { TABLE_COLUMNS_LIST, TABLE_COLUMNS_MAP_BY_ID, DEFAULT_TABLE_COLUMNS };
 
 const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   {
@@ -25,4 +26,5 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   },
 ] as const;
 
-const DEFAULT_TABLE_COLUMNS: readonly (keyof Protein)[] = ['name', 'gene'] as const;
+const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
+const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['name', 'gene'] as const;
