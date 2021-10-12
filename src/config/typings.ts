@@ -4,8 +4,17 @@ export type NodeEnv = 'test' | 'local' | 'develop' | 'pp' | 'production';
 
 export type AppConfig = {
   readonly port: number;
+  readonly rootPath: string;
   readonly logLevel: keyof typeof LogLevel;
   readonly postreSql: PGSettings;
+  readonly upload: UploadSettings;
+};
+
+export type UploadSettings = {
+  uploadDir: string;
+  maxFileSize?: number;
+  maxFields?: number;
+  onFileBegin?: (name: string, file: any) => void;
 };
 
 export type PGSettings = {

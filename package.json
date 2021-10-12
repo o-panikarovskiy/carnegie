@@ -27,7 +27,8 @@
     "posttest": "node src/tests/clear.js"
   },
   "dependencies": {
-    "axios": "0.21.1",
+    "axios": "0.21.4",
+    "csv-parse": "4.16.3",
     "http-status-codes": "2.1.4",
     "joi": "17.4.2",
     "koa": "2.13.1",

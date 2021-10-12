@@ -4,7 +4,10 @@ import { AppError } from './app-error.js';
 import { catchError } from './catch-error.js';
 import { APP_RESOURCE_NOT_FOUND } from './common-errors.js';
 
+export { errorHandler, errorBodyParseHandler, ErrorHandler, ErrorBodyParseHandler };
+
 type ErrorHandler = (ctx: Context, next: () => Promise<unknown>) => Promise<void>;
+type ErrorBodyParseHandler = (err: Error, ctx: Context) => void;
 
 const errorHandler = (): ErrorHandler => {
   return async (ctx, next) => {
@@ -20,4 +23,6 @@ const errorHandler = (): ErrorHandler => {
   };
 };
 
-export { errorHandler, ErrorHandler };
+const errorBodyParseHandler = (): ErrorBodyParseHandler => {
+  return (err, ctx) => catchError(ctx, err);
+};

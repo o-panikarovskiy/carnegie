@@ -1,6 +1,12 @@
 import httpStatus from 'http-status-codes';
 import { IAppError } from './app-error.js';
 
+export const BAD_REQUEST = httpStatus.BAD_REQUEST;
+export const NOT_FOUND = httpStatus.NOT_FOUND;
+export const FORBIDDEN = httpStatus.FORBIDDEN;
+export const NOT_IMPLEMENTED = httpStatus.NOT_IMPLEMENTED;
+export const TOO_MANY_REQUESTS = httpStatus.TOO_MANY_REQUESTS;
+
 export const APP_RUNTIME_ERROR: IAppError = {
   message: 'Runtime error.',
   code: 'APPError',
