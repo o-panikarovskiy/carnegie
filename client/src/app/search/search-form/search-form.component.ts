@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FilterParamValue, TableColumn } from 'src/app/search/models';
@@ -14,7 +15,11 @@ export class SearchFormComponent {
   readonly activeFilters$: Observable<readonly string[]>;
   readonly filtersMap = APP_FILTERS_MAP_BY_PARAM_NAME;
 
-  constructor(public readonly store: StoreService) {
+  constructor(
+    private router: Router, //
+    private route: ActivatedRoute,
+    public readonly store: StoreService,
+  ) {
     this.activeFilters$ = store.viewParams$.pipe(
       map(({ filters }) => {
         return Object.keys(filters).reduce((acc, key) => {
@@ -26,6 +31,11 @@ export class SearchFormComponent {
         }, [] as string[]);
       }),
     );
+  }
+
+  updateSearchTerm(value: string) {
+    this.applyFilterParam('term', value);
+    this.router.navigate(['.'], { queryParams: { term: value }, relativeTo: this.route });
   }
 
   applyFilterParam(key: string, value: FilterParamValue) {

@@ -1,5 +1,4 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { DEFAULT_TABLE_COLUMNS } from 'src/app/search/store/columns-list';
 import { SearchState } from 'src/app/search/store/state';
 import * as actions from './actions';
 
@@ -14,9 +13,14 @@ const reducer = createReducer<SearchState>(
     proteinsTotal: 0,
     viewParams: {
       filters: {},
-      columns: DEFAULT_TABLE_COLUMNS,
+      columns: [],
     },
   },
+
+  on(actions.setViewParams, (state, viewParams) => ({
+    ...state,
+    viewParams,
+  })),
 
   on(actions.setGenesList, (state, { genes }) => ({
     ...state,
