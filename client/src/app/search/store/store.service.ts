@@ -15,6 +15,7 @@ import {
   setDomainsList,
   setFamiliesList,
   setGenesList,
+  setTableColumns,
   setViewParams
 } from 'src/app/search/store/actions';
 import {
@@ -64,6 +65,10 @@ export class StoreService {
 
   mergeFilters(filters: FilterParams): void {
     this.store.dispatch(mergeFilters({ filters }));
+  }
+
+  setTableColumns(columns: readonly ProteinColumn[]): void {
+    this.store.dispatch(setTableColumns({ columns }));
   }
 
   showColumn(column: ProteinColumn): void {

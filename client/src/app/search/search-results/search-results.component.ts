@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { switchMap, takeUntil } from 'rxjs/operators';
@@ -44,7 +45,7 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
     });
 
     this.store.columns$.pipe(takeUntil(this.destroy$)).subscribe((columns) => {
-      this.displayedColumns = columns;
+      this.displayedColumns = [...columns];
       this.allColumns = ['select', ...columns];
     });
   }
@@ -61,5 +62,11 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
   checkOne(protein: Protein, event: MouseEvent) {
     event.preventDefault();
     this.selServ.oneCheck(protein, event.shiftKey);
+  }
+
+  dropColumn(event: CdkDragDrop<ProteinColumn[]>) {
+    const columns = [...this.displayedColumns];
+    moveItemInArray(columns, event.previousIndex, event.currentIndex);
+    this.store.setTableColumns(columns);
   }
 }

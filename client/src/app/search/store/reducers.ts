@@ -54,6 +54,14 @@ const reducer = createReducer<SearchState>(
     },
   })),
 
+  on(actions.setTableColumns, (state, { columns }) => ({
+    ...state,
+    viewParams: {
+      ...state.viewParams,
+      columns,
+    },
+  })),
+
   on(actions.addTableColumn, (state, { column }) => ({
     ...state,
     viewParams: {

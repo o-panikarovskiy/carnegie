@@ -9,6 +9,7 @@ export const setGenesList = createAction('[Genes] set list', props<{ genes: read
 export const setDomainsList = createAction('[Domains] set list', props<{ domains: readonly Domain[] }>());
 export const setFamiliesList = createAction('[Families] set list', props<{ families: readonly Family[] }>());
 export const setViewParams = createAction('[View params] set params', props<ViewParams>());
+export const setTableColumns = createAction('[View params] set columns', props<{ columns: readonly ProteinColumn[] }>());
 export const mergeFilters = createAction('[View params] merge filters', props<{ filters: FilterParams }>());
 export const addTableColumn = createAction('[View params] add col', props<{ column: ProteinColumn }>());
 export const delTableColumn = createAction('[View params] del col', props<{ column: ProteinColumn }>());
