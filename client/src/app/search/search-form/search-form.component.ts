@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FilterParamValue, TableColumn } from 'src/app/search/models';
+import { SearchStoreService } from 'src/app/search/services/store.service';
 import { APP_FILTERS_MAP_BY_PARAM_NAME } from 'src/app/search/store/filters-list';
-import { StoreService } from 'src/app/search/store/store.service';
+import { FilterParamValue, TableColumn } from 'src/app/search/typings/table';
 
 @Component({
   selector: 'crng-search-form',
@@ -18,7 +18,7 @@ export class SearchFormComponent {
   constructor(
     private router: Router, //
     private route: ActivatedRoute,
-    public readonly store: StoreService,
+    public readonly store: SearchStoreService,
   ) {
     this.activeFilters$ = store.viewParams$.pipe(
       map(({ filters }) => {

@@ -14,8 +14,8 @@ import {
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
+import { StringAnyMap } from 'src/app/core/typings/common';
 import { getSortByString } from 'src/app/shared/utils/sort-utils';
-import { StringAnyMap } from 'src/app/typings/common';
 
 type SortPriority = { selected: any[]; other: any[] };
 

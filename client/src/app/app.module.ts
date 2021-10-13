@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { CoreModule } from 'src/app/core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { metaReducers } from './app.store';
 import { AppComponent } from './pages/app/app.component';
@@ -13,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
   declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserModule, //
+    CoreModule,
     SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule,

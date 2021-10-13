@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { SearchStoreService } from 'src/app/search/services/store.service';
 import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
-import { StoreService } from 'src/app/search/store/store.service';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
@@ -11,7 +11,7 @@ import { Destroyer } from 'src/app/shared/abstract/destroyer';
 })
 export class SearchComponent extends Destroyer implements OnInit {
   constructor(
-    private store: StoreService, //
+    private store: SearchStoreService, //
     private vsbs: ViewSettingsBackendService,
   ) {
     super();

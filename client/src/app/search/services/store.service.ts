@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { FilterParams, Protein, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/models';
+import { ErrorResponse } from 'src/app/core/typings/common';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import {
@@ -28,13 +28,13 @@ import {
   selectViewFilters,
   selectViewParams
 } from 'src/app/search/store/selectors';
-import { ErrorResponse } from 'src/app/typings/common';
-import { Domain } from 'src/app/typings/domain';
-import { Family } from 'src/app/typings/family';
-import { Gene } from 'src/app/typings/gene';
+import { Domain } from 'src/app/search/typings/domain';
+import { Family } from 'src/app/search/typings/family';
+import { Gene } from 'src/app/search/typings/gene';
+import { FilterParams, Protein, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/typings/table';
 
 @Injectable()
-export class StoreService {
+export class SearchStoreService {
   public readonly genes$: Observable<readonly Gene[]>;
   public readonly domains$: Observable<readonly Domain[]>;
   public readonly families$: Observable<readonly Family[]>;

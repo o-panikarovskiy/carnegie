@@ -1,4 +1,4 @@
-import { AppFilter } from 'src/app/search/models';
+import { AppFilter } from 'src/app/search/typings/table';
 import { indexBy } from 'src/app/shared/utils/app-utils';
 
 export { APP_FILTERS_LIST, APP_FILTERS_MAP_BY_PARAM_NAME };

@@ -1,4 +1,4 @@
-import { StringStringMap, StringTMap } from 'src/app/typings/common';
+import { StringStringMap, StringTMap } from 'src/app/core/typings/common';
 
 export type Protein = {
   readonly id: string;

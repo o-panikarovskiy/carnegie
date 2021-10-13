@@ -2,11 +2,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { Protein, ProteinColumn } from 'src/app/search/models';
 import { ProteinsDataSource } from 'src/app/search/search-results/data-source';
 import { SelectService } from 'src/app/search/search-results/select.service';
+import { SearchStoreService } from 'src/app/search/services/store.service';
 import { TABLE_COLUMNS_MAP_BY_ID } from 'src/app/search/store/columns-list';
-import { StoreService } from 'src/app/search/store/store.service';
+import { Protein, ProteinColumn } from 'src/app/search/typings/table';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
@@ -27,7 +27,7 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
   @ViewChild(MatSort) sort?: MatSort;
 
   constructor(
-    private readonly store: StoreService, //
+    private readonly store: SearchStoreService, //
     public readonly selServ: SelectService,
   ) {
     super();

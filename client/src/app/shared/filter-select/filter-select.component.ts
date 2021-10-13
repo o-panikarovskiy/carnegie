@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, fo
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { StringAnyMap, StringStringMap } from 'src/app/core/typings/common';
 import { BaseMultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
-import { StringAnyMap, StringStringMap } from 'src/app/typings/common';
 
 export type ItemsType = any[] | StringAnyMap;
 export type DataSourceFn = (_: string) => Observable<ItemsType>;

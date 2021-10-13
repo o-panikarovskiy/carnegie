@@ -7,14 +7,23 @@ const routes: Routes = [
     path: '404',
     component: NotFoundComponent,
   },
+
   {
     path: '',
+    pathMatch: 'full',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
+
   {
     path: 'search',
     loadChildren: () => import('./search/search.module').then((m) => m.SearchModule),
   },
+
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+
   {
     path: '**',
     redirectTo: '404',

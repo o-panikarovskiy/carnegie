@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ViewParams } from 'src/app/search/models';
+import { ViewParams } from 'src/app/search/typings/table';
 import { DEFAULT_TABLE_COLUMNS } from 'src/app/search/store/columns-list';
 
 const storageKey = 'crng:view';

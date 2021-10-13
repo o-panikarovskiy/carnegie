@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Protein } from 'src/app/search/models';
-import { StoreService } from 'src/app/search/store/store.service';
+import { SearchStoreService } from 'src/app/search/services/store.service';
+import { Protein } from 'src/app/search/typings/table';
 
 @Injectable()
 export class SelectService {
@@ -13,7 +13,7 @@ export class SelectService {
 
   public readonly checked$ = this.checkedSubj.asObservable();
 
-  constructor(private readonly store: StoreService) {}
+  constructor(private readonly store: SearchStoreService) {}
 
   public get isAllChecked(): boolean {
     return this._totalCount > 0 && this._checkedCount === this._totalCount;

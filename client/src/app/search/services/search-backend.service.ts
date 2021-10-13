@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { FilterParams, ProteinsListResult } from 'src/app/search/models';
+import { FilterParams, ProteinsListResult } from 'src/app/search/typings/table';
 import { omitEmptyProps } from 'src/app/shared/utils/app-utils';
 import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 

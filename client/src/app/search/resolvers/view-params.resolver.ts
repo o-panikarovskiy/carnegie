@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ViewParams } from 'src/app/search/models';
+import { SearchStoreService } from 'src/app/search/services/store.service';
 import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
-import { StoreService } from 'src/app/search/store/store.service';
+import { ViewParams } from 'src/app/search/typings/table';
 
 @Injectable()
 export class ViewParamsResolver implements Resolve<ViewParams> {
   constructor(
-    private store: StoreService, //
+    private store: SearchStoreService, //
     private vsbs: ViewSettingsBackendService,
   ) {}
 

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TableColumn } from 'src/app/search/models';
+import { StringAnyMap } from 'src/app/core/typings/common';
+import { TableColumn } from 'src/app/search/typings/table';
 import { TABLE_COLUMNS_LIST } from 'src/app/search/store/columns-list';
 import { BaseMultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
-import { StringAnyMap } from 'src/app/typings/common';
 
 export type ItemsType = any[] | StringAnyMap;
 export type DataSourceFn = (_: string) => Observable<ItemsType>;

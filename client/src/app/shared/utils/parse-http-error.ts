@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from 'src/app/typings/common';
+import { ErrorResponse } from 'src/app/core/typings/common';
 
 export { parseHttpError };
 

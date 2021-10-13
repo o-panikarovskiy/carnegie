@@ -1,4 +1,4 @@
-import { ProteinColumn, TableColumn } from 'src/app/search/models';
+import { ProteinColumn, TableColumn } from 'src/app/search/typings/table';
 import { indexBy } from 'src/app/shared/utils/app-utils';
 
 export { TABLE_COLUMNS_LIST, TABLE_COLUMNS_MAP_BY_ID, DEFAULT_TABLE_COLUMNS };

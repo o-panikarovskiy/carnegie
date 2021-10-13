@@ -1,4 +1,4 @@
-import { StringAnyMap } from 'src/app/typings/common';
+import { StringAnyMap } from 'src/app/core/typings/common';
 
 export { indexBy, omitEmptyProps };
 
