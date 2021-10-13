@@ -2,6 +2,8 @@
   <table
     mat-table
     matSort
+    [matSortActive]="matSortActive"
+    [matSortDirection]="matSortDirection"
     [dataSource]="dataSource"
     cdkDropList
     cdkDropListOrientation="horizontal"

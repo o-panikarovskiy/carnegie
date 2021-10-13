@@ -7,6 +7,9 @@
 
 .results-table ::ng-deep {
   width: 100%;
+  .mat-column-select {
+    width: 30px;
+  }
   .mat-header-cell {
     text-align: center;
     .mat-sort-header-container {

@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { MatSort, SortDirection } from '@angular/material/sort';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { Protein, ProteinColumn } from 'src/app/search/models';
 import { ProteinsDataSource } from 'src/app/search/search-results/data-source';
 import { SelectService } from 'src/app/search/search-results/select.service';
@@ -19,6 +19,8 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
   allColumns: readonly string[] = ['select'];
   displayedColumns: readonly ProteinColumn[] = [];
   total = 0;
+  matSortActive: ProteinColumn = 'name';
+  matSortDirection: SortDirection = 'asc';
   readonly columnsMap = TABLE_COLUMNS_MAP_BY_ID;
   readonly dataSource: ProteinsDataSource;
 
@@ -48,15 +50,32 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
       this.displayedColumns = [...columns];
       this.allColumns = ['select', ...columns];
     });
+
+    this.store.filters$
+      .pipe(
+        take(1),
+        map(({ sort }) => sort),
+        filter((sort): sort is string => typeof sort === 'string'),
+      )
+      .subscribe((sort) => {
+        this.matSortDirection = sort[0] === '-' ? 'desc' : 'asc';
+        this.matSortActive = sort.replace('-', '') as ProteinColumn;
+      });
   }
 
   ngAfterViewInit(): void {
-    this.sort?.sortChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      const sortCol = this.sort?.active || 'name';
-      const sortDir = this.sort?.direction === 'desc' ? '-' : '';
-      const sort = sortDir + sortCol;
-      this.store.mergeFilters({ sort, skip: 0 });
-    });
+    this.sort?.sortChange
+      .pipe(
+        debounceTime(300), //
+        distinctUntilChanged(),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
+        const sortCol = this.sort?.active || 'name';
+        const sortDir = this.sort?.direction === 'desc' ? '-' : '';
+        const sort = sortDir + sortCol;
+        this.store.mergeFilters({ sort, skip: 0 });
+      });
   }
 
   checkOne(protein: Protein, event: MouseEvent) {
