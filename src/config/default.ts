@@ -8,6 +8,7 @@ const defaultConfig: Partial<AppConfig> = {
   port: 3000,
   logLevel: 'info',
   rootPath: ROOT_PATH,
+  tokenSign: 'carnegie mellon university',
   upload: {
     uploadDir: join(ROOT_PATH, 'upload'),
     maxFileSize: 10 * 1024 * 1024,

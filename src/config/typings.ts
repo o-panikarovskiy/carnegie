@@ -8,6 +8,7 @@ export type AppConfig = {
   readonly logLevel: keyof typeof LogLevel;
   readonly postreSql: PGSettings;
   readonly upload: UploadSettings;
+  readonly tokenSign: string;
 };
 
 export type UploadSettings = {
