@@ -4,6 +4,6 @@ export type AuthUser = {
 };
 
 export type SingInReq = {
-  readonly email: string;
+  readonly username: string;
   readonly password: string;
 };

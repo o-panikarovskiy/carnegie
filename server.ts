@@ -5,7 +5,7 @@ import * as db from './src/db/index.js';
 import { catchUncaughtException, catchUnhandledRejection } from './src/errors/index.js';
 import { logger } from './src/log/index.js';
 
-const PORT = appConfig.port;
+const PORT = appConfig.host.port;
 
 process.on('unhandledRejection', catchUnhandledRejection);
 process.on('uncaughtException', catchUncaughtException);

@@ -5,7 +5,7 @@ import { signIn } from './signin.js';
 export { createRouter };
 
 const createRouter = () => {
-  const router = new Router({ prefix: 'auth' });
+  const router = new Router({ prefix: '/auth' });
 
   router.post('/signin', signIn);
   router.get('/check-token', checkToken);

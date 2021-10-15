@@ -11,8 +11,8 @@
     <mat-form-field class="input-block">
       <input matInput type="password" maxlength="255" placeholder="Password" autocomplete="password" required formControlName="password" />
       <mat-error *ngIf="password.hasError('required')">Password is required</mat-error>
-      <mat-error *ngIf="loginForm.hasError('serverError')">{{ loginForm.getError('serverError').message }}</mat-error>
     </mat-form-field>
   </div>
+  <mat-error *ngIf="loginForm.hasError('serverError')" class="test">{{ loginForm.getError('serverError').message }}</mat-error>
   <button mat-raised-button="" color="primary" class="btn submit" type="submit" [disabled]="loginForm.disabled">Sign In</button>
 </form>

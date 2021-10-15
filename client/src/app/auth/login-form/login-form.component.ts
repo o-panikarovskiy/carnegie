@@ -18,11 +18,11 @@ export class LoginFormComponent {
   constructor(private readonly authStore: AuthStoreService) {}
 
   login() {
+    this.loginForm.setErrors(null);
     if (this.loginForm.invalid) return;
 
     this.loginForm.disable();
-    this.loginForm.setErrors(null);
-    this.authStore.signIn(this.password.value).subscribe(
+    this.authStore.signIn(this.loginForm.value).subscribe(
       () => {
         this.loginForm.enable();
         this.signedIn.next();

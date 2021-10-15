@@ -1,6 +1,7 @@
 import {
   APP_ACCESS_DENIED,
   APP_INVALID_REQ_MODEL,
+  APP_NOT_IMPLEMENTED,
   APP_RESOURCE_NOT_FOUND,
   APP_RUNTIME_ERROR
 } from './common-errors.js';
@@ -49,6 +50,13 @@ export class AppError extends Error implements IAppError {
 export class AppBadRequest extends AppError {
   constructor(message: string, status = APP_INVALID_REQ_MODEL.status) {
     super({ message, status, code: APP_INVALID_REQ_MODEL.code, expose: true });
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class AppNotImplemented extends AppError {
+  constructor(message = APP_NOT_IMPLEMENTED.message, status = APP_NOT_IMPLEMENTED.status) {
+    super({ message, status, code: APP_NOT_IMPLEMENTED.code, expose: true });
     Error.captureStackTrace(this, this.constructor);
   }
 }

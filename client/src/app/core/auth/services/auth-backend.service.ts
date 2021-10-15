@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthUser, SingInReq } from 'src/app/core/typings/auth';
+import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 
 @Injectable()
 export class AuthBackendService {
@@ -12,6 +13,9 @@ export class AuthBackendService {
     return this.http.post('/api/auth/signin', req).pipe(
       map((res: any) => {
         return res.user;
+      }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
       }),
     );
   }

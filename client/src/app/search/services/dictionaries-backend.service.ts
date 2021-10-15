@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Domain } from 'src/app/search/typings/domain';
 import { Family } from 'src/app/search/typings/family';
 import { Gene } from 'src/app/search/typings/gene';
+import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 
 @Injectable()
 export class DictionariesBackendService {
@@ -15,6 +16,9 @@ export class DictionariesBackendService {
       map((res: any) => {
         return res.genes;
       }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
+      }),
     );
   }
 
@@ -23,6 +27,9 @@ export class DictionariesBackendService {
       map((res: any) => {
         return res.domains;
       }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
+      }),
     );
   }
 
@@ -30,6 +37,9 @@ export class DictionariesBackendService {
     return this.http.get('/api/dicts/families').pipe(
       map((res: any) => {
         return res.families;
+      }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
       }),
     );
   }

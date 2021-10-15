@@ -11,9 +11,7 @@ export class LoginPageComponent {
 
   public redirect() {
     this.route.queryParams.pipe(take(1)).subscribe((params) => {
-      if (params?.back) {
-        this.router.navigate([params.back]);
-      }
+      this.router.navigate([params?.back || '']);
     });
   }
 }
