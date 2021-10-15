@@ -17,12 +17,12 @@ const schema = joi.object().keys({
  * @apiGroup Authentication
  * @apiName SignIn
  * @apiVersion 1.0.0
- * @api {post} /auth/SignIn 1. Sign In
- * @apiParam {String{8..256}} email User email
+ * @api {post} /auth/signin 1. Sign In
+ * @apiParam {String{8..256}} username User email
  * @apiParam {String{8..256}} password User password
  * @apiParamExample {json} Request-Example:
  * {
- *   "email": "some@g.com",
+ *   "username": "some@g.com",
  *   "password": "some pwd"
  * }
  * @apiError (400) InvalidRequestModel Invalid request model.
@@ -34,8 +34,8 @@ const signIn = async (ctx: Context): Promise<void> => {
   const { sid, user } = await authenticateUser(username, password);
 
   const { cookieName, expiresIn } = appConfig.auth;
-  const secure = appConfig.host.protocol === 'https' ? true : false;
   const expires = new Date(Date.now() + ms(expiresIn));
+  const secure = appConfig.host.protocol === 'https' ? true : false;
   ctx.cookies.set(cookieName, sid, { httpOnly: true, secure, expires });
 
   ctx.body = { user };

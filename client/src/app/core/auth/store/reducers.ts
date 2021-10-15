@@ -7,7 +7,7 @@ export { authReducer };
 const reducer = createReducer<AuthState>(
   {},
 
-  on(actions.signInSuccess, (state, { user }) => ({
+  on(actions.signinSuccess, actions.checkTokenSuccess, (state, { user }) => ({
     ...state,
     user,
   })),

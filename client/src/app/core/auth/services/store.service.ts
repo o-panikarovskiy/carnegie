@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthBackendService } from 'src/app/core/auth/services/auth-backend.service';
-import { signIn, signInError, signInSuccess } from 'src/app/core/auth/store/actions';
+import { checkToken, checkTokenSuccess, signin, signinError, signinSuccess } from 'src/app/core/auth/store/actions';
 import { selectUserSelector } from 'src/app/core/auth/store/selectors';
 import { AuthUser, SingInReq } from 'src/app/core/typings/auth';
 import { ErrorResponse } from 'src/app/core/typings/common';
@@ -22,21 +22,31 @@ export class AuthStoreService {
   }
 
   signIn(req: SingInReq): Observable<AuthUser> {
-    this.store.dispatch(signIn({ req }));
+    this.store.dispatch(signin({ req }));
 
     return this.abs.signIn(req).pipe(
       map((user) => {
-        this.store.dispatch(signInSuccess({ user }));
+        this.store.dispatch(signinSuccess({ user }));
         return user;
       }),
       catchError((error: ErrorResponse) => {
-        this.store.dispatch(signInError({ error }));
+        this.store.dispatch(signinError({ error }));
         return throwError(error);
       }),
     );
   }
 
   checkSession(): Observable<boolean> {
-    return of(false);
+    this.store.dispatch(checkToken());
+
+    return this.abs.checkSession().pipe(
+      map((user) => {
+        this.store.dispatch(checkTokenSuccess({ user }));
+        return true;
+      }),
+      catchError(() => {
+        return of(false);
+      }),
+    );
   }
 }

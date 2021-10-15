@@ -19,4 +19,15 @@ export class AuthBackendService {
       }),
     );
   }
+
+  checkSession(): Observable<AuthUser> {
+    return this.http.get('/api/auth/check').pipe(
+      map((res: any) => {
+        return res.user;
+      }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
+      }),
+    );
+  }
 }

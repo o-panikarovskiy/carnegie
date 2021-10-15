@@ -4,6 +4,7 @@ import { IAppError } from './app-error.js';
 export const BAD_REQUEST = httpStatus.BAD_REQUEST;
 export const NOT_FOUND = httpStatus.NOT_FOUND;
 export const FORBIDDEN = httpStatus.FORBIDDEN;
+export const UNAUTHORIZED = httpStatus.UNAUTHORIZED;
 export const NOT_IMPLEMENTED = httpStatus.NOT_IMPLEMENTED;
 export const TOO_MANY_REQUESTS = httpStatus.TOO_MANY_REQUESTS;
 export const INTERNAL_SERVER_ERROR = httpStatus.INTERNAL_SERVER_ERROR;
@@ -43,4 +44,10 @@ export const APP_ACCESS_DENIED: IAppError = {
   message: 'Access denied.',
   code: 'AccessDenied',
   status: FORBIDDEN,
+};
+
+export const APP_UNAUTHORIZED_REQUEST: IAppError = {
+  message: 'Unauthorized request.',
+  code: 'Unauthorized',
+  status: UNAUTHORIZED,
 };

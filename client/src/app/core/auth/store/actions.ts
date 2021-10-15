@@ -2,6 +2,10 @@ import { createAction, props } from '@ngrx/store';
 import { AuthUser, SingInReq } from 'src/app/core/typings/auth';
 import { ErrorResponse } from 'src/app/core/typings/common';
 
-export const signIn = createAction('[Auth] signin', props<{ req: SingInReq }>());
-export const signInError = createAction('[Auth] signin error', props<{ error: ErrorResponse }>());
-export const signInSuccess = createAction('[Auth] signin success', props<{ user: AuthUser }>());
+export const signin = createAction('[Auth] signin', props<{ req: SingInReq }>());
+export const signinError = createAction('[Auth] signin error', props<{ error: ErrorResponse }>());
+export const signinSuccess = createAction('[Auth] signin success', props<{ user: AuthUser }>());
+
+export const checkToken = createAction('[Auth] check token');
+export const checkTokenError = createAction('[Auth] check token error', props<{ error: ErrorResponse }>());
+export const checkTokenSuccess = createAction('[Auth] check token success', props<{ user: AuthUser }>());
