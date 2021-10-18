@@ -1,0 +1,6 @@
+<crng-upload-button (fileSelect)="onFileSelect($event)"> Select csv file </crng-upload-button>
+
+<div class="progress" *ngIf="showProgress">
+  {{ progressStatus }}
+  <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+</div>

@@ -7,6 +7,8 @@ import { AuthBackendService } from 'src/app/core/auth/services/auth-backend.serv
 import { AuthStoreService } from 'src/app/core/auth/services/store.service';
 import { authReducer } from 'src/app/core/auth/store/reducers';
 import { authFeatureKey } from 'src/app/core/auth/store/state';
+import { SocketService } from 'src/app/core/services/socket.service';
+import { UploadService } from 'src/app/core/services/upload.service';
 
 @NgModule({
   declarations: [],
@@ -17,6 +19,8 @@ import { authFeatureKey } from 'src/app/core/auth/store/state';
   ],
   providers: [
     AuthGuard,
+    UploadService,
+    SocketService,
     AuthStoreService,
     AuthBackendService, //
   ],

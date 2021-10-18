@@ -10,8 +10,8 @@ import { ErrorResponse } from 'src/app/core/typings/common';
 
 @Injectable()
 export class AuthStoreService {
-  public readonly user$: Observable<AuthUser | undefined>;
-  public readonly isAuthenticated$: Observable<boolean>;
+  readonly user$: Observable<AuthUser | undefined>;
+  readonly isAuthenticated$: Observable<boolean>;
 
   constructor(
     private readonly store: Store, //

@@ -11,19 +11,19 @@ export class SelectService {
   private _lastCkeckedId?: string;
   private readonly checkedSubj = new BehaviorSubject<Set<Protein>>(new Set());
 
-  public readonly checked$ = this.checkedSubj.asObservable();
+  readonly checked$ = this.checkedSubj.asObservable();
 
   constructor(private readonly store: SearchStoreService) {}
 
-  public get isAllChecked(): boolean {
+  get isAllChecked(): boolean {
     return this._totalCount > 0 && this._checkedCount === this._totalCount;
   }
 
-  public get checkedCount(): number {
+  get checkedCount(): number {
     return this._checkedCount;
   }
 
-  public checkAll(): void {
+  checkAll(): void {
     forkJoin([
       this.store.proteins$.pipe(take(1)), //
       this.store.proteinsTotal$.pipe(take(1)),
@@ -35,7 +35,7 @@ export class SelectService {
     });
   }
 
-  public oneCheck(protein: Protein, shiftKey: boolean): void {
+  oneCheck(protein: Protein, shiftKey: boolean): void {
     forkJoin([
       this.checkedSubj.pipe(take(1)), //
       this.store.proteins$.pipe(take(1)),
@@ -59,7 +59,7 @@ export class SelectService {
     });
   }
 
-  public masterCheck(): void {
+  masterCheck(): void {
     if (!this.isAllChecked) {
       this.checkAll();
     } else {

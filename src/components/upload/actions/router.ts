@@ -1,11 +1,12 @@
 import Router from 'koa-router';
-import { uploadCSV } from './csv.js';
+import { checkApiSessionMiddleware } from '../../auth/service.js';
+import { uploadGenes } from './genes.js';
 
 export { createRouter };
 
 const createRouter = () => {
   const router = new Router({ prefix: '/upload' });
-  router.post('/csv', uploadCSV);
+  router.post('/genes', checkApiSessionMiddleware, uploadGenes);
 
   return router;
 };

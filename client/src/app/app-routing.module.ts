@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/core/auth/guards/auth.guard';
 import { NotFoundComponent } from 'src/app/pages/not-found/not-found.component';
 
 const routes: Routes = [
@@ -22,6 +23,12 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+
+  {
+    path: 'import',
+    canLoad: [AuthGuard],
+    loadChildren: () => import('./csv/csv.module').then((m) => m.CSVImportModule),
   },
 
   {

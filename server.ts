@@ -4,8 +4,7 @@ import { appConfig, NODE_ENV } from './src/config/index.js';
 import * as db from './src/db/index.js';
 import { catchUncaughtException, catchUnhandledRejection } from './src/errors/index.js';
 import { logger } from './src/log/index.js';
-
-const PORT = appConfig.host.port;
+import { createSocketServer } from './src/routes/sockets.js';
 
 process.on('unhandledRejection', catchUnhandledRejection);
 process.on('uncaughtException', catchUncaughtException);
@@ -28,12 +27,17 @@ const main = async () => {
   await db.init();
 
   logger.info(`Start web server...`);
-  const server = http.createServer(app.callback());
-  await new Promise<void>((resolve) => server.listen(PORT, resolve));
-  logger.info(`Server started on port ${PORT} in ${NODE_ENV} mode.`);
+  const port = appConfig.host.port;
+  const httpServer = http.createServer(app.callback());
+  await new Promise<void>((resolve) => httpServer.listen(port, resolve));
 
-  process.on('SIGINT', () => onAbortSignal(server));
-  return server;
+  logger.info(`Start listening web sockets...`);
+  createSocketServer(httpServer);
+
+  process.on('SIGINT', () => onAbortSignal(httpServer));
+
+  logger.info(`Server started on port ${port} in ${NODE_ENV} mode.`);
+  return httpServer;
 };
 
 main();

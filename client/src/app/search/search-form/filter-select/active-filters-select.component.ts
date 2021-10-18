@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StringAnyMap } from 'src/app/core/typings/common';
-import { AppFilter } from 'src/app/search/typings/table';
 import { APP_FILTERS_LIST } from 'src/app/search/store/filters-list';
+import { AppFilter } from 'src/app/search/typings/table';
 import { BaseMultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
 
 export type ItemsType = any[] | StringAnyMap;
@@ -16,7 +16,7 @@ export type DataSource = Observable<ItemsType> | DataSourceFn | null;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActiveFiltersSelectComponent extends BaseMultiSelectComponent {
-  public items: readonly AppFilter[] = APP_FILTERS_LIST;
+  items: readonly AppFilter[] = APP_FILTERS_LIST;
 
   constructor(changeDetectorRef: ChangeDetectorRef) {
     super(changeDetectorRef);

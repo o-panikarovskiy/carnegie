@@ -8,6 +8,7 @@ export const UNAUTHORIZED = httpStatus.UNAUTHORIZED;
 export const NOT_IMPLEMENTED = httpStatus.NOT_IMPLEMENTED;
 export const TOO_MANY_REQUESTS = httpStatus.TOO_MANY_REQUESTS;
 export const INTERNAL_SERVER_ERROR = httpStatus.INTERNAL_SERVER_ERROR;
+export const NO_CONTENT = httpStatus.NO_CONTENT;
 
 export const APP_RUNTIME_ERROR: IAppError = {
   message: 'Runtime error.',
