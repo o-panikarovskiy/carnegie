@@ -6,7 +6,7 @@ import { AuthBackendService } from 'src/app/core/auth/services/auth-backend.serv
 import { checkToken, checkTokenSuccess, signin, signinError, signinSuccess } from 'src/app/core/auth/store/actions';
 import { selectUserSelector } from 'src/app/core/auth/store/selectors';
 import { AuthUser, SingInReq } from 'src/app/core/typings/auth';
-import { ErrorResponse } from 'src/app/core/typings/common';
+import { AppError } from 'src/app/core/typings/common';
 
 @Injectable()
 export class AuthStoreService {
@@ -29,7 +29,7 @@ export class AuthStoreService {
         this.store.dispatch(signinSuccess({ user }));
         return user;
       }),
-      catchError((error: ErrorResponse) => {
+      catchError((error: AppError) => {
         this.store.dispatch(signinError({ error }));
         return throwError(error);
       }),

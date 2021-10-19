@@ -1,5 +1,5 @@
 import { dirname, join } from 'path';
-import { onFileBegin } from '../components/upload/bi/on-file-begin.js';
+import { onFileBegin } from '../components/upload/index.js';
 import { AppConfig } from './typings.js';
 
 const ROOT_PATH = new URL(join(dirname(import.meta.url), '..', '..')).pathname;

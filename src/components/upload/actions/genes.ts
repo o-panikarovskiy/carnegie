@@ -1,8 +1,8 @@
 import { Context } from 'koa';
 import { AppBadRequest } from '../../../errors/app-error.js';
-import { NO_CONTENT } from '../../../errors/index.js';
-import { importGenes } from '../bi/import-genes.js';
-import { readCSV } from '../bi/read-csv.js';
+import { getRandomString } from '../../../utils/get-random-string.js';
+import { importGenes } from '../bl/import-genes.js';
+import { readCSV } from '../bl/read-csv.js';
 
 export { uploadGenes };
 
@@ -11,8 +11,9 @@ const uploadGenes = async (ctx: Context): Promise<void> => {
   if (!file) throw new AppBadRequest('Empty request');
   if (Array.isArray(file)) throw new AppBadRequest('Array of files not allowed');
 
+  const fileId = getRandomString(16);
   const results = await readCSV(file);
-  importGenes(ctx.state.user, results); // don't wait
+  importGenes(fileId, ctx.state.user, results); // don't wait
 
-  ctx.status = NO_CONTENT;
+  ctx.body = { fileId };
 };

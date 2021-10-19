@@ -13,10 +13,12 @@ export type NumberNumberMap = NumberTMap<number>;
 export type StringBooleanMap = StringTMap<boolean>;
 export type NumberBooleanMap = NumberTMap<boolean>;
 
+export type StronglyKeyedMap<T extends string | number, V> = { [k in T]: V };
+
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type PickRequired<T, TRequired extends keyof T> = Partial<T> & Pick<T, TRequired>;
 
-export type ErrorResponse = {
+export type AppError = {
   readonly status: number;
   readonly message: string;
   readonly code?: string;

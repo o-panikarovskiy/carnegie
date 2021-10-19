@@ -1,6 +1,16 @@
-<crng-upload-button (fileSelect)="onFileSelect($event)"> Select csv file </crng-upload-button>
+<div class="header">
+  <crng-upload-button (fileSelect)="onFileSelect($event)"> Select CSV File </crng-upload-button>
 
-<div class="progress" *ngIf="showProgress">
-  {{ progressStatus }}
-  <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+  <ng-container *ngIf="importSrv.status$ | async as status">
+    <div class="progress" *ngIf="importSrv.progress$ | async as progress">
+      <div class="title">{{ progress + '%' }}&nbsp;{{ statuses[status] }}</div>
+      <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+    </div>
+  </ng-container>
 </div>
+
+<cdk-virtual-scroll-viewport itemSize="40" class="logs">
+  <div *cdkVirtualFor="let log of logs" class="log" [ngClass]="{ error: !!log.error }">
+    {{ log.error ? log.error.message : log.gene ? log.gene.name + ' imported successfuly' : '' }}
+  </div>
+</cdk-virtual-scroll-viewport>

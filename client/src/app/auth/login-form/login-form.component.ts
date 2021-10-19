@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthStoreService } from 'src/app/core/auth/services/store.service';
-import { ErrorResponse } from 'src/app/core/typings/common';
+import { AppError } from 'src/app/core/typings/common';
 
 @Component({
   selector: 'crng-login-form',
@@ -27,7 +27,7 @@ export class LoginFormComponent {
         this.loginForm.enable();
         this.signedIn.next();
       },
-      (err: ErrorResponse) => {
+      (err: AppError) => {
         this.loginForm.enable();
         this.loginForm.setErrors({ serverError: err });
       },

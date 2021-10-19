@@ -1,5 +1,5 @@
-import * as http from 'http';
-import { Server, Socket } from 'socket.io';
+import { IncomingMessage } from 'http';
+import { Socket } from 'socket.io';
 import { ExtendedError } from 'socket.io/dist/namespace';
 import { SESSION_REQUIRED } from '../components/auth/errors.js';
 import { verifyToken } from '../components/auth/utils/verify-token.js';
@@ -8,32 +8,13 @@ import { AppError } from '../errors/app-error.js';
 import { APP_UNAUTHORIZED_REQUEST } from '../errors/common-errors.js';
 import { parseCookies } from '../utils/parse-cookies.js';
 
-export { createSocketServer, sendToSocketByKey, Message };
+export { checkSession, allowRequest };
 
 type SocketNext = (err?: ExtendedError) => void;
-type Message = { message: string; payload?: any };
 type SocketMiddleware = (socket: Socket, next: SocketNext) => void;
+type AllowRequestCallback = (err: string | null | undefined, success: boolean) => void;
 
-const sockets = new Map<string, Socket>();
-
-const createSocketServer = (httpServer: http.Server): void => {
-  const io = new Server(httpServer, { transports: ['websocket'] });
-
-  io.use(checkApiSessionMiddleware).on('connection', (socket: Socket): void => {
-    const key = socket.data.user.email;
-    sockets.set(key, socket);
-    socket.on('disconnect', () => sockets.delete(key));
-  });
-};
-
-const sendToSocketByKey = (key: string, msg: Message): void => {
-  const socket = sockets.get(key);
-  if (!socket) return;
-
-  socket.emit('message', msg);
-};
-
-const checkApiSessionMiddleware: SocketMiddleware = async (socket: Socket, next: SocketNext): Promise<void> => {
+const checkSession: SocketMiddleware = async (socket: Socket, next: SocketNext): Promise<void> => {
   const cookies = parseCookies(socket.request?.headers?.cookie || '');
   const token = cookies[appConfig.auth.cookieName];
 
@@ -43,9 +24,25 @@ const checkApiSessionMiddleware: SocketMiddleware = async (socket: Socket, next:
 
   try {
     const user = await verifyToken(token);
-    socket.data = { user };
+    socket.data = { ...socket.data, user };
     return next();
   } catch (error) {
     return next(new AppError(APP_UNAUTHORIZED_REQUEST));
+  }
+};
+
+const allowRequest = async (req: IncomingMessage, callback: AllowRequestCallback): Promise<void> => {
+  const cookies = parseCookies(req.headers?.cookie || '');
+  const token = cookies[appConfig.auth.cookieName];
+
+  if (!token) {
+    return callback(SESSION_REQUIRED.message, false);
+  }
+
+  try {
+    await verifyToken(token);
+    return callback(void 0, true);
+  } catch (error) {
+    return callback(error?.message, false);
   }
 };

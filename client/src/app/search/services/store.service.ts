@@ -2,31 +2,31 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { ErrorResponse } from 'src/app/core/typings/common';
+import { AppError } from 'src/app/core/typings/common';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import {
-  addTableColumn,
-  delTableColumn,
-  loadProteinsList,
-  loadProteinsListError,
-  loadProteinsListSuccess,
-  mergeFilters,
-  setDomainsList,
-  setFamiliesList,
-  setGenesList,
-  setTableColumns,
-  setViewParams
+    addTableColumn,
+    delTableColumn,
+    loadProteinsList,
+    loadProteinsListError,
+    loadProteinsListSuccess,
+    mergeFilters,
+    setDomainsList,
+    setFamiliesList,
+    setGenesList,
+    setTableColumns,
+    setViewParams
 } from 'src/app/search/store/actions';
 import {
-  selectDomainsSelector,
-  selectFamiliesSelector,
-  selectGenesSelector,
-  selectProteinsSelector,
-  selectProteinsTotalSelector,
-  selectViewColumns,
-  selectViewFilters,
-  selectViewParams
+    selectDomainsSelector,
+    selectFamiliesSelector,
+    selectGenesSelector,
+    selectProteinsSelector,
+    selectProteinsTotalSelector,
+    selectViewColumns,
+    selectViewFilters,
+    selectViewParams
 } from 'src/app/search/store/selectors';
 import { Domain } from 'src/app/search/typings/domain';
 import { Family } from 'src/app/search/typings/family';
@@ -99,7 +99,7 @@ export class SearchStoreService {
         this.store.dispatch(loadProteinsListSuccess(result));
         return result;
       }),
-      catchError((error: ErrorResponse) => {
+      catchError((error: AppError) => {
         this.store.dispatch(loadProteinsListError({ error }));
         return throwError(error);
       }),

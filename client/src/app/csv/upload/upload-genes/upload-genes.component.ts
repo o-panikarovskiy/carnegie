@@ -1,54 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { SocketService } from 'src/app/core/services/socket.service';
-import { UploadService } from 'src/app/core/services/upload.service';
+import { StronglyKeyedMap } from 'src/app/core/typings/common';
+import { CSVImportService, GenePayload, ImportStatus } from 'src/app/csv/services/import.service';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
-import { createGuid } from 'src/app/shared/utils/crypto-utils';
+
+const progressStatuses: StronglyKeyedMap<ImportStatus, string> = {
+  complete: 'completed',
+  uploading: 'uploading...',
+  importing: 'importing...',
+};
 
 @Component({
   selector: 'crng-upload-genes',
   templateUrl: './upload-genes.component.html',
   styleUrls: ['./upload-genes.component.scss'],
 })
-export class UploadGenesComponent extends Destroyer implements OnInit {
-  progress = 0;
+export class UploadGenesComponent extends Destroyer {
   showProgress = false;
-  progressStatus = 'Uploading...';
+  logs: readonly GenePayload[] = [];
+  readonly statuses = progressStatuses;
 
-  private fileGuid = '';
-
-  constructor(
-    private uploadSrv: UploadService, //
-    private socketSrv: SocketService,
-  ) {
+  constructor(public importSrv: CSVImportService) {
     super();
   }
 
-  ngOnInit() {
-    this.uploadSrv.progressUpload$.pipe(takeUntil(this.destroy$)).subscribe((e) => {
-      if (e.guids.has(this.fileGuid)) {
-        this.progress = e.progress;
-      }
-    });
+  onFileSelect(file: File) {
+    this.logs = [];
+    this.showProgress = true;
 
-    this.socketSrv.message$.pipe(takeUntil(this.destroy$)).subscribe(({ message, payload }) => {
-      console.log(message, payload);
-    });
+    this.importSrv
+      .importGenes(file)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(({ payload }) => {
+        this.logs = [payload, ...this.logs];
+      });
   }
 
-  onFileSelect(file: File) {
-    this.showProgress = true;
-    this.fileGuid = createGuid();
-
-    const files = [file];
-    const guids = [this.fileGuid];
-
-    this.uploadSrv
-      .upload('api/upload/genes', files, { guids })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.progress = 0;
-        this.progressStatus = 'Importing...';
-      });
+  identify(index: number): number {
+    return index;
   }
 }

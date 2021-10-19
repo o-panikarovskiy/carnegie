@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { io, Socket } from 'socket.io-client';
 
-export type Message = {
-  message: string;
-  payload: any;
+export type Message<T = any> = {
+  readonly event: string;
+  readonly payload: T;
 };
 
 @Injectable()
@@ -16,13 +17,16 @@ export class SocketService {
   constructor() {
     this.message$ = new Observable<Message>((observer) => {
       this.socket = io('', { transports: ['websocket'] });
-      this.socket.on('message', (msg: Message) => observer.next(msg));
-
-      return () => this.socket?.close();
+      this.socket?.on('message', (msg: Message) => observer.next(msg));
+      return () => this.socket?.disconnect();
     });
   }
 
   send(msg: Message) {
     this.socket?.emit('message', msg);
+  }
+
+  on(eventName: string): Observable<Message> {
+    return this.message$.pipe(filter(({ event }) => event === eventName));
   }
 }

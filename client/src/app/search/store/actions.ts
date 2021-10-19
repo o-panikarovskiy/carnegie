@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ErrorResponse } from 'src/app/core/typings/common';
+import { AppError } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/search/typings/domain';
 import { Family } from 'src/app/search/typings/family';
 import { Gene } from 'src/app/search/typings/gene';
@@ -15,5 +15,5 @@ export const addTableColumn = createAction('[View params] add col', props<{ colu
 export const delTableColumn = createAction('[View params] del col', props<{ column: ProteinColumn }>());
 
 export const loadProteinsList = createAction('[Proteins] load list', props<{ filterParams: FilterParams }>());
-export const loadProteinsListError = createAction('[Proteins] load list error', props<{ error: ErrorResponse }>());
+export const loadProteinsListError = createAction('[Proteins] load list error', props<{ error: AppError }>());
 export const loadProteinsListSuccess = createAction('[Proteins] load list success', props<ProteinsListResult>());

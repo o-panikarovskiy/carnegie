@@ -4,7 +4,7 @@ import { appConfig, NODE_ENV } from './src/config/index.js';
 import * as db from './src/db/index.js';
 import { catchUncaughtException, catchUnhandledRejection } from './src/errors/index.js';
 import { logger } from './src/log/index.js';
-import { createSocketServer } from './src/routes/sockets.js';
+import { createSocketServer } from './src/sockets/index.js';
 
 process.on('unhandledRejection', catchUnhandledRejection);
 process.on('uncaughtException', catchUncaughtException);

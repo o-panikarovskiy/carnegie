@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorResponse } from 'src/app/core/typings/common';
+import { AppError } from 'src/app/core/typings/common';
 
 export { parseHttpError };
 
@@ -12,6 +12,6 @@ const parseHttpError = (res: HttpErrorResponse) => {
     message = res.message || res.statusText,
   } = res.error?.error || {};
 
-  const result: ErrorResponse = { message, status, code, stack, name };
+  const result: AppError = { message, status, code, stack, name };
   return result;
 };

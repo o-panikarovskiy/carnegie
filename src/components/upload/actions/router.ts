@@ -1,5 +1,5 @@
 import Router from 'koa-router';
-import { checkApiSessionMiddleware } from '../../auth/service.js';
+import { checkApiSessionMiddleware } from '../../auth/index.js';
 import { uploadGenes } from './genes.js';
 
 export { createRouter };

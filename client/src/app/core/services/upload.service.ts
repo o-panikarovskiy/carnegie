@@ -17,7 +17,7 @@ export class UploadService {
 
   constructor() {}
 
-  upload(url: string, files: FileList | File[], data?: any, headers?: HttpHeaders): Observable<any> {
+  upload<T>(url: string, files: FileList | File[], data?: any, headers?: HttpHeaders): Observable<T> {
     return new Observable((observer: Observer<any>) => {
       const fd = new FormData(),
         xhr: XMLHttpRequest = new XMLHttpRequest(),
@@ -37,7 +37,7 @@ export class UploadService {
 
       xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
+          if (xhr.status === 200 || xhr.status === 204) {
             observer.next(safeJSONParse(xhr.response));
           } else {
             const error = new HttpErrorResponse({
