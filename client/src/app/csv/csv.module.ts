@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CSVImportRoutingModule } from 'src/app/csv/csv-routing.module';
-import { CSVImportService } from 'src/app/csv/services/import.service';
 import { UploadButtonComponent } from './upload/upload-button/upload-button.component';
 import { UploadGenesComponent } from './upload/upload-genes/upload-genes.component';
 import { UploadComponent } from './upload/upload.component';
@@ -24,6 +23,6 @@ import { UploadComponent } from './upload/upload.component';
     MatProgressBarModule,
     CSVImportRoutingModule,
   ],
-  providers: [CSVImportService],
+  providers: [],
 })
 export class CSVImportModule {}

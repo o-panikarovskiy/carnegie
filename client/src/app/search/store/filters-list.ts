@@ -9,6 +9,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     labelFieldName: 'name',
     dataSourceName: 'genes$',
     filterParamName: 'gene',
+    aliasLabelFieldName: 'accession',
     buttonText: { '=0': 'Genes', '=1': '1 gene', other: '# genes' },
     dropdownItemName: 'Genes',
   },

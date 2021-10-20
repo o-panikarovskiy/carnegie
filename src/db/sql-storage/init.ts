@@ -2,8 +2,11 @@ import { init as dictionariesInit } from '../../components/dictionaries/index.js
 import { init as searchInit } from '../../components/search/index.js';
 import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
+import { initAppPool } from './pool.js';
 
 export async function init(): Promise<void> {
+  initAppPool();
+
   logger.info('Trying to connect to PostgreSQL...');
   const client = await connect();
   logger.info('PostgreSQL connected.');

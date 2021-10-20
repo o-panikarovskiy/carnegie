@@ -28,6 +28,7 @@ export type FilterParams = StringTMap<FilterParamValue>;
 export type AppFilter = {
   readonly idFieldName: string;
   readonly labelFieldName: string;
+  readonly aliasLabelFieldName?: string;
   readonly dataSourceName: string;
   readonly filterParamName: string;
   readonly dropdownItemName: string;

@@ -21,6 +21,7 @@ export type PickRequired<T, TRequired extends keyof T> = Partial<T> & Pick<T, TR
 export type AppError = {
   readonly status: number;
   readonly message: string;
+  readonly details?: any;
   readonly code?: string;
   readonly name?: string;
   readonly stack?: string;

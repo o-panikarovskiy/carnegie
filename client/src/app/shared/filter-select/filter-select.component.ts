@@ -24,6 +24,7 @@ export type DataSource = Observable<ItemsType> | DataSourceFn | null;
 })
 export class FilterSelectComponent extends BaseMultiSelectComponent implements OnInit, OnDestroy {
   @Input() buttonText: StringStringMap = {};
+  @Input() aliasLabelFieldName?: string;
   @Input() dataSource?: DataSource;
 
   @Output() apply = new EventEmitter<readonly string[]>();

@@ -27,7 +27,7 @@
         craftDisableFocus=""
       >
         <mat-checkbox [checked]="selectedSet.has(item[idFieldName])" (change)="clickOnItem(item)" class="checkbox full-h full-w">
-          {{ item[labelFieldName] }}
+          {{ item[labelFieldName] || item[aliasLabelFieldName!] }}
         </mat-checkbox>
       </div>
     </div>

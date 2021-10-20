@@ -6,9 +6,14 @@ import { StringAnyMap } from '../typings/index.js';
 import { defaultConfig } from './default.js';
 import { AppConfig, NodeEnv } from './typings.js';
 
-export { appConfig, NODE_ENV };
+export { appConfig, initAppConfig, NODE_ENV };
 
+let appConfig: AppConfig;
 const NODE_ENV: NodeEnv = process.env.NODE_ENV as NodeEnv;
+
+const initAppConfig = () => {
+  appConfig = parseConfig();
+};
 
 const parseConfig = (): AppConfig => {
   const settings = process.env.SETTINGS;
@@ -42,5 +47,3 @@ const getConfigJSON = (): Partial<AppConfig> => {
 
   return config;
 };
-
-const appConfig: AppConfig = parseConfig();

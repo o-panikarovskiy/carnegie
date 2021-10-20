@@ -5,14 +5,15 @@ import { Gene, NewGene } from '../models.js';
 export { insertGene };
 
 const insertGene = async (gene: NewGene, client?: DbClient): Promise<Gene> => {
-  const text = `INSERT INTO "public"."genes"("name")
-                VALUES ($1)
+  const text = `INSERT INTO "public"."genes"("name", "symbol", "accession")
+                VALUES ($1, $2, $3)
+                ON CONFLICT ("accession")
+                DO UPDATE SET "name"      = excluded."name",
+                              "symbol"    = excluded."symbol"
                 RETURNING *`;
 
-  const values = [gene.name];
+  const values = [gene.name, gene.symbol, gene.accession];
 
-  let res: QueryResult;
-  res = await (client || pool).query({ text, values });
-
+  const res: QueryResult = await (client || pool).query({ text, values });
   return res.rows[0] as Gene;
 };

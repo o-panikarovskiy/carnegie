@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
+import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 import { safeJSONParse } from 'src/app/shared/utils/text-utils';
 
 export type UploadProgressEvent = {
@@ -17,8 +18,8 @@ export class UploadService {
 
   constructor() {}
 
-  upload<T>(url: string, files: FileList | File[], data?: any, headers?: HttpHeaders): Observable<T> {
-    return new Observable((observer: Observer<any>) => {
+  upload<T = any>(url: string, files: FileList | File[], data?: any, headers?: HttpHeaders): Observable<T> {
+    return new Observable((observer: Observer<T>) => {
       const fd = new FormData(),
         xhr: XMLHttpRequest = new XMLHttpRequest(),
         guids = new Set<string>();
@@ -40,12 +41,14 @@ export class UploadService {
           if (xhr.status === 200 || xhr.status === 204) {
             observer.next(safeJSONParse(xhr.response));
           } else {
-            const error = new HttpErrorResponse({
-              error: safeJSONParse(xhr.response),
-              status: xhr.status,
-              statusText: xhr.statusText,
-              url: xhr.responseURL,
-            });
+            const error = parseHttpError(
+              new HttpErrorResponse({
+                error: safeJSONParse(xhr.response),
+                status: xhr.status,
+                statusText: xhr.statusText,
+                url: xhr.responseURL,
+              }),
+            );
 
             observer.error(error);
           }
