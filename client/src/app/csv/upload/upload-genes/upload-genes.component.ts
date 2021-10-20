@@ -3,27 +3,10 @@ import { filter, map, takeUntil } from 'rxjs/operators';
 import { Message, SocketService } from 'src/app/core/services/socket.service';
 import { UploadService } from 'src/app/core/services/upload.service';
 import { AppError, StronglyKeyedMap } from 'src/app/core/typings/common';
+import { ImportStatus, LogMessage, Payload, UploadResult } from 'src/app/csv/typings/upload';
+import { formatLogMessage } from 'src/app/csv/utils/format-log-message';
 import { Gene } from 'src/app/search/typings/gene';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
-
-export type ImportStatus = 'uploading' | 'importing' | 'complete';
-
-export type UploadResult = {
-  readonly fileId: string;
-};
-
-export type Payload = {
-  readonly fileId: string;
-  readonly rowNumber: number;
-  readonly progress: number;
-  readonly error?: AppError;
-  readonly gene?: Gene;
-};
-
-export type LogMessage = {
-  readonly error: boolean;
-  readonly message: string;
-};
 
 @Component({
   selector: 'crng-upload-genes',
@@ -33,7 +16,7 @@ export type LogMessage = {
 export class UploadGenesComponent extends Destroyer implements OnInit {
   progress = 0;
   status?: ImportStatus;
-  importError?: AppError;
+  parseError?: AppError;
   logs: readonly LogMessage[] = [];
 
   readonly statuses: StronglyKeyedMap<ImportStatus, string> = {
@@ -64,13 +47,13 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
 
     this.socketSrv.message$
       .pipe(
-        filter((msg): msg is Message<Payload> => !!this.fileId && msg.payload?.fileId === this.fileId),
+        filter((msg): msg is Message<Payload<Gene>> => !!this.fileId && msg.payload?.fileId === this.fileId),
         takeUntil(this.destroy$),
       )
       .subscribe(({ event, payload }) => {
         if (event === 'import:item:complete') {
           this.progress = payload.progress;
-          this.logs = [this.formatLogMessage(payload), ...this.logs];
+          this.logs = [formatLogMessage(payload), ...this.logs];
         } else if (event === 'import:complete') {
           this.progress = 100;
           this.status = 'complete';
@@ -82,6 +65,7 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
     this.logs = [];
     this.progress = 0;
     this.fileId = void 0;
+    this.parseError = void 0;
     this.status = 'uploading';
 
     this.uploadSrv
@@ -93,25 +77,12 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
           this.status = 'importing';
         },
         (err: AppError) => {
-          this.importError = err;
+          this.parseError = err;
         },
       );
   }
 
   identify(index: number): number {
     return index;
-  }
-
-  private formatLogMessage(payload: Payload): LogMessage {
-    const rowStr = `Row ${payload.rowNumber}:`;
-
-    let msg = '';
-    if (payload.error) {
-      msg = `${rowStr} ${payload.error.message}`;
-    } else if (payload.gene) {
-      msg = `${rowStr} ${payload.gene.name} imported successfully`;
-    }
-
-    return { error: !!payload.error, message: msg };
   }
 }

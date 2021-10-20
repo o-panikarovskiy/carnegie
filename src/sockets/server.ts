@@ -4,7 +4,7 @@ import { allowRequest, checkSession } from './check-session.js';
 
 export { createSocketServer, sendToSocket, Message };
 
-type Message = { event: string; payload?: any };
+type Message<T = any> = { event: string; payload?: T };
 const sockets = new Map<string, Socket>();
 
 const createSocketServer = (httpServer: http.Server): void => {
@@ -19,6 +19,6 @@ const createSocketServer = (httpServer: http.Server): void => {
   });
 };
 
-const sendToSocket = (key: string, msg: Message): void => {
+const sendToSocket = <T>(key: string, msg: Message<T>): void => {
   sockets.get(key)?.emit('message', msg);
 };

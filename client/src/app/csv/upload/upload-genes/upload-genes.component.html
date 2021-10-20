@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class="g-error" *ngIf="importError">{{ importError.message }}</div>
+<div class="parse-error" *ngIf="parseError">{{ parseError.message }}</div>
 
 <cdk-virtual-scroll-viewport itemSize="40" class="logs">
   <div *cdkVirtualFor="let log of logs" class="log" [ngClass]="{ error: log.error }">

@@ -1,10 +1,10 @@
 import joi from 'joi';
-import { sendToSocket } from '../../../sockets/index.js';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
 import { insertGene } from '../../dictionaries/index.js';
 import { Gene, NewGene } from '../../dictionaries/models.js';
+import { importRows } from './import-rows.js';
 
 export { importGenes };
 
@@ -18,22 +18,7 @@ const schema = joi
   .unknown(true);
 
 const importGenes = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<void> => {
-  const total = list.length;
-  const event = 'import:item:complete';
-
-  for (let idx = 0; idx < total; idx++) {
-    const raw = list[idx];
-    const rowNumber = idx + 1;
-    const progress = Math.round((idx / total) * 100);
-    try {
-      const gene = await importGene(creator, raw);
-      sendToSocket(creator.email, { event, payload: { fileId, rowNumber, progress, gene } });
-    } catch (error) {
-      sendToSocket(creator.email, { event, payload: { fileId, rowNumber, progress, error } });
-    }
-  }
-
-  sendToSocket(creator.email, { event: 'import:complete', payload: { fileId } });
+  return importRows<Gene>(fileId, creator, list, importGene);
 };
 
 const importGene = async (creator: User, raw: StringAnyMap): Promise<Gene> => {
