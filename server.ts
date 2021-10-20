@@ -1,5 +1,5 @@
 import * as http from 'http';
-import { app, initApp } from './src/app.js';
+import { createApp } from './src/app.js';
 import { appConfig, NODE_ENV } from './src/config/index.js';
 import * as db from './src/db/index.js';
 import { catchUncaughtException, catchUnhandledRejection } from './src/errors/index.js';
@@ -23,7 +23,7 @@ const main = async () => {
     throw new Error('NODE_ENV not defined!');
   }
 
-  initApp();
+  const app = createApp();
 
   logger.info(`Connect to databases...`);
   await db.init();

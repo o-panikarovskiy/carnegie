@@ -4,6 +4,8 @@ import { ListRequest } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { getFamiliesList } from '../repository/get-families-list.js';
 
+export { familiesList };
+
 const schema = joi.object().keys({
   sort: joi.string().trim().max(50).default('name'),
   skip: joi.number().positive().allow(0).default(0),
@@ -46,9 +48,9 @@ const schema = joi.object().keys({
  *   ]
  * }
  */
-export async function familiesList(ctx: Context): Promise<void> {
+const familiesList = async (ctx: Context): Promise<void> => {
   const req = await verifySchema<ListRequest>(schema, ctx.request.query);
   const families = await getFamiliesList(req);
 
   ctx.body = { families };
-}
+};

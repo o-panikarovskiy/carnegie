@@ -16,7 +16,7 @@
   <ng-template matMenuContent="">
     <div class="menu-search mat-menu-item">
       <mat-icon class="icon-search">search</mat-icon>
-      <input type="text" #searchInput (click)="$event.stopPropagation()" [placeholder]="searchPlaceholder" [formControl]="searchControl" />
+      <input type="text" class="input" #searchInput (click)="$event.stopPropagation()" [placeholder]="searchPlaceholder" [formControl]="searchControl" />
     </div>
 
     <div class="menu-scroll">

@@ -1,7 +1,9 @@
 import { DbClient } from './models.js';
 import { pool } from './pool.js';
 
-export async function transaction<T>(transactionBodyFn: (client: DbClient) => Promise<T>): Promise<T> {
+export { transaction };
+
+const transaction = async <T>(transactionBodyFn: (client: DbClient) => Promise<T>): Promise<T> => {
   const client = await pool.connect();
 
   try {
@@ -15,4 +17,4 @@ export async function transaction<T>(transactionBodyFn: (client: DbClient) => Pr
   } finally {
     client.release();
   }
-}
+};

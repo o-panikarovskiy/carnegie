@@ -3,7 +3,9 @@ import { domainsList } from './domains-list.js';
 import { familiesList } from './families-list.js';
 import { genesList } from './genes-list.js';
 
-export function createRouter() {
+export { createRouter };
+
+const createRouter = () => {
   const router = new Router({ prefix: '/dicts' });
 
   router.get('/genes', genesList);
@@ -11,4 +13,4 @@ export function createRouter() {
   router.get('/families', familiesList);
 
   return router;
-}
+};

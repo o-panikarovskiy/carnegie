@@ -2,7 +2,9 @@ import joi from 'joi';
 import { AppError } from '../errors/app-error.js';
 import { APP_INVALID_REQ_MODEL } from '../errors/common-errors.js';
 
-export async function verifySchema<T>(schema: joi.ObjectSchema, rawValue: unknown): Promise<T> {
+export { verifySchema };
+
+const verifySchema = async <T>(schema: joi.ObjectSchema, rawValue: unknown): Promise<T> => {
   try {
     return await schema.validateAsync(rawValue);
   } catch (error) {
@@ -12,4 +14,4 @@ export async function verifySchema<T>(schema: joi.ObjectSchema, rawValue: unknow
       message: error.message,
     });
   }
-}
+};

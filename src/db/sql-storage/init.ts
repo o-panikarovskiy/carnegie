@@ -4,7 +4,9 @@ import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
 import { initAppPool } from './pool.js';
 
-export async function init(): Promise<void> {
+export { init };
+
+const init = async (): Promise<void> => {
   initAppPool();
 
   logger.info('Trying to connect to PostgreSQL...');
@@ -28,13 +30,13 @@ export async function init(): Promise<void> {
   } finally {
     client.release();
   }
-}
+};
 
-function crateCryptoEx() {
+const crateCryptoEx = () => {
   return `CREATE EXTENSION IF NOT EXISTS pgcrypto;`;
-}
+};
 
-function createShortUID() {
+const createShortUID = () => {
   return `
     CREATE OR REPLACE FUNCTION gen_short_uid(size INT) RETURNS TEXT AS $$
     DECLARE
@@ -51,4 +53,4 @@ function createShortUID() {
       RETURN output;
     END;
     $$ LANGUAGE plpgsql VOLATILE;`;
-}
+};

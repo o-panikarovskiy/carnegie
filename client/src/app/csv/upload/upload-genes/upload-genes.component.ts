@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, map, takeUntil } from 'rxjs/operators';
-import { Message, SocketService } from 'src/app/core/services/socket.service';
-import { UploadService } from 'src/app/core/services/upload.service';
-import { AppError, StronglyKeyedMap } from 'src/app/core/typings/common';
-import { ImportStatus, LogMessage, Payload, UploadResult } from 'src/app/csv/typings/upload';
-import { formatLogMessage } from 'src/app/csv/utils/format-log-message';
+import { takeUntil } from 'rxjs/operators';
+import { AppError } from 'src/app/core/typings/common';
+import { COMPLETE_IMPORT, COMPLETE_IMPORT_ITEM, ImportProcessToken, ImportsService, IMPORT_STATUSES } from 'src/app/csv/services/imports.service';
+import { ImportStatus, LogMessage, Payload } from 'src/app/csv/typings/upload';
 import { Gene } from 'src/app/search/typings/gene';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
@@ -18,45 +16,33 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
   status?: ImportStatus;
   parseError?: AppError;
   logs: readonly LogMessage[] = [];
+  readonly statuses = IMPORT_STATUSES;
 
-  readonly statuses: StronglyKeyedMap<ImportStatus, string> = {
-    complete: 'completed',
-    uploading: 'uploading...',
-    importing: 'importing...',
-  };
+  private readonly impToken: ImportProcessToken = { fileId: '' };
 
-  private fileId?: string;
-
-  constructor(
-    private uploadSrv: UploadService, //
-    private socketSrv: SocketService,
-  ) {
+  constructor(private importsSrv: ImportsService) {
     super();
   }
 
   ngOnInit() {
-    this.uploadSrv.progressUpload$
-      .pipe(
-        filter(({ guids }) => !!this.fileId && guids.has(this.fileId)),
-        map(({ progress }) => progress),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((progcess) => {
-        this.progress = progcess;
+    this.importsSrv
+      .onUploadProgress(this.impToken)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((progress) => {
+        this.status = 'uploading';
+        this.progress = progress;
       });
 
-    this.socketSrv.message$
-      .pipe(
-        filter((msg): msg is Message<Payload<Gene>> => !!this.fileId && msg.payload?.fileId === this.fileId),
-        takeUntil(this.destroy$),
-      )
+    this.importsSrv
+      .onImportProgress<Gene>(this.impToken)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(({ event, payload }) => {
-        if (event === 'import:item:complete') {
-          this.progress = payload.progress;
-          this.logs = [formatLogMessage(payload), ...this.logs];
-        } else if (event === 'import:complete') {
-          this.progress = 100;
+        this.progress = payload.progress;
+        if (event === COMPLETE_IMPORT) {
           this.status = 'complete';
+        } else if (event === COMPLETE_IMPORT_ITEM) {
+          this.status = 'importing';
+          this.logs = [this.formatLogMessage(payload), ...this.logs];
         }
       });
   }
@@ -64,25 +50,41 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
   fileSelect(file: File) {
     this.logs = [];
     this.progress = 0;
-    this.fileId = void 0;
     this.parseError = void 0;
     this.status = 'uploading';
+    this.impToken.fileId = file.name;
 
-    this.uploadSrv
-      .upload<UploadResult>(`api/upload/genes`, [file])
+    this.importsSrv
+      .importGenes(file)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         ({ fileId }) => {
-          this.fileId = fileId;
-          this.status = 'importing';
+          this.impToken.fileId = fileId;
         },
         (err: AppError) => {
+          this.status = void 0;
           this.parseError = err;
         },
       );
   }
 
-  identify(index: number): number {
-    return index;
+  identify(index: number, log: LogMessage): string | number {
+    return log.id || index;
+  }
+
+  private formatLogMessage({ error, rowNum, item }: Payload<Gene>): LogMessage {
+    const rowStr = `Row ${rowNum}:`;
+
+    let id = '';
+    let message = '';
+    if (error) {
+      id = rowNum + '';
+      message = `${rowStr} ${error.message}`;
+    } else if (item) {
+      id = item.id;
+      message = `${rowStr} ${item.name || item.accession} imported successfully`;
+    }
+
+    return { error: !!error, message, id };
   }
 }

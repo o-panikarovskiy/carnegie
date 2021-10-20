@@ -1,0 +1,2 @@
+<crng-upload-button (fileSelect)="file = $event">{{ file?.name || 'Select File' }}</crng-upload-button>
+<button class="btn" mat-button mat-raised-button color="primary" [disabled]="!file" (click)="done.next(file)">Start import</button>

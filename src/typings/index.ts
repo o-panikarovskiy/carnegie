@@ -1,17 +1,17 @@
-export type IStringTMap<T> = { [key: string]: T };
-export type INumberTMap<T> = { [key: number]: T };
+export type StringTMap<T> = { [key: string]: T };
+export type NumberTMap<T> = { [key: number]: T };
 
-export type StringAnyMap = IStringTMap<any>;
-export type NumberAnyMap = INumberTMap<any>;
+export type StringAnyMap = StringTMap<any>;
+export type NumberAnyMap = NumberTMap<any>;
 
-export type StringStringMap = IStringTMap<string>;
-export type NumberStringMap = INumberTMap<string>;
+export type StringStringMap = StringTMap<string>;
+export type NumberStringMap = NumberTMap<string>;
 
-export type StringNumberMap = IStringTMap<number>;
-export type NumberNumberMap = INumberTMap<number>;
+export type StringNumberMap = StringTMap<number>;
+export type NumberNumberMap = NumberTMap<number>;
 
-export type StringBooleanMap = IStringTMap<boolean>;
-export type NumberBooleanMap = INumberTMap<boolean>;
+export type StringBooleanMap = StringTMap<boolean>;
+export type NumberBooleanMap = NumberTMap<boolean>;
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type PickRequired<T, TRequired extends keyof T> = Partial<T> & Pick<T, TRequired>;

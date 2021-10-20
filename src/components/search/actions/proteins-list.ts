@@ -4,6 +4,8 @@ import { verifySchema } from '../../../utils/joi.js';
 import { ProteinRequest } from '../models.js';
 import { getProteinsList } from '../repository/get-proteins-list.js';
 
+export { proteinsList };
+
 const schema = joi.object().keys({
   sort: joi.string().trim().max(50).default('name'),
   skip: joi.number().positive().allow(0).default(0),
@@ -50,9 +52,9 @@ const schema = joi.object().keys({
  *   ]
  * }
  */
-export async function proteinsList(ctx: Context): Promise<void> {
+const proteinsList = async (ctx: Context): Promise<void> => {
   const req = await verifySchema<ProteinRequest>(schema, ctx.request.body);
   const { proteins, total } = await getProteinsList(req);
 
   ctx.body = { proteins, total };
-}
+};

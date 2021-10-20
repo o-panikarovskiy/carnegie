@@ -17,7 +17,7 @@ const schema = joi
   })
   .unknown(true);
 
-const importGenes = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<void> => {
+const importGenes = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Gene[]> => {
   return importRows<Gene>(fileId, creator, list, importGene);
 };
 

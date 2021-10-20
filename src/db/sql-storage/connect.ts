@@ -1,6 +1,8 @@
 import { PoolClient } from 'pg';
 import { pool } from './pool.js';
 
-export function connect(): Promise<PoolClient> {
+export { connect };
+
+const connect = async (): Promise<PoolClient> => {
   return pool.connect();
-}
+};

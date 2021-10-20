@@ -4,6 +4,8 @@ import { ListRequest } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { getDomainsList } from '../repository/get-domains-list.js';
 
+export { domainsList };
+
 const schema = joi.object().keys({
   sort: joi.string().trim().max(50).default('name'),
   skip: joi.number().positive().allow(0).default(0),
@@ -45,9 +47,9 @@ const schema = joi.object().keys({
  *   ]
  * }
  */
-export async function domainsList(ctx: Context): Promise<void> {
+const domainsList = async (ctx: Context): Promise<void> => {
   const req = await verifySchema<ListRequest>(schema, ctx.request.query);
   const domains = await getDomainsList(req);
 
   ctx.body = { domains };
-}
+};

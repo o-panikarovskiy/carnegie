@@ -9,7 +9,7 @@ export { readCSV };
 
 const readCSV = async (file: File): Promise<readonly StringAnyMap[]> => {
   const results: any = [];
-  const parser = parse({ delimiter: ',', columns: true });
+  const parser = parse({ columns: true });
 
   try {
     createReadStream(file.path).pipe(parser);
