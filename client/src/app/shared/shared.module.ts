@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { DisableFocusDirective } from 'src/app/shared/directives/disable-focus.directive';
 import { FilterSelectComponent } from 'src/app/shared/filter-select/filter-select.component';
 import { MultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
 import { MainFooterComponent } from './main-footer/main-footer.component';
@@ -20,6 +21,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
     SearchInputComponent,
     MultiSelectComponent,
     FilterSelectComponent,
+    DisableFocusDirective,
   ],
   exports: [
     MainMenuComponent, //

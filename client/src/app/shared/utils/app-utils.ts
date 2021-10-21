@@ -1,6 +1,6 @@
 import { StringAnyMap } from 'src/app/core/typings/common';
 
-export { indexBy, omitEmptyProps };
+export { indexBy, omitEmptyProps, isDefined };
 
 const indexBy = <T extends StringAnyMap>(arr: readonly T[], key: keyof T) => {
   return arr.reduce((map, item) => {
@@ -19,4 +19,8 @@ const omitEmptyProps = <T extends StringAnyMap>(object: T | undefined): T => {
     }, {} as T);
   }
   return {} as T;
+};
+
+const isDefined = (val: any) => {
+  return val !== null && val !== void 0;
 };

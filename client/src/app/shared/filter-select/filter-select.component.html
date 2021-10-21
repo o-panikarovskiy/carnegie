@@ -20,13 +20,13 @@
     </div>
 
     <div class="menu-scroll">
-      <div
-        mat-menu-item=""
-        *ngFor="let item of filteredItems | async | slice: 0:100; trackBy: identify"
-        (click)="$event.stopPropagation()"
-        craftDisableFocus=""
-      >
-        <mat-checkbox [checked]="selectedSet.has(item[idFieldName])" (change)="clickOnItem(item)" class="checkbox full-h full-w">
+      <div mat-menu-item="" crngDisableFocus="" *ngFor="let item of filteredItems | async | slice: 0:100; trackBy: identify" (click)="$event.stopPropagation()">
+        <mat-checkbox
+          [checked]="selectedSet.has(item[idFieldName])"
+          (change)="clickOnItem(item)"
+          class="checkbox full-h full-w"
+          [title]="item[labelFieldName] || item[alternativeLabelFieldName!]"
+        >
           {{ item[labelFieldName] || item[alternativeLabelFieldName!] }}
         </mat-checkbox>
       </div>

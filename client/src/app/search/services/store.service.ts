@@ -7,7 +7,7 @@ import { Domain } from 'src/app/core/typings/domain';
 import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
 import { Protein } from 'src/app/core/typings/protein';
-import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
+import { DictionariesBackendService } from 'src/app/core/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import {
   addTableColumn,

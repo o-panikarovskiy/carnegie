@@ -26,6 +26,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
   @Input() items: readonly any[] | Readonly<StringAnyMap> = [];
   @Input() idFieldName = '';
   @Input() labelFieldName = '';
+  @Input() alternativeLabelFieldName: string = '';
   @Input() selectedIds: readonly string[] = [];
   @Input() searchVisibleCount = 10;
   @Input() disabled = false;
@@ -110,13 +111,13 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
 
   protected filterItems(searchText: string) {
     const items = this.getItemsAsArray();
+    if (!searchText) return items;
 
-    if (!searchText) {
-      return items;
-    } else {
-      const text = searchText.toLowerCase();
-      return items.filter((i) => (i[this.labelFieldName] + '').toLowerCase().includes(text));
-    }
+    const text = searchText.toLowerCase();
+    return items.filter((i) => {
+      const val = i[this.labelFieldName] || i[this.alternativeLabelFieldName] || '';
+      return val.toLowerCase().includes(text);
+    });
   }
 
   protected setItems(items: any[] | StringAnyMap, selectedIds: readonly string[]) {

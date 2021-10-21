@@ -7,6 +7,7 @@ import { AuthBackendService } from 'src/app/core/auth/services/auth-backend.serv
 import { AuthStoreService } from 'src/app/core/auth/services/store.service';
 import { authReducer } from 'src/app/core/auth/store/reducers';
 import { authFeatureKey } from 'src/app/core/auth/store/state';
+import { DictionariesBackendService } from 'src/app/core/services/dictionaries-backend.service';
 import { SocketService } from 'src/app/core/services/socket.service';
 import { UploadService } from 'src/app/core/services/upload.service';
 
@@ -23,6 +24,7 @@ import { UploadService } from 'src/app/core/services/upload.service';
     SocketService,
     AuthStoreService,
     AuthBackendService, //
+    DictionariesBackendService,
   ],
 })
 export class CoreModule {

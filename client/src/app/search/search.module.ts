@@ -21,7 +21,6 @@ import { ViewParamsResolver } from 'src/app/search/resolvers/view-params.resolve
 import { ActiveFiltersSelectComponent } from 'src/app/search/search-form/filter-select/active-filters-select.component';
 import { TableColumnsSelectComponent } from 'src/app/search/search-form/table-columns-select/table-columns-select.component';
 import { SearchRoutingModule } from 'src/app/search/search-routing.module';
-import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import { SearchStoreService } from 'src/app/search/services/store.service';
 import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
@@ -67,7 +66,6 @@ import { SearchComponent } from './search/search.component';
     ViewParamsResolver,
     SearchBackendService,
     ViewSettingsBackendService,
-    DictionariesBackendService,
   ],
 })
 export class SearchModule {}
