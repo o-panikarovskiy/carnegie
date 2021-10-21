@@ -6,6 +6,7 @@ import { AppBadRequest } from '../../../errors/app-error.js';
 import { StringTMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { importGenes } from '../bl/import-genes.js';
+import { importProteins } from '../bl/import-proteins.js';
 import { readCSV } from '../bl/read-csv.js';
 import { ImportTable } from '../models.js';
 
@@ -17,6 +18,7 @@ const schema = joi.object().keys({
 
 const IMPORTS: StringTMap<ImportTable> = {
   genes: importGenes,
+  proteins: importProteins,
 };
 
 const uploadCSV = async (ctx: Context): Promise<void> => {

@@ -6,8 +6,9 @@ import { errorToObject } from './error-to-object.js';
 
 export { parseError };
 
-const isDevelopEnv = NODE_ENV === 'develop' || NODE_ENV === 'local';
 const parseError = (e: any): AppError => {
+  const isDevelopEnv = NODE_ENV === 'develop' || NODE_ENV === 'local';
+
   let error: any = errorToObject(e);
   error.status = error.status || error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
 

@@ -1,3 +1,4 @@
+import { parseError } from '../../../errors/utils/parse-error.js';
 import { sendToSocket } from '../../../sockets/server.js';
 import { StringAnyMap } from '../../../typings/index.js';
 import { User } from '../../auth/models.js';
@@ -9,7 +10,7 @@ const importRows = async <T>(
   fileId: string,
   creator: User,
   list: readonly StringAnyMap[],
-  createItem: (creator: User, raw: StringAnyMap) => Promise<T>
+  createItem: (creator: User, raw: StringAnyMap) => Promise<T>,
 ): Promise<readonly T[]> => {
   const total = list.length;
   const event = 'import:item:complete';
@@ -25,7 +26,7 @@ const importRows = async <T>(
       items.push(item);
       sendToSocket<Payload<T>>(creator.email, { event, payload });
     } catch (error) {
-      const payload: Payload<T> = { fileId, rowNum, progress, error };
+      const payload: Payload<T> = { fileId, rowNum, progress, error: parseError(error) };
       sendToSocket<Payload<T>>(creator.email, { event, payload });
     }
   }

@@ -1,5 +1,13 @@
 <mat-tab-group class="tabs-list">
-  <mat-tab label="Genes"> <crng-upload-genes></crng-upload-genes> </mat-tab>
+  <mat-tab label="Proteins">
+    <ng-template matTabContent>
+      <crng-upload-proteins></crng-upload-proteins>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Genes">
+    <ng-template matTabContent>
+      <crng-upload-genes></crng-upload-genes>
+    </ng-template>
+  </mat-tab>
   <mat-tab label="PWY"> Content 2 </mat-tab>
-  <mat-tab label="Proteins"> Content 3 </mat-tab>
 </mat-tab-group>

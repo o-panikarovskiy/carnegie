@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { AppError } from 'src/app/core/typings/common';
-import { Gene } from 'src/app/core/typings/gene';
+import { Protein } from 'src/app/core/typings/protein';
 import { COMPLETE_IMPORT, COMPLETE_IMPORT_ITEM, ImportProcessToken, ImportsService, IMPORT_STATUSES } from 'src/app/csv/services/imports.service';
 import { ImportStatus, LogMessage, Payload } from 'src/app/csv/typings/upload';
 import { arrayToCSV } from 'src/app/csv/utils/array-to-csv';
@@ -9,11 +9,11 @@ import { downloadBlob } from 'src/app/csv/utils/download-blob';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
-  selector: 'crng-upload-genes',
-  templateUrl: './upload-genes.component.html',
-  styleUrls: ['./upload-genes.component.scss'],
+  selector: 'crng-upload-proteins',
+  templateUrl: './upload-proteins.component.html',
+  styleUrls: ['./upload-proteins.component.scss'],
 })
-export class UploadGenesComponent extends Destroyer implements OnInit {
+export class UploadProteinsComponent extends Destroyer implements OnInit {
   progress = 0;
   status?: ImportStatus;
   parseError?: AppError;
@@ -36,7 +36,7 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
       });
 
     this.importsSrv
-      .onImportProgress<Gene>(this.impToken)
+      .onImportProgress<Protein>(this.impToken)
       .pipe(takeUntil(this.destroy$))
       .subscribe(({ event, payload }) => {
         this.progress = payload.progress;
@@ -57,7 +57,7 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
     this.impToken.fileId = file.name;
 
     this.importsSrv
-      .importGenes(file)
+      .importProteins(file)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         ({ fileId }) => {
@@ -76,13 +76,13 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
 
   sendSample() {
     const csv = arrayToCSV([
-      ['accession', 'symbol', 'name'], //
-      ['unique id', 'string', 'string'],
+      ['geneId', 'uniProtId', 'name', 'species', 'description', 'isEnzyme', 'sequence', 'length'],
+      ['gene accession string', 'unique id', 'string', 'string', 'string', 'TRUE/FALSE', 'string', 'number'],
     ]);
-    downloadBlob(csv, 'genes.csv', 'text/csv;charset=utf-8;');
+    downloadBlob(csv, 'proteins.csv', 'text/csv;charset=utf-8;');
   }
 
-  private formatLogMessage({ error, rowNum, item: gene }: Payload<Gene>): LogMessage {
+  private formatLogMessage({ error, rowNum, item: protein }: Payload<Protein>): LogMessage {
     const rowStr = `Row ${rowNum}:`;
 
     let id = '';
@@ -90,9 +90,9 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
     if (error) {
       id = rowNum + '';
       message = `${rowStr} ${error.message || error.code || ''}`;
-    } else if (gene) {
-      id = gene.accession;
-      message = `${rowStr} ${gene.name || id} imported successfully`;
+    } else if (protein) {
+      id = protein.uniProtId;
+      message = `${rowStr} ${protein.name || id} imported successfully`;
     }
 
     return { error: !!error, message, id };

@@ -1,5 +1,5 @@
 import { init as dictionariesInit } from '../../components/dictionaries/index.js';
-import { init as searchInit } from '../../components/search/index.js';
+import { init as searchInit } from '../../components/proteins/index.js';
 import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
 import { initAppPool } from './pool.js';

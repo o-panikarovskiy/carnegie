@@ -11,7 +11,7 @@
     class="results-table"
   >
     <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
+    <ng-container matColumnDef="select" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox
           (change)="selServ.masterCheck()"
@@ -32,7 +32,7 @@
       <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="allColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: allColumns"></tr>
   </table>
 </ng-container>

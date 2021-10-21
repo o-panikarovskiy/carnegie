@@ -5,7 +5,7 @@ import { NewProtein, Protein } from '../models.js';
 export { insertProtein };
 
 const insertProtein = async (protein: NewProtein, client?: DbClient): Promise<Protein> => {
-  const text = `INSERT INTO "public"."protein"( "uniProtId",
+  const text = `INSERT INTO "public"."proteins"("uniProtId",
                                                 "geneId",
                                                 "domainId",
                                                 "familyId",

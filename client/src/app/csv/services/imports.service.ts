@@ -43,4 +43,8 @@ export class ImportsService {
   importGenes(file: File): Observable<ImportProcessToken> {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'genes' });
   }
+
+  importProteins(file: File): Observable<ImportProcessToken> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'proteins' });
+  }
 }
