@@ -12,10 +12,21 @@ type ProteinsListResult = {
 };
 
 const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
-  const allowedSort: (keyof ProteinClient)[] = ['name', 'alias', 'length', 'enzyme', 'gene', 'domain', 'family'];
+  const allowedSort: (keyof ProteinClient)[] = [
+    'uniProtId',
+    'gene',
+    'domain',
+    'family',
+    'name',
+    'description',
+    'length',
+    'sequence',
+    'species',
+    'isEnzyme',
+  ];
 
   const allowedFilters: FiltersSchema[] = [
-    { filterName: 'gene', columnName: 'g.id' }, //
+    { filterName: 'gene', columnName: 'g.accession' }, //
     { filterName: 'domain', columnName: 'd.id' },
     { filterName: 'family', columnName: 'f.id' },
   ];
@@ -24,14 +35,14 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
   const { where, values } = buildWhere(allowedFilters, filters || {});
 
   const text = `SELECT p.*,
-                       g."name" as gene,
+                       COALESCE(g."name", g."accession") as gene,
                        d."name" as domain,
                        f."name" as family,
                        COUNT(*) OVER() AS total
                 FROM "public"."proteins" as p
-                INNER JOIN "public"."genes" as g ON g."id" = p."geneId"
-                INNER JOIN "public"."domains" as d ON d."id" = p."domainId"
-                INNER JOIN "public"."families" as f ON f."id" = p."familyId"
+                LEFT JOIN "public"."genes" as g ON g."accession" = p."geneId"
+                LEFT JOIN "public"."domains" as d ON d."id" = p."domainId"
+                LEFT JOIN "public"."families" as f ON f."id" = p."familyId"
                 ${where}
                 ORDER BY "${orderBy}" ${orderDirection}
                 LIMIT ${limit | 0}
@@ -47,8 +58,9 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
 const buildWhere = (schema: FiltersSchema[], filters: ProteinRequest): WhereConditionResult => {
   const like = `(
       p."name" ILIKE $1
-  OR  p."alias" ILIKE $1
+  OR  p."description" ILIKE $1
   OR  g."name" ILIKE $1
+  OR  g."accession" ILIKE $1
   OR  d."name" ILIKE $1
   OR  f."name" ILIKE $1
   )`;

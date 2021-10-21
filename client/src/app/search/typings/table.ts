@@ -1,24 +1,6 @@
 import { StringStringMap, StringTMap } from 'src/app/core/typings/common';
+import { Protein } from 'src/app/core/typings/protein';
 
-export type Protein = {
-  readonly id: string;
-  readonly geneId: string;
-  readonly gene: string;
-  readonly domainId: string;
-  readonly domain: string;
-  readonly familyId: string;
-  readonly family: string;
-  readonly name: string;
-  readonly length: number;
-  readonly alias?: string | null;
-  readonly sequence?: string | null;
-  readonly pubmed?: string | null;
-  readonly biochemicalFn?: string | null;
-  readonly biologicalFn?: string | null;
-  readonly enzyme?: boolean | null;
-};
-
-export type NewProtein = Omit<Protein, 'id'>;
 export type ProteinColumn = keyof Protein;
 export type ProteinsListResult = { proteins: readonly Protein[]; total: number };
 
@@ -28,7 +10,7 @@ export type FilterParams = StringTMap<FilterParamValue>;
 export type AppFilter = {
   readonly idFieldName: string;
   readonly labelFieldName: string;
-  readonly aliasLabelFieldName?: string;
+  readonly alternativeLabelFieldName?: string;
   readonly dataSourceName: string;
   readonly filterParamName: string;
   readonly dropdownItemName: string;

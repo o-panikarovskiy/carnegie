@@ -3,35 +3,36 @@ import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AppError } from 'src/app/core/typings/common';
+import { Domain } from 'src/app/core/typings/domain';
+import { Family } from 'src/app/core/typings/family';
+import { Gene } from 'src/app/core/typings/gene';
+import { Protein } from 'src/app/core/typings/protein';
 import { DictionariesBackendService } from 'src/app/search/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import {
-    addTableColumn,
-    delTableColumn,
-    loadProteinsList,
-    loadProteinsListError,
-    loadProteinsListSuccess,
-    mergeFilters,
-    setDomainsList,
-    setFamiliesList,
-    setGenesList,
-    setTableColumns,
-    setViewParams
+  addTableColumn,
+  delTableColumn,
+  loadProteinsList,
+  loadProteinsListError,
+  loadProteinsListSuccess,
+  mergeFilters,
+  setDomainsList,
+  setFamiliesList,
+  setGenesList,
+  setTableColumns,
+  setViewParams
 } from 'src/app/search/store/actions';
 import {
-    selectDomainsSelector,
-    selectFamiliesSelector,
-    selectGenesSelector,
-    selectProteinsSelector,
-    selectProteinsTotalSelector,
-    selectViewColumns,
-    selectViewFilters,
-    selectViewParams
+  selectDomainsSelector,
+  selectFamiliesSelector,
+  selectGenesSelector,
+  selectProteinsSelector,
+  selectProteinsTotalSelector,
+  selectViewColumns,
+  selectViewFilters,
+  selectViewParams
 } from 'src/app/search/store/selectors';
-import { Domain } from 'src/app/search/typings/domain';
-import { Family } from 'src/app/search/typings/family';
-import { Gene } from 'src/app/search/typings/gene';
-import { FilterParams, Protein, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/typings/table';
+import { FilterParams, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/typings/table';
 
 @Injectable()
 export class SearchStoreService {

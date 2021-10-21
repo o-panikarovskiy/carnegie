@@ -2,11 +2,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, SortDirection } from '@angular/material/sort';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { Protein } from 'src/app/core/typings/protein';
 import { ProteinsDataSource } from 'src/app/search/search-results/data-source';
 import { SelectService } from 'src/app/search/search-results/select.service';
 import { SearchStoreService } from 'src/app/search/services/store.service';
 import { TABLE_COLUMNS_MAP_BY_ID } from 'src/app/search/store/columns-list';
-import { Protein, ProteinColumn } from 'src/app/search/typings/table';
+import { ProteinColumn } from 'src/app/search/typings/table';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({

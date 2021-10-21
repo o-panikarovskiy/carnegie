@@ -1,18 +1,18 @@
 import * as pool from '../../../db/sql-storage/index.js';
 import { DbClient, QueryResult } from '../../../db/sql-storage/models.js';
-import { Gene, NewGene } from '../models.js';
+import { Gene } from '../models.js';
 
 export { insertGene };
 
-const insertGene = async (gene: NewGene, client?: DbClient): Promise<Gene> => {
-  const text = `INSERT INTO "public"."genes"("name", "symbol", "accession")
+const insertGene = async (gene: Gene, client?: DbClient): Promise<Gene> => {
+  const text = `INSERT INTO "public"."genes"("accession", "name", "symbol")
                 VALUES ($1, $2, $3)
                 ON CONFLICT ("accession")
                 DO UPDATE SET "name"      = excluded."name",
                               "symbol"    = excluded."symbol"
                 RETURNING *`;
 
-  const values = [gene.name, gene.symbol, gene.accession];
+  const values = [gene.accession, gene.name, gene.symbol];
 
   const res: QueryResult = await (client || pool).query({ text, values });
   return res.rows[0] as Gene;

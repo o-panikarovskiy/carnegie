@@ -5,11 +5,11 @@ export { APP_FILTERS_LIST, APP_FILTERS_MAP_BY_PARAM_NAME };
 
 const APP_FILTERS_LIST: readonly AppFilter[] = [
   {
-    idFieldName: 'id',
+    idFieldName: 'accession',
     labelFieldName: 'name',
     dataSourceName: 'genes$',
     filterParamName: 'gene',
-    aliasLabelFieldName: 'accession',
+    alternativeLabelFieldName: 'accession',
     buttonText: { '=0': 'Genes', '=1': '1 gene', other: '# genes' },
     dropdownItemName: 'Genes',
   },

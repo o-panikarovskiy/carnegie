@@ -1,7 +1,8 @@
-import { Domain } from 'src/app/search/typings/domain';
-import { Family } from 'src/app/search/typings/family';
-import { Gene } from 'src/app/search/typings/gene';
-import { Protein, ViewParams } from 'src/app/search/typings/table';
+import { Domain } from 'src/app/core/typings/domain';
+import { Family } from 'src/app/core/typings/family';
+import { Gene } from 'src/app/core/typings/gene';
+import { Protein } from 'src/app/core/typings/protein';
+import { ViewParams } from 'src/app/search/typings/table';
 
 export const searchFeatureKey = 'search';
 

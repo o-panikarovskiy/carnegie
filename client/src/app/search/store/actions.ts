@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { AppError } from 'src/app/core/typings/common';
-import { Domain } from 'src/app/search/typings/domain';
-import { Family } from 'src/app/search/typings/family';
-import { Gene } from 'src/app/search/typings/gene';
+import { Domain } from 'src/app/core/typings/domain';
+import { Family } from 'src/app/core/typings/family';
+import { Gene } from 'src/app/core/typings/gene';
 import { FilterParams, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/typings/table';
 
 export const setGenesList = createAction('[Genes] set list', props<{ genes: readonly Gene[] }>());

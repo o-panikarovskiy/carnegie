@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Protein } from 'src/app/core/typings/protein';
 import { SearchStoreService } from 'src/app/search/services/store.service';
-import { Protein } from 'src/app/search/typings/table';
 
 @Injectable()
 export class SelectService {

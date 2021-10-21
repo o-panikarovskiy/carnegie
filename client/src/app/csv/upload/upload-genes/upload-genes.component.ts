@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { AppError } from 'src/app/core/typings/common';
+import { Gene } from 'src/app/core/typings/gene';
 import { COMPLETE_IMPORT, COMPLETE_IMPORT_ITEM, ImportProcessToken, ImportsService, IMPORT_STATUSES } from 'src/app/csv/services/imports.service';
 import { ImportStatus, LogMessage, Payload } from 'src/app/csv/typings/upload';
-import { Gene } from 'src/app/search/typings/gene';
+import { arrayToCSV } from 'src/app/csv/utils/array-to-csv';
+import { downloadBlob } from 'src/app/csv/utils/download-blob';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
@@ -72,7 +74,12 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
     return log.id || index;
   }
 
-  private formatLogMessage({ error, rowNum, item }: Payload<Gene>): LogMessage {
+  sendSample() {
+    const csv = arrayToCSV([['accession', 'symbol', 'name']]);
+    downloadBlob(csv, 'genes.csv', 'text/csv;charset=utf-8;');
+  }
+
+  private formatLogMessage({ error, rowNum, item: gene }: Payload<Gene>): LogMessage {
     const rowStr = `Row ${rowNum}:`;
 
     let id = '';
@@ -80,9 +87,9 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
     if (error) {
       id = rowNum + '';
       message = `${rowStr} ${error.message}`;
-    } else if (item) {
-      id = item.id;
-      message = `${rowStr} ${item.name || item.accession} imported successfully`;
+    } else if (gene) {
+      id = gene.accession;
+      message = `${rowStr} ${gene.name || gene.accession} imported successfully`;
     }
 
     return { error: !!error, message, id };

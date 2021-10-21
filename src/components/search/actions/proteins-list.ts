@@ -11,7 +11,7 @@ const schema = joi.object().keys({
   skip: joi.number().positive().allow(0).default(0),
   limit: joi.number().positive().min(1).max(1000).default(50),
   term: joi.string().optional().allow('').trim().max(512),
-  gene: joi.array().optional().items(joi.string().trim().guid()).max(100),
+  gene: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   domain: joi.array().optional().items(joi.string().trim().guid()).max(100),
   family: joi.array().optional().items(joi.string().trim().guid()).max(100),
 });

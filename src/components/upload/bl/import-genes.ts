@@ -3,7 +3,7 @@ import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
 import { insertGene } from '../../dictionaries/index.js';
-import { Gene, NewGene } from '../../dictionaries/models.js';
+import { Gene } from '../../dictionaries/models.js';
 import { importRows } from './import-rows.js';
 
 export { importGenes };
@@ -22,6 +22,6 @@ const importGenes = async (fileId: string, creator: User, list: readonly StringA
 };
 
 const importGene = async (creator: User, raw: StringAnyMap): Promise<Gene> => {
-  const req = await verifySchema<NewGene>(schema, raw);
+  const req = await verifySchema<Gene>(schema, raw);
   return insertGene(req);
 };

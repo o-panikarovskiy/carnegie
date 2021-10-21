@@ -1,3 +1,5 @@
+@import 'mixins/func';
+
 :host {
   display: inline-flex;
   align-items: center;
@@ -19,6 +21,10 @@
   width: 100%;
   height: 100%;
   color: var(--color-black);
+
+  ::ng-deep .mat-checkbox-label {
+    @extend %ellipsis;
+  }
 }
 
 .btn-menu {

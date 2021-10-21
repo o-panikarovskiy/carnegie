@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Family } from 'src/app/core/typings/family';
 import { SearchStoreService } from 'src/app/search/services/store.service';
-import { Family } from 'src/app/search/typings/family';
 
 @Injectable()
 export class FamiliesResolver implements Resolve<readonly Family[]> {

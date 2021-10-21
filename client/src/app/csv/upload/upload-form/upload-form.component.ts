@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class UploadFormComponent {
   @Output() done = new EventEmitter<File>();
+  @Output() sample = new EventEmitter<void>();
 
   file?: File;
 
@@ -17,4 +18,9 @@ export class UploadFormComponent {
   });
 
   constructor() {}
+
+  downloadSample(e: MouseEvent) {
+    e.preventDefault();
+    this.sample.next();
+  }
 }

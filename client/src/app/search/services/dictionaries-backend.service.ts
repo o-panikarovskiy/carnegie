@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Domain } from 'src/app/search/typings/domain';
-import { Family } from 'src/app/search/typings/family';
-import { Gene } from 'src/app/search/typings/gene';
+import { Domain } from 'src/app/core/typings/domain';
+import { Family } from 'src/app/core/typings/family';
+import { Gene } from 'src/app/core/typings/gene';
 import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 
 @Injectable()

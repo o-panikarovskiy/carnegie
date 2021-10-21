@@ -1,4 +1,4 @@
-<crng-upload-form *ngIf="!status || status === 'complete'" class="form" (done)="fileSelect($event)"></crng-upload-form>
+<crng-upload-form *ngIf="!status || status === 'complete'" class="form" (done)="fileSelect($event)" (sample)="sendSample()"></crng-upload-form>
 
 <div class="progress" *ngIf="!!status">
   <div class="title">{{ progress + '%' }}&nbsp;{{ statuses[status] }}</div>
