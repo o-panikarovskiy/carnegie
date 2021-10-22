@@ -7,6 +7,7 @@ import { getGenesList } from '../repository/get-genes-list.js';
 export { genesList };
 
 const schema = joi.object().keys({
+  search: joi.string().trim().max(50).allow('', null),
   sort: joi.string().trim().max(50).default('name'),
   skip: joi.number().positive().allow(0).default(0),
   limit: joi.number().positive().min(1).max(1000).default(50),

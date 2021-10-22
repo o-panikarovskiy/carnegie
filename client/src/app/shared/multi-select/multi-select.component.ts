@@ -54,7 +54,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
     this.filteredItems = this.searchControl.valueChanges.pipe(
       startWith(null),
       distinctUntilChanged(),
-      map((searchText) => this.sortItems(this.filterItems(searchText))),
+      map((searchText) => this.prioritizeItems(this.filterItems(searchText))),
     );
   }
 
@@ -148,7 +148,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
     }
   }
 
-  protected sortItems(items: any[]): any[] {
+  protected prioritizeItems(items: any[]): any[] {
     let res: SortPriority;
 
     if (this.selectedSet.size === 0) {

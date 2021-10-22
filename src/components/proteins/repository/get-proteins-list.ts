@@ -58,6 +58,7 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
 const buildWhere = (schema: FiltersSchema[], filters: ProteinRequest): WhereConditionResult => {
   const like = `(
       p."name" ILIKE $1
+  OR  p."uniProtId" ILIKE $1
   OR  p."description" ILIKE $1
   OR  g."name" ILIKE $1
   OR  g."accession" ILIKE $1

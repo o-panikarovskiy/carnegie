@@ -14,9 +14,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { DomainsResolver } from 'src/app/search/resolvers/domains.resolver';
-import { FamiliesResolver } from 'src/app/search/resolvers/families.resolver';
-import { GenesResolver } from 'src/app/search/resolvers/genes.resolver';
 import { ViewParamsResolver } from 'src/app/search/resolvers/view-params.resolver';
 import { ActiveFiltersSelectComponent } from 'src/app/search/search-form/filter-select/active-filters-select.component';
 import { TableColumnsSelectComponent } from 'src/app/search/search-form/table-columns-select/table-columns-select.component';
@@ -60,9 +57,6 @@ import { SearchComponent } from './search/search.component';
   ],
   providers: [
     SearchStoreService, //
-    GenesResolver,
-    DomainsResolver,
-    FamiliesResolver,
     ViewParamsResolver,
     SearchBackendService,
     ViewSettingsBackendService,

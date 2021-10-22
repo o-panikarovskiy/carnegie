@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { AppError } from 'src/app/core/typings/common';
+import { catchError, map } from 'rxjs/operators';
+import { DictionariesBackendService } from 'src/app/core/services/dictionaries-backend.service';
+import { AppError, ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
 import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
 import { Protein } from 'src/app/core/typings/protein';
-import { DictionariesBackendService } from 'src/app/core/services/dictionaries-backend.service';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import {
   addTableColumn,
@@ -16,29 +16,14 @@ import {
   loadProteinsListError,
   loadProteinsListSuccess,
   mergeFilters,
-  setDomainsList,
-  setFamiliesList,
-  setGenesList,
   setTableColumns,
   setViewParams
 } from 'src/app/search/store/actions';
-import {
-  selectDomainsSelector,
-  selectFamiliesSelector,
-  selectGenesSelector,
-  selectProteinsSelector,
-  selectProteinsTotalSelector,
-  selectViewColumns,
-  selectViewFilters,
-  selectViewParams
-} from 'src/app/search/store/selectors';
+import { selectProteinsSelector, selectProteinsTotalSelector, selectViewColumns, selectViewFilters, selectViewParams } from 'src/app/search/store/selectors';
 import { FilterParams, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/typings/table';
 
 @Injectable()
 export class SearchStoreService {
-  public readonly genes$: Observable<readonly Gene[]>;
-  public readonly domains$: Observable<readonly Domain[]>;
-  public readonly families$: Observable<readonly Family[]>;
   public readonly proteins$: Observable<readonly Protein[]>;
   public readonly proteinsTotal$: Observable<number>;
   public readonly viewParams$: Observable<ViewParams>;
@@ -50,9 +35,6 @@ export class SearchStoreService {
     private readonly sbs: SearchBackendService,
     private readonly dbs: DictionariesBackendService,
   ) {
-    this.genes$ = store.select(selectGenesSelector);
-    this.domains$ = store.select(selectDomainsSelector);
-    this.families$ = store.select(selectFamiliesSelector);
     this.proteins$ = store.select(selectProteinsSelector);
     this.viewParams$ = store.select(selectViewParams);
     this.filters$ = store.select(selectViewFilters);
@@ -80,19 +62,19 @@ export class SearchStoreService {
     this.store.dispatch(delTableColumn({ column }));
   }
 
-  loadGenes(): Observable<readonly Gene[]> {
-    return this.dbs.getGenes().pipe(tap((genes) => this.store.dispatch(setGenesList({ genes }))));
-  }
+  loadGenes = (req?: ListRequest): Observable<readonly Gene[]> => {
+    return this.dbs.getGenes(req);
+  };
 
-  loadDomains(): Observable<readonly Domain[]> {
-    return this.dbs.getDomains().pipe(tap((domains) => this.store.dispatch(setDomainsList({ domains }))));
-  }
+  loadDomains = (req?: ListRequest): Observable<readonly Domain[]> => {
+    return this.dbs.getDomains(req);
+  };
 
-  loadFamilies(): Observable<readonly Family[]> {
-    return this.dbs.getFamilies().pipe(tap((families) => this.store.dispatch(setFamiliesList({ families }))));
-  }
+  loadFamilies = (req?: ListRequest): Observable<readonly Family[]> => {
+    return this.dbs.getFamilies(req);
+  };
 
-  loadProteins(filterParams: FilterParams): Observable<ProteinsListResult> {
+  loadProteins = (filterParams: FilterParams): Observable<ProteinsListResult> => {
     this.store.dispatch(loadProteinsList({ filterParams }));
 
     return this.sbs.getProteinsList(filterParams).pipe(
@@ -105,5 +87,5 @@ export class SearchStoreService {
         return throwError(error);
       }),
     );
-  }
+  };
 }

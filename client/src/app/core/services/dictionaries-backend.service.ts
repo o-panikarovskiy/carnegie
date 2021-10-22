@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
 import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
@@ -11,8 +12,8 @@ import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 export class DictionariesBackendService {
   constructor(private readonly http: HttpClient) {}
 
-  getGenes(): Observable<readonly Gene[]> {
-    return this.http.get('/api/dicts/genes').pipe(
+  getGenes(params?: ListRequest): Observable<readonly Gene[]> {
+    return this.http.get('/api/dicts/genes', { params }).pipe(
       map((res: any) => {
         return res.genes;
       }),
@@ -22,8 +23,8 @@ export class DictionariesBackendService {
     );
   }
 
-  getDomains(): Observable<readonly Domain[]> {
-    return this.http.get('/api/dicts/domains').pipe(
+  getDomains(params?: ListRequest): Observable<readonly Domain[]> {
+    return this.http.get('/api/dicts/domains', { params }).pipe(
       map((res: any) => {
         return res.domains;
       }),
@@ -33,8 +34,8 @@ export class DictionariesBackendService {
     );
   }
 
-  getFamilies(): Observable<readonly Family[]> {
-    return this.http.get('/api/dicts/families').pipe(
+  getFamilies(params?: ListRequest): Observable<readonly Family[]> {
+    return this.http.get('/api/dicts/families', { params }).pipe(
       map((res: any) => {
         return res.families;
       }),

@@ -6,9 +6,6 @@ export { searchReducer };
 
 const reducer = createReducer<SearchState>(
   {
-    genes: [],
-    domains: [],
-    families: [],
     proteins: [],
     proteinsTotal: 0,
     viewParams: {
@@ -20,21 +17,6 @@ const reducer = createReducer<SearchState>(
   on(actions.setViewParams, (state, viewParams) => ({
     ...state,
     viewParams,
-  })),
-
-  on(actions.setGenesList, (state, { genes }) => ({
-    ...state,
-    genes,
-  })),
-
-  on(actions.setDomainsList, (state, { domains }) => ({
-    ...state,
-    domains,
-  })),
-
-  on(actions.setFamiliesList, (state, { families }) => ({
-    ...state,
-    families,
   })),
 
   on(actions.loadProteinsListSuccess, (state, { proteins, total }) => ({

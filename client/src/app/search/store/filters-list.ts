@@ -7,7 +7,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
   {
     idFieldName: 'accession',
     labelFieldName: 'name',
-    dataSourceName: 'genes$',
+    dataSourceName: 'loadGenes',
     filterParamName: 'gene',
     alternativeLabelFieldName: 'accession',
     buttonText: { '=0': 'Genes', '=1': '1 gene', other: '# genes' },
@@ -16,7 +16,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
   {
     idFieldName: 'id',
     labelFieldName: 'name',
-    dataSourceName: 'domains$',
+    dataSourceName: 'loadDomains',
     filterParamName: 'domain',
     buttonText: { '=0': 'Domains', '=1': '1 domain', other: '# domains' },
     dropdownItemName: 'Domains',
@@ -24,7 +24,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
   {
     idFieldName: 'id',
     labelFieldName: 'name',
-    dataSourceName: 'families$',
+    dataSourceName: 'loadFamilies',
     filterParamName: 'family',
     buttonText: { '=0': 'Families', '=1': '1 family', other: '# families' },
     dropdownItemName: 'Families',

@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, fo
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
-import { StringAnyMap, StringStringMap } from 'src/app/core/typings/common';
+import { ListRequest, StringAnyMap, StringStringMap } from 'src/app/core/typings/common';
 import { BaseMultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
 
 export type ItemsType = any[] | StringAnyMap;
-export type DataSourceFn = (_: string) => Observable<ItemsType>;
+export type DataSourceFn = (req?: ListRequest) => Observable<ItemsType>;
 export type DataSource = Observable<ItemsType> | DataSourceFn | null;
 
 @Component({
@@ -99,12 +99,12 @@ export class FilterSelectComponent extends BaseMultiSelectComponent implements O
     this.setSelectedSet();
   }
 
-  protected filterSource(searchText: string): Observable<any[]> {
+  protected filterSource(search: string): Observable<any[]> {
     if (typeof this.dataSource === 'function') {
-      return this.dataSource(searchText).pipe(
+      return this.dataSource({ search }).pipe(
         map((items) => {
           this.setItems(items, this.selectedIds);
-          return this.sortItems(Array.isArray(items) ? items : Object.values(items));
+          return this.prioritizeItems(Array.isArray(items) ? items : Object.values(items));
         }),
       );
     }
@@ -113,7 +113,7 @@ export class FilterSelectComponent extends BaseMultiSelectComponent implements O
     return obs.pipe(
       map((items) => {
         this.setItems(items, this.selectedIds);
-        return this.sortItems(this.filterItems(searchText));
+        return this.prioritizeItems(this.filterItems(search));
       }),
     );
   }

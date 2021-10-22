@@ -24,7 +24,7 @@ const createApp = (): Koa<Koa.DefaultState, Koa.DefaultContext> => {
       multipart: true,
       formidable: appConfig.upload,
       onError: errorBodyParseHandler(),
-    })
+    }),
   );
 
   // routes

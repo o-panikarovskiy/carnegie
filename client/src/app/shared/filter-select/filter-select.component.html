@@ -24,7 +24,7 @@
         <mat-checkbox
           [checked]="selectedSet.has(item[idFieldName])"
           (change)="clickOnItem(item)"
-          class="checkbox full-h full-w"
+          class="dd-checkbox"
           [title]="item[labelFieldName] || item[alternativeLabelFieldName!]"
         >
           {{ item[labelFieldName] || item[alternativeLabelFieldName!] }}

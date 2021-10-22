@@ -20,7 +20,7 @@
           [checked]="selectedSet.has(item.id)"
           (change)="clickOnItem(item)"
           [disabled]="selectedSet.has(item.id) && selectedSet.size <= 1"
-          class="checkbox full-h full-w"
+          class="dd-checkbox"
         >
           {{ item.dropdownItemName }}
         </mat-checkbox>

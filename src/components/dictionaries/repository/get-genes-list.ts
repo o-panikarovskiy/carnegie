@@ -9,12 +9,17 @@ export { getGenesList };
 const getGenesList = async (options?: ListRequest, client?: DbClient): Promise<readonly Gene[]> => {
   const { orderBy, skip, limit, orderDirection } = parseListReqOptions<Gene>(options, ['name']);
 
+  const term = options?.search;
+  const where = term ? `WHERE "name" ILIKE $1 OR "accession" ILIKE $1` : '';
+  const values: string[] = term ? [`%${term}%`] : [];
+
   const text = `SELECT *
                 FROM "public"."genes"
+                ${where}
                 ORDER BY "${orderBy}" ${orderDirection}
                 LIMIT ${limit | 0} OFFSET ${skip | 0};`;
 
-  const res = await (client || pool).query({ text });
+  const res = await (client || pool).query({ text, values });
 
   return res.rows;
 };

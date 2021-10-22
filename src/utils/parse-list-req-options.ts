@@ -7,7 +7,7 @@ export { parseListReqOptions };
 const parseListReqOptions = <T>(
   options?: ListRequest,
   allowedSortFileds: (keyof T)[] = [],
-  defaultLimit = 1000
+  defaultLimit = 100
 ): ParsedListRequest => {
   const { sort = '', skip = 0, limit = defaultLimit } = options || {};
 

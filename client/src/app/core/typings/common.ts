@@ -26,3 +26,10 @@ export type AppError = {
   readonly name?: string;
   readonly stack?: string;
 };
+
+export type ListRequest = {
+  search?: string;
+  sort?: string;
+  skip?: number;
+  limit?: number;
+};
