@@ -1,6 +1,6 @@
 import { AfterViewInit, Directive, ElementRef } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { forkJoin, fromEvent } from 'rxjs';
+import { debounceTime, filter, switchMap, take, takeUntil } from 'rxjs/operators';
 import { SearchStoreService } from 'src/app/search/services/store.service';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
@@ -14,26 +14,36 @@ export class SearchResultsViewPortDirective extends Destroyer implements AfterVi
   }
 
   ngAfterViewInit(): void {
-    const host: HTMLDivElement = this.hostElementRef.nativeElement;
-    if (!host) return;
-
     this.store.activeFilters$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       setTimeout(() => this.calculateTableViewPort(), 0);
     });
 
-    fromEvent(host, 'scroll')
-      .pipe(
-        debounceTime(300), //
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => {
-        this.calculateNextPage();
-      });
+    const host: HTMLDivElement = this.hostElementRef.nativeElement;
+    if (host) {
+      fromEvent(host, 'scroll')
+        .pipe(
+          debounceTime(300), //
+          filter(() => this.isScrollGreaterThenLimit()),
+          switchMap(() => {
+            return forkJoin([
+              this.store.filters$.pipe(take(1)), //
+              this.store.proteins$.pipe(take(1)),
+              this.store.proteinsTotal$.pipe(take(1)),
+            ]);
+          }),
+          filter(([, proteins, total]) => proteins.length < total),
+          switchMap(([filters, proteins]) => {
+            return this.store.loadProteinsPage({ ...filters, skip: proteins.length });
+          }),
+          takeUntil(this.destroy$),
+        )
+        .subscribe();
+    }
   }
 
-  private calculateNextPage() {
+  private isScrollGreaterThenLimit(): boolean {
     const host: HTMLDivElement = this.hostElementRef.nativeElement;
-    if (!host) return;
+    if (!host) return false;
 
     const scrollTop = host.scrollTop;
     const viewHeight = host.offsetHeight;
@@ -42,9 +52,7 @@ export class SearchResultsViewPortDirective extends Destroyer implements AfterVi
     const limit = 0.75;
     const scrollPercent = scrollTop / (scrollHeight - viewHeight);
 
-    if (scrollPercent > limit) {
-      console.log('ADD MORE');
-    }
+    return scrollPercent > limit;
   }
 
   private calculateTableViewPort() {

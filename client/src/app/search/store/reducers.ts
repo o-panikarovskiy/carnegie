@@ -25,6 +25,12 @@ const reducer = createReducer<SearchState>(
     proteinsTotal: total,
   })),
 
+  on(actions.loadProteinsPageSuccess, (state, { proteins, total }) => ({
+    ...state,
+    proteins: [...state.proteins, ...proteins],
+    proteinsTotal: total,
+  })),
+
   on(actions.mergeFilters, (state, { filters }) => ({
     ...state,
     viewParams: {

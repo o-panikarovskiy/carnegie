@@ -13,7 +13,7 @@ type ProteinsListResult = {
 
 const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
   const allowedSort: (keyof ProteinClient)[] = [
-    'uniProtId',
+    'uniProtId', //
     'gene',
     'domain',
     'family',

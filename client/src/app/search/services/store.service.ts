@@ -15,6 +15,9 @@ import {
   loadProteinsList,
   loadProteinsListError,
   loadProteinsListSuccess,
+  loadProteinsPage,
+  loadProteinsPageError,
+  loadProteinsPageSuccess,
   mergeFilters,
   setTableColumns,
   setViewParams
@@ -98,6 +101,21 @@ export class SearchStoreService {
       }),
       catchError((error: AppError) => {
         this.store.dispatch(loadProteinsListError({ error }));
+        return throwError(error);
+      }),
+    );
+  };
+
+  loadProteinsPage = (filterParams: FilterParams): Observable<ProteinsListResult> => {
+    this.store.dispatch(loadProteinsPage({ filterParams }));
+
+    return this.sbs.getProteinsList(filterParams).pipe(
+      map((result) => {
+        this.store.dispatch(loadProteinsPageSuccess(result));
+        return result;
+      }),
+      catchError((error: AppError) => {
+        this.store.dispatch(loadProteinsPageError({ error }));
         return throwError(error);
       }),
     );

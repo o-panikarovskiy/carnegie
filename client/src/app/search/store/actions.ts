@@ -11,3 +11,7 @@ export const delTableColumn = createAction('[View params] del col', props<{ colu
 export const loadProteinsList = createAction('[Proteins] load list', props<{ filterParams: FilterParams }>());
 export const loadProteinsListError = createAction('[Proteins] load list error', props<{ error: AppError }>());
 export const loadProteinsListSuccess = createAction('[Proteins] load list success', props<ProteinsListResult>());
+
+export const loadProteinsPage = createAction('[Proteins] load page', props<{ filterParams: FilterParams }>());
+export const loadProteinsPageError = createAction('[Proteins] load page error', props<{ error: AppError }>());
+export const loadProteinsPageSuccess = createAction('[Proteins] load page success', props<ProteinsListResult>());

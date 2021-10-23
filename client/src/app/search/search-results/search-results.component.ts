@@ -19,7 +19,6 @@ import { Destroyer } from 'src/app/shared/abstract/destroyer';
 export class SearchResultsComponent extends Destroyer implements AfterViewInit, OnInit {
   allColumns: readonly string[] = ['select'];
   displayedColumns: readonly ProteinColumn[] = [];
-  total = 0;
   matSortActive: ProteinColumn = 'name';
   matSortDirection: SortDirection = 'asc';
   readonly columnsMap = TABLE_COLUMNS_MAP_BY_ID;
@@ -58,10 +57,6 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
       this.displayedColumns = [...columns];
       this.allColumns = ['select', ...columns];
     });
-
-    this.store.proteinsTotal$.pipe(takeUntil(this.destroy$)).subscribe((total) => {
-      this.total = total >= 0 ? total : this.total;
-    });
   }
 
   ngAfterViewInit(): void {
@@ -88,18 +83,5 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
     const columns = [...this.displayedColumns];
     moveItemInArray(columns, event.previousIndex, event.currentIndex);
     this.store.setTableColumns(columns);
-  }
-
-  onTableScroll(tableViewPort: HTMLDivElement) {
-    const scrollTop = tableViewPort.scrollTop;
-    const tableViewHeight = tableViewPort.offsetHeight;
-    const tableScrollHeight = tableViewPort.scrollHeight;
-
-    // If the user has scrolled within 200px of the bottom, add more data
-    const buffer = 200;
-    const limit = tableScrollHeight - tableViewHeight - buffer;
-    if (scrollTop > limit) {
-      console.log('ADD MORE');
-    }
   }
 }
