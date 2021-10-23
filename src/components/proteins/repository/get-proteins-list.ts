@@ -35,7 +35,7 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
   const { where, values } = buildWhere(allowedFilters, filters || {});
 
   const text = `SELECT p.*,
-                       COALESCE(g."name", g."accession") as gene,
+                       g."name" as gene,
                        d."name" as domain,
                        f."name" as family,
                        COUNT(*) OVER() AS total

@@ -36,8 +36,13 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   },
   {
     id: 'gene',
-    friendlyName: 'Gene',
+    friendlyName: 'Gene name',
     dropdownItemName: 'Gene name',
+  },
+  {
+    id: 'geneId',
+    friendlyName: 'Gene accession',
+    dropdownItemName: 'Gene accession',
   },
   {
     id: 'domain',
@@ -52,4 +57,4 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
-const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['uniProtId', 'name', 'description', 'isEnzyme', 'gene'] as const;
+const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['uniProtId', 'name', 'geneId'] as const;
