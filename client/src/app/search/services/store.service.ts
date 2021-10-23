@@ -19,16 +19,18 @@ import {
   setTableColumns,
   setViewParams
 } from 'src/app/search/store/actions';
+import { APP_FILTERS_MAP_BY_PARAM_NAME } from 'src/app/search/store/filters-list';
 import { selectProteinsSelector, selectProteinsTotalSelector, selectViewColumns, selectViewFilters, selectViewParams } from 'src/app/search/store/selectors';
 import { FilterParams, ProteinColumn, ProteinsListResult, ViewParams } from 'src/app/search/typings/table';
 
 @Injectable()
 export class SearchStoreService {
-  public readonly proteins$: Observable<readonly Protein[]>;
-  public readonly proteinsTotal$: Observable<number>;
-  public readonly viewParams$: Observable<ViewParams>;
-  public readonly filters$: Observable<FilterParams>;
-  public readonly columns$: Observable<readonly ProteinColumn[]>;
+  readonly proteins$: Observable<readonly Protein[]>;
+  readonly proteinsTotal$: Observable<number>;
+  readonly viewParams$: Observable<ViewParams>;
+  readonly filters$: Observable<FilterParams>;
+  readonly columns$: Observable<readonly ProteinColumn[]>;
+  readonly activeFilters$: Observable<readonly string[]>;
 
   constructor(
     private readonly store: Store, //
@@ -40,6 +42,18 @@ export class SearchStoreService {
     this.filters$ = store.select(selectViewFilters);
     this.columns$ = store.select(selectViewColumns);
     this.proteinsTotal$ = store.select(selectProteinsTotalSelector);
+
+    this.activeFilters$ = this.viewParams$.pipe(
+      map(({ filters }) => {
+        return Object.keys(filters).reduce((acc, key) => {
+          const filter = APP_FILTERS_MAP_BY_PARAM_NAME.get(key);
+          if (filter && filters[key]) {
+            acc.push(filter.filterParamName);
+          }
+          return acc;
+        }, [] as string[]);
+      }),
+    );
   }
 
   setViewParams(params: ViewParams): void {

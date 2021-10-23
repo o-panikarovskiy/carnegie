@@ -1,7 +1,7 @@
 <ng-container *ngIf="store.viewParams$ | async as viewParams">
   <crng-search-input [value]="$any(viewParams.filters.term) || ''" (blured)="updateSearchTerm($event)" (clear)="updateSearchTerm('')"></crng-search-input>
 
-  <ng-container *ngIf="activeFilters$ | async as filtersList">
+  <ng-container *ngIf="store.activeFilters$ | async as filtersList">
     <ng-container *ngFor="let filter of filtersList; trackBy: identify">
       <ng-container *ngIf="filtersMap.get(filter) as af">
         <crng-filter-select

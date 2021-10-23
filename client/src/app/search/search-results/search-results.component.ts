@@ -28,8 +28,8 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
   @ViewChild(MatSort) sort?: MatSort;
 
   constructor(
-    private readonly store: SearchStoreService, //
     public readonly selServ: SelectService,
+    private readonly store: SearchStoreService, //
   ) {
     super();
     this.dataSource = new ProteinsDataSource(this.store);
@@ -43,15 +43,6 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
       )
       .subscribe();
 
-    this.store.proteinsTotal$.pipe(takeUntil(this.destroy$)).subscribe((total) => {
-      this.total = total >= 0 ? total : this.total;
-    });
-
-    this.store.columns$.pipe(takeUntil(this.destroy$)).subscribe((columns) => {
-      this.displayedColumns = [...columns];
-      this.allColumns = ['select', ...columns];
-    });
-
     this.store.filters$
       .pipe(
         take(1),
@@ -62,6 +53,15 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
         this.matSortDirection = sort[0] === '-' ? 'desc' : 'asc';
         this.matSortActive = sort.replace('-', '') as ProteinColumn;
       });
+
+    this.store.columns$.pipe(takeUntil(this.destroy$)).subscribe((columns) => {
+      this.displayedColumns = [...columns];
+      this.allColumns = ['select', ...columns];
+    });
+
+    this.store.proteinsTotal$.pipe(takeUntil(this.destroy$)).subscribe((total) => {
+      this.total = total >= 0 ? total : this.total;
+    });
   }
 
   ngAfterViewInit(): void {

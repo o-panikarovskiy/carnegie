@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { SearchStoreService } from 'src/app/search/services/store.service';
 import { APP_FILTERS_MAP_BY_PARAM_NAME } from 'src/app/search/store/filters-list';
 import { FilterParamValue, TableColumn } from 'src/app/search/typings/table';
@@ -12,26 +10,13 @@ import { FilterParamValue, TableColumn } from 'src/app/search/typings/table';
   styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent {
-  readonly activeFilters$: Observable<readonly string[]>;
   readonly filtersMap = APP_FILTERS_MAP_BY_PARAM_NAME;
 
   constructor(
     private router: Router, //
     private route: ActivatedRoute,
     public readonly store: SearchStoreService,
-  ) {
-    this.activeFilters$ = store.viewParams$.pipe(
-      map(({ filters }) => {
-        return Object.keys(filters).reduce((acc, key) => {
-          const filter = APP_FILTERS_MAP_BY_PARAM_NAME.get(key);
-          if (filter && filters[key]) {
-            acc.push(filter.filterParamName);
-          }
-          return acc;
-        }, [] as string[]);
-      }),
-    );
-  }
+  ) {}
 
   updateSearchTerm(value: string) {
     this.applyFilterParam('term', value);
