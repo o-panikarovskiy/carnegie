@@ -17,6 +17,16 @@ const insertProtein = async (protein: NewProtein, client?: DbClient): Promise<Pr
                                                 "isEnzyme"
                                               )
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                ON CONFLICT ("uniProtId")
+                DO UPDATE SET "geneId"        = excluded."geneId",
+                              "domainId"      = excluded."domainId",
+                              "familyId"      = excluded."familyId",
+                              "name"          = excluded."name",
+                              "description"   = excluded."description",
+                              "length"        = excluded."length",
+                              "sequence"      = excluded."sequence",
+                              "species"       = excluded."species",
+                              "isEnzyme"      = excluded."isEnzyme"
                 RETURNING *`;
 
   const values = [
