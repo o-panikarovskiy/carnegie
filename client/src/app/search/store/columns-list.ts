@@ -52,4 +52,4 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
-const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['uniProtId', 'description', 'name', 'gene'] as const;
+const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['uniProtId', 'name', 'description', 'isEnzyme', 'gene'] as const;
