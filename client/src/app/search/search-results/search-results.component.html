@@ -1,4 +1,4 @@
-<ng-container *ngIf="selServ.checked$ | async as checked">
+<div class="view-port" crngSearchResultsViewPort *ngIf="selServ.checked$ | async as checked">
   <table
     mat-table
     matSort
@@ -35,4 +35,4 @@
     <tr mat-header-row *matHeaderRowDef="allColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: allColumns"></tr>
   </table>
-</ng-container>
+</div>

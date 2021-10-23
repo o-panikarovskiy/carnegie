@@ -58,7 +58,7 @@
   border-bottom-right-radius: 4px;
   padding: 0;
   position: absolute;
-  z-index: 101;
+  z-index: 201;
   top: 100%;
   left: 0;
   display: none;
@@ -110,7 +110,7 @@
   }
 
   .menu {
-    z-index: 100;
+    z-index: 200;
     flex-direction: column;
     position: absolute;
     top: 0;

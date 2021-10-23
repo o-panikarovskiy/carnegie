@@ -89,4 +89,17 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
     moveItemInArray(columns, event.previousIndex, event.currentIndex);
     this.store.setTableColumns(columns);
   }
+
+  onTableScroll(tableViewPort: HTMLDivElement) {
+    const scrollTop = tableViewPort.scrollTop;
+    const tableViewHeight = tableViewPort.offsetHeight;
+    const tableScrollHeight = tableViewPort.scrollHeight;
+
+    // If the user has scrolled within 200px of the bottom, add more data
+    const buffer = 200;
+    const limit = tableScrollHeight - tableViewHeight - buffer;
+    if (scrollTop > limit) {
+      console.log('ADD MORE');
+    }
+  }
 }

@@ -17,7 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { ViewParamsResolver } from 'src/app/search/resolvers/view-params.resolver';
 import { ActiveFiltersSelectComponent } from 'src/app/search/search-form/filter-select/active-filters-select.component';
 import { TableColumnsSelectComponent } from 'src/app/search/search-form/table-columns-select/table-columns-select.component';
-import { TableViewPortHeightDirective } from 'src/app/search/search-results/view-port-height.directive';
+import { SearchResultsViewPortDirective } from 'src/app/search/search-results/searct-results-view-port.directive';
 import { SearchRoutingModule } from 'src/app/search/search-routing.module';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import { SearchStoreService } from 'src/app/search/services/store.service';
@@ -36,7 +36,7 @@ import { SearchComponent } from './search/search.component';
     SearchResultsComponent, //
     TableColumnsSelectComponent,
     ActiveFiltersSelectComponent,
-    TableViewPortHeightDirective,
+    SearchResultsViewPortDirective,
   ],
   imports: [
     CommonModule, //
