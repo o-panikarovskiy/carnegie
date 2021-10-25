@@ -6,7 +6,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { CopyTextButtonComponent } from 'src/app/shared/copy-text-button/copy-text-button.component';
 import { DisableFocusDirective } from 'src/app/shared/directives/disable-focus.directive';
 import { FilterSelectComponent } from 'src/app/shared/filter-select/filter-select.component';
 import { MultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
@@ -22,6 +24,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
     MultiSelectComponent,
     FilterSelectComponent,
     DisableFocusDirective,
+    CopyTextButtonComponent,
   ],
   exports: [
     MainMenuComponent, //
@@ -29,6 +32,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
     SearchInputComponent,
     MultiSelectComponent,
     FilterSelectComponent,
+    CopyTextButtonComponent,
   ],
   imports: [
     CommonModule, //
@@ -36,6 +40,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
     MatToolbarModule,
     MatCheckboxModule,
     MatMenuModule,
+    MatTooltipModule,
     MatIconModule,
     RouterModule,
     ReactiveFormsModule,

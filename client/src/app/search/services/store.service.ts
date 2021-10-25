@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { DictionariesBackendService } from 'src/app/core/services/dictionaries-backend.service';
 import { AppError, ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
@@ -9,6 +9,7 @@ import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
 import { Protein } from 'src/app/core/typings/protein';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
+import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
 import {
   addTableColumn,
   delTableColumn,
@@ -38,6 +39,7 @@ export class SearchStoreService {
   constructor(
     private readonly store: Store, //
     private readonly sbs: SearchBackendService,
+    private readonly vbs: ViewSettingsBackendService,
     private readonly dbs: DictionariesBackendService,
   ) {
     this.proteins$ = store.select(selectProteinsSelector);
@@ -77,6 +79,15 @@ export class SearchStoreService {
 
   hideColumn(column: ProteinColumn): void {
     this.store.dispatch(delTableColumn({ column }));
+  }
+
+  shareViewParams(): Observable<string> {
+    return this.viewParams$.pipe(
+      take(1),
+      switchMap((viewParams) => {
+        return this.vbs.createShare(viewParams);
+      }),
+    );
   }
 
   loadGenes = (req?: ListRequest): Observable<readonly Gene[]> => {

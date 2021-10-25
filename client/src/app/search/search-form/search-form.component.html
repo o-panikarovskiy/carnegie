@@ -1,4 +1,4 @@
-<ng-container *ngIf="store.viewParams$ | async as viewParams">
+<div class="left" *ngIf="store.viewParams$ | async as viewParams">
   <crng-search-input [value]="$any(viewParams.filters.term) || ''" (blured)="updateSearchTerm($event)" (clear)="updateSearchTerm('')"></crng-search-input>
 
   <ng-container *ngIf="store.activeFilters$ | async as filtersList">
@@ -27,4 +27,10 @@
       (unselectItem)="hideColumn($event)"
     ></crng-table-columns-select>
   </ng-container>
-</ng-container>
+</div>
+
+<div class="right">
+  <crng-copy-text-button [text$]="shareUrl$" tooltipStartText="Share" tooltipCopiedText="Link copied to clipboard!" tooltipPosition="left">
+    <mat-icon class="share">share</mat-icon>
+  </crng-copy-text-button>
+</div>

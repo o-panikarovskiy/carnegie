@@ -1,5 +1,6 @@
 import { init as dictionariesInit } from '../../components/dictionaries/index.js';
 import { init as searchInit } from '../../components/proteins/index.js';
+import { init as shareInit } from '../../components/share/index.js';
 import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
 import { initAppPool } from './pool.js';
@@ -19,7 +20,8 @@ const init = async (): Promise<void> => {
     await client.query(createShortUID());
 
     await Promise.all([
-      dictionariesInit(client), //
+      shareInit(client), //
+      dictionariesInit(client),
     ]);
 
     await Promise.all([

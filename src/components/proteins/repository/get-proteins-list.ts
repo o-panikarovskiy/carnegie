@@ -15,6 +15,7 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
   const allowedSort: (keyof ProteinClient)[] = [
     'uniProtId', //
     'gene',
+    'geneId',
     'domain',
     'family',
     'name',

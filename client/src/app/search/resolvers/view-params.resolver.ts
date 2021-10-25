@@ -14,10 +14,10 @@ export class ViewParamsResolver implements Resolve<ViewParams> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ViewParams> {
-    return this.vsbs.load().pipe(
-      map(({ filters, columns }) => {
-        const queryParams = route.queryParams;
+    const { shareId, ...queryParams } = route.queryParams;
 
+    return this.vsbs.load(shareId).pipe(
+      map(({ filters, columns }) => {
         const viewParams: ViewParams = {
           filters: {
             ...filters,
