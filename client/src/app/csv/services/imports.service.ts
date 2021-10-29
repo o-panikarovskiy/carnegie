@@ -47,4 +47,8 @@ export class ImportsService {
   importProteins(file: File): Observable<ImportProcessToken> {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'proteins' });
   }
+
+  importLocalizations(file: File): Observable<ImportProcessToken> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'localizations' });
+  }
 }

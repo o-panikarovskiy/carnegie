@@ -1,0 +1,14 @@
+<crng-upload-form *ngIf="!status || status === 'complete'" class="form" (done)="fileSelect($event)" (sample)="sendSample()"></crng-upload-form>
+
+<div class="progress" *ngIf="!!status">
+  <div class="title">{{ progress + '%' }}&nbsp;{{ statuses[status] }}</div>
+  <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+</div>
+
+<div class="parse-error" *ngIf="parseError">{{ parseError.message }}</div>
+
+<cdk-virtual-scroll-viewport itemSize="40" class="logs">
+  <div *cdkVirtualFor="let log of logs; trackBy: identify" class="log" [ngClass]="{ error: log.error }">
+    {{ log.message }}
+  </div>
+</cdk-virtual-scroll-viewport>

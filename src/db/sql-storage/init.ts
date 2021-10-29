@@ -1,6 +1,9 @@
-import { init as dictionariesInit } from '../../components/dictionaries/index.js';
-import { init as searchInit } from '../../components/proteins/index.js';
-import { init as shareInit } from '../../components/share/index.js';
+import { init as domainsInit } from '../../components/domains/index.js';
+import { init as familiesInit } from '../../components/families/index.js';
+import { init as genesInit } from '../../components/genes/index.js';
+import { init as localizationInit } from '../../components/localization/index.js';
+import { init as proteinsInit } from '../../components/proteins/index.js';
+import { init as sharesInit } from '../../components/share/index.js';
 import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
 import { initAppPool } from './pool.js';
@@ -20,12 +23,18 @@ const init = async (): Promise<void> => {
     await client.query(createShortUID());
 
     await Promise.all([
-      shareInit(client), //
-      dictionariesInit(client),
+      sharesInit(client), //
+      domainsInit(client),
+      genesInit(client),
+      familiesInit(client),
     ]);
 
     await Promise.all([
-      searchInit(client), //
+      proteinsInit(client), //
+    ]);
+
+    await Promise.all([
+      localizationInit(client), //
     ]);
 
     logger.info('Database inited.');

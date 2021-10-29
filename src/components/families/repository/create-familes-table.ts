@@ -8,6 +8,6 @@ const createFamiliesTable = (): string => {
       "description"     text NULL
     );
 
-    CREATE INDEX IF NOT EXISTS families_lower_case_name ON "public"."families" ((lower("name")));
+    CREATE INDEX IF NOT EXISTS families_lower_case_name ON "public"."families" (lower("name"));
   `;
 };

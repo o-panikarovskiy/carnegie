@@ -40,7 +40,7 @@ const schema = joi.object().keys({
  *   "proteins": [
  *     {
  *       "id": "...",
- *       "name": "domain 1"
+ *       "name": "protein 1"
  *     },
  *     {
  *       ...

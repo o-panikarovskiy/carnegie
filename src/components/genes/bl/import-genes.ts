@@ -2,9 +2,9 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { insertGene } from '../../dictionaries/index.js';
-import { Gene } from '../../dictionaries/models.js';
-import { importRows } from './import-rows.js';
+import { importRows } from '../../upload/bl/import-rows.js';
+import { Gene } from '../models.js';
+import { insertGene } from '../repository/insert-gene.js';
 
 export { importGenes };
 

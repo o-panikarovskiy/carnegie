@@ -8,7 +8,7 @@ const createGenesTable = (): string => {
       "symbol"          varchar(50) NULL
     );
 
-    CREATE INDEX IF NOT EXISTS genes_lower_case_name ON "public"."genes" ((lower("name")));
-    CREATE INDEX IF NOT EXISTS symbol_lower_case_name ON "public"."genes" ((lower("symbol")));
+    CREATE INDEX IF NOT EXISTS genes_lower_case_name ON "public"."genes" (lower("name"));
+    CREATE INDEX IF NOT EXISTS symbol_lower_case_name ON "public"."genes" (lower("symbol"));
   `;
 };

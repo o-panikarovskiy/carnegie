@@ -7,6 +7,6 @@ const createDomainsTable = (): string => {
       "name"            varchar(255) NOT NULL
     );
 
-    CREATE INDEX IF NOT EXISTS domains_lower_case_name ON "public"."domains" ((lower("name")));
+    CREATE INDEX IF NOT EXISTS domains_lower_case_name ON "public"."domains" (lower("name"));
   `;
 };

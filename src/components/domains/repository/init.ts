@@ -1,10 +1,10 @@
 import { DbClient } from '../../../db/sql-storage/models.js';
-import { createProteinsTable } from './create-proteins-table.js';
+import { createDomainsTable } from './create-domains-table.js';
 import { migrate } from './migrations/init.js';
 
 export { init };
 
 const init = async (client: DbClient): Promise<void> => {
-  await client.query({ text: createProteinsTable() });
+  await client.query({ text: createDomainsTable() });
   await migrate(client);
 };

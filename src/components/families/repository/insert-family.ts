@@ -14,8 +14,6 @@ const insertFamily = async (family: NewFamily, client?: DbClient): Promise<Famil
     family.description,
   ];
 
-  let res: QueryResult;
-  res = await (client || pool).query({ text, values });
-
+  const res: QueryResult = await (client || pool).query({ text, values });
   return res.rows[0] as Family;
 };

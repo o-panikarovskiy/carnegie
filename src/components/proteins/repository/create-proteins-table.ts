@@ -19,7 +19,7 @@ const createProteinsTable = (): string => {
       CONSTRAINT        "fkfamily" FOREIGN KEY ( "familyId" ) REFERENCES "public"."families" ( "id" ) ON DELETE CASCADE
     );
 
-    CREATE INDEX IF NOT EXISTS proteins_lower_case_name ON "public"."proteins" ((lower("name")));
-    CREATE INDEX IF NOT EXISTS proteins_lower_case_description ON "public"."proteins" ((lower("description")));
+    CREATE INDEX IF NOT EXISTS proteins_lower_case_name ON "public"."proteins" (lower("name"));
+    CREATE INDEX IF NOT EXISTS proteins_lower_case_description ON "public"."proteins" (lower("description"));
   `;
 };

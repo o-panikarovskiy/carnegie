@@ -35,7 +35,7 @@ const schema = joi.object().keys({
  * {
  *   "genes": [
  *     {
- *       "id": "...",
+ *       "accession": "...",
  *       "name": "gene 1"
  *     },
  *     {

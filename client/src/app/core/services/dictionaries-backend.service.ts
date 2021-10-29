@@ -13,7 +13,7 @@ export class DictionariesBackendService {
   constructor(private readonly http: HttpClient) {}
 
   getGenes(params?: ListRequest): Observable<readonly Gene[]> {
-    return this.http.get('/api/dicts/genes', { params }).pipe(
+    return this.http.get('/api/genes/', { params }).pipe(
       map((res: any) => {
         return res.genes;
       }),
@@ -24,7 +24,7 @@ export class DictionariesBackendService {
   }
 
   getDomains(params?: ListRequest): Observable<readonly Domain[]> {
-    return this.http.get('/api/dicts/domains', { params }).pipe(
+    return this.http.get('/api/domains/', { params }).pipe(
       map((res: any) => {
         return res.domains;
       }),
@@ -35,7 +35,7 @@ export class DictionariesBackendService {
   }
 
   getFamilies(params?: ListRequest): Observable<readonly Family[]> {
-    return this.http.get('/api/dicts/families', { params }).pipe(
+    return this.http.get('/api/families/', { params }).pipe(
       map((res: any) => {
         return res.families;
       }),

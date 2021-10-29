@@ -3,8 +3,9 @@ import { Context } from 'koa';
 import { basename } from 'path';
 import { AppBadRequest } from '../../../errors/app-error.js';
 import { StringTMap } from '../../../typings/index.js';
-import { importGenes } from '../bl/import-genes.js';
-import { importProteins } from '../bl/import-proteins.js';
+import { importGenes } from '../../genes/index.js';
+import { importLocalizations } from '../../localization/index.js';
+import { importProteins } from '../../proteins//index.js';
 import { readCSV } from '../bl/read-csv.js';
 import { ImportTable } from '../models.js';
 
@@ -13,6 +14,7 @@ export { uploadCSV };
 const IMPORTS: StringTMap<ImportTable> = {
   genes: importGenes,
   proteins: importProteins,
+  localizations: importLocalizations,
 };
 
 const uploadCSV = async (ctx: Context): Promise<void> => {
@@ -21,7 +23,7 @@ const uploadCSV = async (ctx: Context): Promise<void> => {
   if (Array.isArray(file)) throw new AppBadRequest('Array of files not allowed');
 
   const imp = IMPORTS[ctx.request.body?.table];
-  if (!imp) throw new AppBadRequest('Invalid table name');
+  if (!imp) throw new AppBadRequest('Invalid import name');
 
   try {
     const csv = await readCSV(file);

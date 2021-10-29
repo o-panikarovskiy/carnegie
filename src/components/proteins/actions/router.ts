@@ -1,12 +1,12 @@
 import Router from 'koa-router';
-import { proteinsList } from './proteins-list.js';
+import { proteinsList } from './list.js';
 
 export { createRouter };
 
 const createRouter = () => {
-  const router = new Router({ prefix: '/search' });
+  const router = new Router({ prefix: '/proteins' });
 
-  router.post('/proteins', proteinsList);
+  router.post('/', proteinsList);
 
   return router;
 };

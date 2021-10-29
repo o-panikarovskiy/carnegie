@@ -11,7 +11,7 @@ export class SearchBackendService {
   constructor(private readonly http: HttpClient) {}
 
   getProteinsList(params: FilterParams): Observable<ProteinsListResult> {
-    return this.http.post('/api/search/proteins', omitEmptyProps(params)).pipe(
+    return this.http.post('/api/proteins', omitEmptyProps(params)).pipe(
       map((res: any) => res),
       catchError((res: HttpErrorResponse): never => {
         throw parseHttpError(res);
