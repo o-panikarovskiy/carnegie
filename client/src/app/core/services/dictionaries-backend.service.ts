@@ -6,6 +6,7 @@ import { ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
 import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
+import { LocalizationMethod, LocalizationOrganelle } from 'src/app/core/typings/localization';
 import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 
 @Injectable()
@@ -38,6 +39,28 @@ export class DictionariesBackendService {
     return this.http.get('/api/families/', { params }).pipe(
       map((res: any) => {
         return res.families;
+      }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
+      }),
+    );
+  }
+
+  getLocMethods(params?: ListRequest): Observable<readonly LocalizationMethod[]> {
+    return this.http.get('/api/localization/methods', { params }).pipe(
+      map((res: any) => {
+        return res.methods;
+      }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
+      }),
+    );
+  }
+
+  getLocOrganelles(params?: ListRequest): Observable<readonly LocalizationOrganelle[]> {
+    return this.http.get('/api/localization/organelles', { params }).pipe(
+      map((res: any) => {
+        return res.organelles;
       }),
       catchError((res: HttpErrorResponse): never => {
         throw parseHttpError(res);

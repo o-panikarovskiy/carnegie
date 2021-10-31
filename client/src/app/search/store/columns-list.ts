@@ -55,12 +55,12 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Family name',
   },
   {
-    id: 'locMethodStr',
+    id: 'locMethod',
     friendlyName: 'Method',
     dropdownItemName: 'Localization Method',
   },
   {
-    id: 'locOrganelleIdStr',
+    id: 'locOrganelleId',
     friendlyName: 'Organelle',
     dropdownItemName: 'Localization Organelle',
   },

@@ -18,8 +18,8 @@ export type ProteinClient = Protein & {
   readonly gene?: string | null;
   readonly domain?: string | null;
   readonly family?: string | null;
-  readonly locMethod?: readonly string[];
-  readonly locOrganelleId?: readonly string[];
+  readonly locMethod?: string | null;
+  readonly locOrganelleId?: string | null;
 };
 
 export type ProteinRequest = ListRequest & {
@@ -39,4 +39,5 @@ export type FiltersSchema = {
 export type WhereConditionResult = {
   readonly where: string;
   readonly values: string[];
+  readonly conditions: string[];
 };

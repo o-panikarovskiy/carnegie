@@ -14,6 +14,8 @@ const schema = joi.object().keys({
   gene: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   domain: joi.array().optional().items(joi.string().trim().guid()).max(100),
   family: joi.array().optional().items(joi.string().trim().guid()).max(100),
+  locMethod: joi.array().optional().items(joi.string().trim().max(25)).max(100),
+  locOrganelle: joi.array().optional().items(joi.string().trim().max(50)).max(100),
 });
 
 /**
