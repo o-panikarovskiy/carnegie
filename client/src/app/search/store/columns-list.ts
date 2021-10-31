@@ -60,6 +60,11 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Localization Method',
   },
   {
+    id: 'locPubMedId',
+    friendlyName: 'Pub MedID',
+    dropdownItemName: 'Localization Pub MedID',
+  },
+  {
     id: 'locOrganelleId',
     friendlyName: 'Organelle',
     dropdownItemName: 'Localization Organelle',
@@ -67,4 +72,4 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
-const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['uniProtId', 'name', 'geneId'] as const;
+const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['name', 'uniProtId', 'locOrganelleId', 'locMethod', 'geneId'] as const;

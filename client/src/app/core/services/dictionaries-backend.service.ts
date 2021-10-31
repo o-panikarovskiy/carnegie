@@ -6,7 +6,7 @@ import { ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
 import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
-import { LocalizationMethod, LocalizationOrganelle } from 'src/app/core/typings/localization';
+import { LocalizationIdVal } from 'src/app/core/typings/localization';
 import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
 
 @Injectable()
@@ -46,10 +46,10 @@ export class DictionariesBackendService {
     );
   }
 
-  getLocMethods(params?: ListRequest): Observable<readonly LocalizationMethod[]> {
+  getLocMethods(params?: ListRequest): Observable<readonly LocalizationIdVal[]> {
     return this.http.get('/api/localization/methods', { params }).pipe(
       map((res: any) => {
-        return res.methods;
+        return res.list;
       }),
       catchError((res: HttpErrorResponse): never => {
         throw parseHttpError(res);
@@ -57,10 +57,21 @@ export class DictionariesBackendService {
     );
   }
 
-  getLocOrganelles(params?: ListRequest): Observable<readonly LocalizationOrganelle[]> {
+  getLocOrganelles(params?: ListRequest): Observable<readonly LocalizationIdVal[]> {
     return this.http.get('/api/localization/organelles', { params }).pipe(
       map((res: any) => {
-        return res.organelles;
+        return res.list;
+      }),
+      catchError((res: HttpErrorResponse): never => {
+        throw parseHttpError(res);
+      }),
+    );
+  }
+
+  getLocPubMedIds(params?: ListRequest): Observable<readonly LocalizationIdVal[]> {
+    return this.http.get('/api/localization/pubmedids', { params }).pipe(
+      map((res: any) => {
+        return res.list;
       }),
       catchError((res: HttpErrorResponse): never => {
         throw parseHttpError(res);

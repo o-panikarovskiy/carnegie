@@ -2,9 +2,9 @@ import joi from 'joi';
 import { Context } from 'koa';
 import { ListRequest } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
-import { getMethodsList } from '../repository/get-methods-list.js';
+import { getPubMedIdList } from '../repository/get-pub-med-id-list.js';
 
-export { methodsList };
+export { pubMedIdList };
 
 const schema = joi.object().keys({
   search: joi.string().trim().max(50).allow('', null),
@@ -15,13 +15,13 @@ const schema = joi.object().keys({
 
 /**
  * @apiGroup Localization
- * @apiName GetMethodList
+ * @apiName GetPubMedIdList
  * @apiVersion 1.0.0
- * @api {get} /methods?sort=-val&skip=0&limit=100 Get methods list
+ * @api {get} /pubMedId?sort=-val&skip=0&limit=100 Get pubMedId list
  * @apiParam {String="val"} sort="val" Sort field.
  * Set prefix "-" for desc direction. For example: -val.
- * @apiParam {Number} skip=0 Skip (offset) methods
- * @apiParam {Number} limit=50 Max methods per page (min 1, max 1000)
+ * @apiParam {Number} skip=0 Skip (offset) pubMedId
+ * @apiParam {Number} limit=50 Max pubMedId per page (min 1, max 1000)
  * @apiParamExample {json} Request-Example:
  * {
  *   "sort":"val",
@@ -29,7 +29,7 @@ const schema = joi.object().keys({
  *   "limit": 100
  * }
  * @apiError (400) InvalidRequestModel Invalid request model.
- * @apiSuccess (200) {IdVal[]} methods Methods list
+ * @apiSuccess (200) {IdVal[]} pubMedId Methods list
  * @apiSuccessExample Success Response:
  * 200 OK
  * {
@@ -48,9 +48,9 @@ const schema = joi.object().keys({
  *   ]
  * }
  */
-const methodsList = async (ctx: Context): Promise<void> => {
+const pubMedIdList = async (ctx: Context): Promise<void> => {
   const req = await verifySchema<ListRequest>(schema, ctx.request.query);
-  const list = await getMethodsList(req);
+  const list = await getPubMedIdList(req);
 
   ctx.body = { list };
 };

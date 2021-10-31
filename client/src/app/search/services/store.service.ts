@@ -7,7 +7,7 @@ import { AppError, ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
 import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
-import { LocalizationMethod, LocalizationOrganelle } from 'src/app/core/typings/localization';
+import { LocalizationIdVal } from 'src/app/core/typings/localization';
 import { Protein } from 'src/app/core/typings/protein';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
@@ -103,12 +103,16 @@ export class SearchStoreService {
     return this.dbs.getFamilies(req);
   };
 
-  loadLocMethods = (req?: ListRequest): Observable<readonly LocalizationMethod[]> => {
+  loadLocMethods = (req?: ListRequest): Observable<readonly LocalizationIdVal[]> => {
     return this.dbs.getLocMethods(req);
   };
 
-  loadOrganelles = (req?: ListRequest): Observable<readonly LocalizationOrganelle[]> => {
+  loadLocOrganelles = (req?: ListRequest): Observable<readonly LocalizationIdVal[]> => {
     return this.dbs.getLocOrganelles(req);
+  };
+
+  loadLocPubMedIds = (req?: ListRequest): Observable<readonly LocalizationIdVal[]> => {
+    return this.dbs.getLocPubMedIds(req);
   };
 
   loadProteins = (filterParams: FilterParams): Observable<ProteinsListResult> => {

@@ -25,11 +25,13 @@ const allowedSort: (keyof ProteinClient)[] = [
   'isEnzyme',
   'locMethod',
   'locOrganelleId',
+  'locPubMedId',
 ];
 
 const allowedAggFilters: FiltersSchema[] = [
   { filterName: 'locMethod', columnName: 'l."method"' }, //
-  { filterName: 'locOrganelle', columnName: 'l."organelleId"' }, //
+  { filterName: 'locPubMedId', columnName: 'l."pubMedId"' },
+  { filterName: 'locOrganelle', columnName: 'l."organelleId"' },
 ];
 
 const allowedMainFilters: FiltersSchema[] = [
@@ -56,6 +58,7 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
                 FROM (
                   SELECT p.*,
                          STRING_AGG(DISTINCT l."method", '; ') AS "locMethod",
+                         STRING_AGG(DISTINCT l."pubMedId", '; ') AS "locPubMedId",
                          STRING_AGG(DISTINCT l."organelleId", '; ') AS "locOrganelleId"
                    FROM "public"."proteins" as p
                    LEFT JOIN "public"."localization" as l ON l."proteinId" = p."uniProtId"
@@ -69,8 +72,6 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
                 ORDER BY "${orderBy}" ${orderDirection}
                 LIMIT ${limit | 0}
                 OFFSET ${skip | 0};`;
-
-  console.log(text);
 
   const res = await (client || pool).query({ text, values });
   const rows = res.rows;

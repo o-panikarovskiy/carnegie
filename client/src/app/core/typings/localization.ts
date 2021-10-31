@@ -5,12 +5,7 @@ export type Localization = {
   readonly method?: string | null;
 };
 
-export type LocalizationMethod = {
+export type LocalizationIdVal = {
   readonly id: string;
-  readonly method: string;
-};
-
-export type LocalizationOrganelle = {
-  readonly id: string;
-  readonly organelle: string;
+  readonly val: string;
 };

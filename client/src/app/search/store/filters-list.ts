@@ -31,7 +31,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
   },
   {
     idFieldName: 'id',
-    labelFieldName: 'method',
+    labelFieldName: 'val',
     dataSourceName: 'loadLocMethods',
     filterParamName: 'locMethod',
     buttonText: { '=0': 'Methods', '=1': '1 method', other: '# methods' },
@@ -39,11 +39,19 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
   },
   {
     idFieldName: 'id',
-    labelFieldName: 'organelle',
-    dataSourceName: 'loadOrganelles',
+    labelFieldName: 'val',
+    dataSourceName: 'loadLocOrganelles',
     filterParamName: 'locOrganelle',
     buttonText: { '=0': 'Organelle', '=1': '1 organelle', other: '# organelles' },
     dropdownItemName: 'Localization Organelles',
+  },
+  {
+    idFieldName: 'id',
+    labelFieldName: 'val',
+    dataSourceName: 'loadLocPubMedIds',
+    filterParamName: 'locPubMedId',
+    buttonText: { '=0': 'Pub MedID', '=1': '1 Pub MedID', other: '# Pub MedID' },
+    dropdownItemName: 'Localization Pub MedID',
   },
 ] as const;
 
