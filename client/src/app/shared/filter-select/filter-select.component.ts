@@ -44,7 +44,7 @@ export class FilterSelectComponent extends BaseMultiSelectComponent implements O
       this.setItems([], this.selectedIds);
 
       this.filteredItems = this.searchControl.valueChanges.pipe(
-        startWith(''),
+        startWith(void 0),
         debounceTime(300),
         distinctUntilChanged(),
         switchMap((searchText) => this.filterSource(searchText)),
@@ -99,9 +99,9 @@ export class FilterSelectComponent extends BaseMultiSelectComponent implements O
     this.setSelectedSet();
   }
 
-  protected filterSource(search: string): Observable<any[]> {
+  protected filterSource(search?: string): Observable<any[]> {
     if (typeof this.dataSource === 'function') {
-      return this.dataSource({ search }).pipe(
+      return this.dataSource(search ? { search } : void 0).pipe(
         map((items) => {
           this.setItems(items, this.selectedIds);
           return this.prioritizeItems(Array.isArray(items) ? items : Object.values(items));

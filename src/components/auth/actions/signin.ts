@@ -16,7 +16,6 @@ const schema = joi.object().keys({
 /**
  * @apiGroup Authentication
  * @apiName SignIn
- * @apiVersion 1.0.0
  * @api {post} /auth/signin 1. Sign In
  * @apiParam {String{8..256}} username User email
  * @apiParam {String{8..256}} password User password

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthUser, SingInReq } from 'src/app/core/typings/auth';
-import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
+import { parseHttpError } from 'src/app/core/utils/parse-http-error';
 
 @Injectable()
 export class AuthBackendService {

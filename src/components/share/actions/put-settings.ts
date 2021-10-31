@@ -4,7 +4,6 @@ import { putShareData } from '../bl/put-share-data.js';
 /**
  * @apiGroup ShareRecord
  * @apiName PutShareRecord
- * @apiVersion 1.0.0
  * @api {post} /share 2. Put share data
  * @apiParam {Any} values Any settings values in json format
  * @apiParamExample {json} Request-Example:

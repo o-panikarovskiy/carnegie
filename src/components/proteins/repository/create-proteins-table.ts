@@ -3,8 +3,7 @@ export { createProteinsTable };
 const createProteinsTable = (): string => {
   return `
     CREATE TABLE IF NOT EXISTS "public"."proteins" (
-      "id"              uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-      "uniProtId"       varchar(50) NOT NULL UNIQUE,
+      "id"              varchar(50) PRIMARY KEY,
       "geneId"          varchar(50) NULL,
       "domainId"        uuid NULL,
       "familyId"        uuid NULL,

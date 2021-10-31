@@ -13,12 +13,12 @@ export type SeparatorItem = {
 
 const SEPARATOR_ITEMS: readonly SeparatorItem[] = [
   {
-    id: ',',
-    label: 'Comma ,',
-  },
-  {
     id: ';',
     label: 'Semicolon ;',
+  },
+  {
+    id: ',',
+    label: 'Comma ,',
   },
 ] as const;
 

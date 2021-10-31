@@ -12,7 +12,7 @@ type ProteinsListResult = {
 };
 
 const allowedSort: (keyof ProteinClient)[] = [
-  'uniProtId', //
+  'id', //
   'gene',
   'geneId',
   'domain',
@@ -23,15 +23,15 @@ const allowedSort: (keyof ProteinClient)[] = [
   'sequence',
   'species',
   'isEnzyme',
-  'locMethod',
-  'locOrganelleId',
-  'locPubMedId',
+  'method',
+  'organelleId',
+  'pubMedId',
 ];
 
 const allowedAggFilters: FiltersSchema[] = [
-  { filterName: 'locMethod', columnName: 'l."method"' }, //
-  { filterName: 'locPubMedId', columnName: 'l."pubMedId"' },
-  { filterName: 'locOrganelle', columnName: 'l."organelleId"' },
+  { filterName: 'method', columnName: 'l."methodId"' }, //
+  { filterName: 'pubMedId', columnName: 'l."pubMedId"' },
+  { filterName: 'organelleId', columnName: 'l."organelleId"' },
 ];
 
 const allowedMainFilters: FiltersSchema[] = [
@@ -57,11 +57,11 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
                        COUNT(*) OVER() AS total
                 FROM (
                   SELECT p.*,
-                         STRING_AGG(DISTINCT l."method", '; ') AS "locMethod",
-                         STRING_AGG(DISTINCT l."pubMedId", '; ') AS "locPubMedId",
-                         STRING_AGG(DISTINCT l."organelleId", '; ') AS "locOrganelleId"
+                         STRING_AGG(DISTINCT l."methodId", '; ') AS "method",
+                         STRING_AGG(DISTINCT l."pubMedId", '; ') AS "pubMedId",
+                         STRING_AGG(DISTINCT l."organelleId", '; ') AS "organelleId"
                    FROM "public"."proteins" as p
-                   LEFT JOIN "public"."localization" as l ON l."proteinId" = p."uniProtId"
+                   LEFT JOIN "public"."localization" as l ON l."proteinId" = p."id"
                    ${whereAgg}
                    GROUP BY p."id"
                 ) as p
@@ -84,7 +84,7 @@ const buildMainLike = (term: string, values: string[] = [], conditions: string[]
   const len = values.length + 1;
   const like = `(
                   p."name" ILIKE $${len}
-              OR  p."uniProtId" ILIKE $${len}
+              OR  p."id" ILIKE $${len}
               OR  p."description" ILIKE $${len}
               OR  g."name" ILIKE $${len}
               OR  g."accession" ILIKE $${len}

@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subject } from 'rxjs';
-import { parseHttpError } from 'src/app/shared/utils/parse-http-error';
-import { safeJSONParse } from 'src/app/shared/utils/text-utils';
+import { parseHttpError } from 'src/app/core/utils/parse-http-error';
+import { safeJSONParse } from 'src/app/core/utils/text-utils';
 
 export type UploadProgressEvent = {
   progress: number;

@@ -16,7 +16,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { StringAnyMap } from 'src/app/core/typings/common';
-import { getSortByString } from 'src/app/shared/utils/sort-utils';
+import { getSortByString } from 'src/app/core/utils/sort-utils';
 
 type SortPriority = { selected: any[]; other: any[] };
 
@@ -80,6 +80,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
   }
 
   clickOnItem(item: any, event?: MouseEvent) {
+    event?.preventDefault();
     event?.stopPropagation();
 
     if (this.mode === 'multi') {
@@ -119,11 +120,11 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
     this.disabled = isDisabled;
   }
 
-  protected filterItems(searchText: string) {
+  protected filterItems(search?: string) {
     const items = this.getItemsAsArray();
-    if (!searchText) return items;
+    if (!search) return items;
 
-    const text = searchText.toLowerCase();
+    const text = search.toLowerCase();
     return items.filter((i) => {
       const val = i[this.labelFieldName] || i[this.alternativeLabelFieldName] || '';
       return val.toLowerCase().includes(text);

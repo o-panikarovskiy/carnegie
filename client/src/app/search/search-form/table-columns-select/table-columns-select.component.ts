@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StringAnyMap } from 'src/app/core/typings/common';
-import { TableColumn } from 'src/app/search/typings/table';
 import { TABLE_COLUMNS_LIST } from 'src/app/search/store/columns-list';
+import { TableColumn } from 'src/app/search/typings/table';
 import { BaseMultiSelectComponent } from 'src/app/shared/multi-select/multi-select.component';
 
 export type ItemsType = any[] | StringAnyMap;
@@ -21,23 +21,5 @@ export class TableColumnsSelectComponent extends BaseMultiSelectComponent {
   constructor(changeDetectorRef: ChangeDetectorRef) {
     super(changeDetectorRef);
     this.idFieldName = 'id';
-  }
-
-  clickOnItem(item: TableColumn) {
-    this.changeSelectedItems(item);
-  }
-
-  onMenuOpened() {
-    super.onMenuOpened();
-  }
-
-  onMenuClosed() {
-    super.onMenuClosed();
-  }
-
-  protected setItems(items: readonly TableColumn[], selectedIds: readonly string[]) {
-    this.items = items;
-    this.selectedIds = selectedIds;
-    this.setSelectedSet();
   }
 }

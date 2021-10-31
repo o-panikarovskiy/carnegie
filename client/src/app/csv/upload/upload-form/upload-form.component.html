@@ -2,7 +2,7 @@
   <a href="" class="link" (click)="downloadSample($event)">Sample</a>
   <crng-upload-button (fileSelect)="form.get('file')?.setValue($event)">{{ form.get('file')?.value?.name || 'Select File' }}</crng-upload-button>
   <crng-multi-select formControlName="separator" mode="single" [items]="separatorItems" idFieldName="id" labelFieldName="label">
-    Column separator: {{ form.get('separator')?.value }}</crng-multi-select
-  >
+    Column separator: {{ form.get('separator')?.value }}
+  </crng-multi-select>
   <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="form.invalid">Start import</button>
 </form>

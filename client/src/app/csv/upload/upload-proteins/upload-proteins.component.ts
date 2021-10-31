@@ -77,8 +77,8 @@ export class UploadProteinsComponent extends Destroyer implements OnInit {
 
   sendSample() {
     const csv = arrayToCSV([
-      ['geneId', 'uniProtId', 'name', 'species', 'description', 'isEnzyme', 'sequence', 'length'],
-      ['gene accession string', 'unique id', 'string', 'string', 'string', 'TRUE/FALSE', 'string', 'number'],
+      ['id', 'geneId', 'name', 'species', 'description', 'isEnzyme', 'sequence', 'length'],
+      ['unique id', 'gene accession string', 'string', 'string', 'string', 'TRUE/FALSE', 'string', 'number'],
     ]);
     downloadBlob(csv, 'proteins.csv', 'text/csv;charset=utf-8;');
   }
@@ -92,8 +92,7 @@ export class UploadProteinsComponent extends Destroyer implements OnInit {
       id = rowNum + '';
       message = `${rowStr} ${error.message || error.code || ''}`;
     } else if (protein) {
-      id = protein.uniProtId;
-      message = `${rowStr} ${protein.name || id} imported successfully`;
+      message = `${rowStr} ${protein.name || protein.id} imported successfully`;
     }
 
     return { error: !!error, message, id };

@@ -1,5 +1,5 @@
+import { indexBy } from 'src/app/core/utils/app-utils';
 import { AppFilter } from 'src/app/search/typings/table';
-import { indexBy } from 'src/app/shared/utils/app-utils';
 
 export { APP_FILTERS_LIST, APP_FILTERS_MAP_BY_PARAM_NAME };
 
@@ -30,28 +30,12 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     dropdownItemName: 'Families',
   },
   {
-    idFieldName: 'id',
-    labelFieldName: 'val',
-    dataSourceName: 'loadLocMethods',
-    filterParamName: 'locMethod',
+    idFieldName: 'type',
+    labelFieldName: 'type',
+    dataSourceName: 'loadMethods',
+    filterParamName: 'method',
     buttonText: { '=0': 'Methods', '=1': '1 method', other: '# methods' },
-    dropdownItemName: 'Localization Methods',
-  },
-  {
-    idFieldName: 'id',
-    labelFieldName: 'val',
-    dataSourceName: 'loadLocOrganelles',
-    filterParamName: 'locOrganelle',
-    buttonText: { '=0': 'Organelle', '=1': '1 organelle', other: '# organelles' },
-    dropdownItemName: 'Localization Organelles',
-  },
-  {
-    idFieldName: 'id',
-    labelFieldName: 'val',
-    dataSourceName: 'loadLocPubMedIds',
-    filterParamName: 'locPubMedId',
-    buttonText: { '=0': 'Pub MedID', '=1': '1 Pub MedID', other: '# Pub MedID' },
-    dropdownItemName: 'Localization Pub MedID',
+    dropdownItemName: 'Methods',
   },
 ] as const;
 

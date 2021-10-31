@@ -5,18 +5,18 @@ import { Localization } from '../models.js';
 export { insertLocalization };
 
 const insertLocalization = async (loc: Localization, client?: DbClient): Promise<Localization> => {
-  const text = `INSERT INTO "public"."localization"("proteinId", "organelleId", "pubMedId", "method")
+  const text = `INSERT INTO "public"."localization"("proteinId", "organelleId", "pubMedId", "methodId")
                 VALUES ($1, $2, $3, $4)
                 ON CONFLICT ("proteinId", "organelleId")
                 DO UPDATE SET "pubMedId"   = excluded."pubMedId",
-                              "method"     = excluded."method"
+                              "methodId"   = excluded."methodId"
                 RETURNING *`;
 
   const values = [
     loc.proteinId, //
     loc.organelleId,
     loc.pubMedId,
-    loc.method,
+    loc.methodId,
   ];
 
   const res: QueryResult = await (client || pool).query({ text, values });

@@ -33,3 +33,4 @@ src/**/*.map
 .vscode
 dist
 public
+doc

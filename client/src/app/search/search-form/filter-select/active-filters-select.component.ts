@@ -22,22 +22,4 @@ export class ActiveFiltersSelectComponent extends BaseMultiSelectComponent {
     super(changeDetectorRef);
     this.idFieldName = 'filterParamName';
   }
-
-  clickOnItem(item: AppFilter) {
-    this.changeSelectedItems(item);
-  }
-
-  onMenuOpened() {
-    super.onMenuOpened();
-  }
-
-  onMenuClosed() {
-    super.onMenuClosed();
-  }
-
-  protected setItems(items: readonly AppFilter[], selectedIds: readonly string[]) {
-    this.items = items;
-    this.selectedIds = selectedIds;
-    this.setSelectedSet();
-  }
 }

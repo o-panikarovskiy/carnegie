@@ -10,7 +10,6 @@ const schema = joi.object().keys({
 /**
  * @apiGroup ShareRecord
  * @apiName GetShareRecord
- * @apiVersion 1.0.0
  * @api {get} /share 1. Get share
  * @apiSuccess (200) {ShareData} share data
  * @apiSuccessExample Success Response:

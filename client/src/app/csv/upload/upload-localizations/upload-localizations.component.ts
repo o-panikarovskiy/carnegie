@@ -77,8 +77,8 @@ export class UploadLocalizationsComponent extends Destroyer implements OnInit {
 
   sendSample() {
     const csv = arrayToCSV([
-      ['proteinId', 'organelleId', 'pubMedId', 'method'],
-      ['protein unique id', 'organelle unique id', 'string', 'string'],
+      ['proteinId', 'organelleId', 'pubMedId', 'methodId'],
+      ['protein id', 'organelle id', 'string', 'method type'],
     ]);
 
     downloadBlob(csv, 'localizations.csv', 'text/csv;charset=utf-8;');

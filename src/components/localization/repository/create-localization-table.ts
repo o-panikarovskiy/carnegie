@@ -7,9 +7,8 @@ const createLocalizationTable = (): string => {
       "organelleId"          varchar(50) NOT NULL,
       PRIMARY KEY            ("proteinId", "organelleId"),
       "pubMedId"             varchar(50) NULL,
-      "method"               varchar(25) NULL
+      "methodId"             varchar(20) NULL,
+      CONSTRAINT             "fkmethods" FOREIGN KEY ( "methodId" ) REFERENCES "public"."methods" ( "type" )
     );
-
-    CREATE INDEX IF NOT EXISTS localization_pubMedId ON "public"."localization"("pubMedId");
   `;
 };

@@ -18,7 +18,7 @@
       <div mat-menu-item="" *ngFor="let item of items; trackBy: identify">
         <mat-checkbox
           [checked]="selectedSet.has(item.id)"
-          (change)="clickOnItem(item)"
+          (click)="clickOnItem(item, $event)"
           [disabled]="selectedSet.has(item.id) && selectedSet.size <= 1"
           class="dd-checkbox"
         >

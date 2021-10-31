@@ -2,6 +2,7 @@ import { init as domainsInit } from '../../components/domains/index.js';
 import { init as familiesInit } from '../../components/families/index.js';
 import { init as genesInit } from '../../components/genes/index.js';
 import { init as localizationInit } from '../../components/localization/index.js';
+import { init as methodsInit } from '../../components/methods/index.js';
 import { init as proteinsInit } from '../../components/proteins/index.js';
 import { init as sharesInit } from '../../components/share/index.js';
 import { logger } from '../../log/index.js';
@@ -27,6 +28,7 @@ const init = async (): Promise<void> => {
       domainsInit(client),
       genesInit(client),
       familiesInit(client),
+      methodsInit(client),
     ]);
 
     await Promise.all([

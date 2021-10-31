@@ -11,8 +11,8 @@ export { importProteins };
 const schema = joi
   .object()
   .keys({
+    id: joi.string().trim().max(50),
     geneId: joi.string().trim().max(50),
-    uniProtId: joi.string().trim().max(50),
     name: joi.string().max(255).allow('', null),
     species: joi.string().allow('', null),
     description: joi.string().allow('', null),
