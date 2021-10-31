@@ -54,6 +54,16 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     friendlyName: 'Family',
     dropdownItemName: 'Family name',
   },
+  {
+    id: 'locMethodStr',
+    friendlyName: 'Method',
+    dropdownItemName: 'Localization Method',
+  },
+  {
+    id: 'locOrganelleIdStr',
+    friendlyName: 'Organelle',
+    dropdownItemName: 'Localization Organelle',
+  },
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');

@@ -13,6 +13,10 @@ export type Protein = {
   readonly gene?: string | null;
   readonly domain?: string | null;
   readonly family?: string | null;
+  readonly locMethod?: readonly string[];
+  readonly locOrganelleId?: readonly string[];
+  readonly locMethodStr?: string;
+  readonly locOrganelleIdStr?: string;
 };
 
 export type NewProtein = Omit<Protein, 'id'>;

@@ -18,6 +18,8 @@ export type ProteinClient = Protein & {
   readonly gene?: string | null;
   readonly domain?: string | null;
   readonly family?: string | null;
+  readonly locMethod?: readonly string[];
+  readonly locOrganelleId?: readonly string[];
 };
 
 export type ProteinRequest = ListRequest & {

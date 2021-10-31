@@ -39,8 +39,17 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
                        g."name" as gene,
                        d."name" as domain,
                        f."name" as family,
+                       (CASE WHEN p."locMethod"::text = '[null]' THEN '[]'::json ELSE p."locMethod" END) AS "locMethod",
+                       (CASE WHEN p."locOrganelleId"::text = '[null]' THEN '[]'::json ELSE p."locOrganelleId" END) AS "locOrganelleId",
                        COUNT(*) OVER() AS total
-                FROM "public"."proteins" as p
+                FROM (
+                  SELECT p.*,
+                         json_agg(DISTINCT l."method") AS "locMethod",
+                         json_agg(DISTINCT l."organelleId") AS "locOrganelleId"
+                   FROM "public"."proteins" as p
+                   LEFT JOIN "public"."localization" as l ON l."proteinId" = p."uniProtId"
+                   GROUP BY p."id"
+                ) as p
                 LEFT JOIN "public"."genes" as g ON g."accession" = p."geneId"
                 LEFT JOIN "public"."domains" as d ON d."id" = p."domainId"
                 LEFT JOIN "public"."families" as f ON f."id" = p."familyId"

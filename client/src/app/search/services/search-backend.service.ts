@@ -12,10 +12,20 @@ export class SearchBackendService {
 
   getProteinsList(params: FilterParams): Observable<ProteinsListResult> {
     return this.http.post('/api/proteins', omitEmptyProps(params)).pipe(
-      map((res: any) => res),
+      map((res: any) => this.parseProteins(res)),
       catchError((res: HttpErrorResponse): never => {
         throw parseHttpError(res);
       }),
     );
+  }
+
+  private parseProteins(res: ProteinsListResult): ProteinsListResult {
+    const proteins = res.proteins.map((p) => {
+      const locMethodStr = p.locMethod?.join('; ') || '';
+      const locOrganelleIdStr = p.locOrganelleId?.join('; ') || '';
+      return { ...p, locMethodStr, locOrganelleIdStr };
+    });
+
+    return { ...res, proteins };
   }
 }
