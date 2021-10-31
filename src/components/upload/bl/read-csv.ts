@@ -7,9 +7,9 @@ import { StringAnyMap } from '../../../typings/index.js';
 
 export { readCSV };
 
-const readCSV = async (file: File): Promise<readonly StringAnyMap[]> => {
+const readCSV = async (file: File, delimiter: string): Promise<readonly StringAnyMap[]> => {
   const results: any = [];
-  const parser = parse({ columns: true });
+  const parser = parse({ columns: true, delimiter });
 
   try {
     createReadStream(file.path).pipe(parser);

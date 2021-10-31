@@ -1,12 +1,13 @@
 <button
   type="button"
   class="btn"
-  mat-button=""
+  mat-raised-button
   [disabled]="disabled"
   [disableRipple]="disableRipple"
   (menuOpened)="onMenuOpened()"
   (menuClosed)="onMenuClosed()"
   [matMenuTriggerFor]="multiSelectMenu"
+  #menuTrigger="matMenuTrigger"
 >
   <ng-content></ng-content>
 </button>

@@ -16,9 +16,11 @@ export class SocketService {
 
   constructor() {
     this.message$ = new Observable<Message>((observer) => {
-      this.socket = io('', { transports: ['websocket'] });
-      this.socket?.on('message', (msg: Message) => observer.next(msg));
-      return () => this.socket?.disconnect();
+      const socket = io('', { transports: ['websocket'] });
+      socket.on('message', (msg: Message) => observer.next(msg));
+
+      this.socket = socket;
+      return () => socket?.disconnect();
     });
   }
 

@@ -29,6 +29,7 @@ import { SearchInputComponent } from './search-input/search-input.component';
   exports: [
     MainMenuComponent, //
     MainFooterComponent,
+    MultiSelectComponent,
     SearchInputComponent,
     MultiSelectComponent,
     FilterSelectComponent,

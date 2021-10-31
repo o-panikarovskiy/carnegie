@@ -4,21 +4,18 @@ import { allowRequest, checkSession } from './check-session.js';
 
 export { createSocketServer, sendToSocket, Message };
 
+let io: Server;
 type Message<T = any> = { event: string; payload?: T };
-const sockets = new Map<string, Socket>();
 
 const createSocketServer = (httpServer: http.Server): void => {
-  const io = new Server(httpServer, { transports: ['websocket'], allowRequest });
+  io = new Server(httpServer, { transports: ['websocket'], allowRequest });
 
   io.use(checkSession).on('connection', (socket: Socket): void => {
-    const key = socket.data?.user?.email;
-    if (!key) return;
-
-    sockets.set(key, socket);
-    socket.on('disconnect', () => sockets.delete(key));
+    const room = socket.data?.user?.email;
+    socket.join(room);
   });
 };
 
-const sendToSocket = <T>(key: string, msg: Message<T>): void => {
-  sockets.get(key)?.emit('message', msg);
+const sendToSocket = <T>(room: string, msg: Message<T>): void => {
+  io.to(room).emit('message', msg);
 };

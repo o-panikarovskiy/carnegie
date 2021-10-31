@@ -12,6 +12,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
 import { StringAnyMap } from 'src/app/core/typings/common';
@@ -32,6 +33,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
   @Input() disabled = false;
   @Input() disableRipple = false;
   @Input() searchPlaceholder = 'Search';
+  @Input() mode: 'single' | 'multi' = 'multi';
 
   @Output() opened = new EventEmitter<void>();
   @Output() closed = new EventEmitter<void>();
@@ -39,6 +41,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
   @Output() unselectItem = new EventEmitter<any>();
 
   @ViewChild('searchInput') searchInput?: ElementRef;
+  @ViewChild('menuTrigger') menuTrigger?: MatMenuTrigger;
 
   itemsCount = 0;
   selectedText = '';
@@ -78,8 +81,15 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
 
   clickOnItem(item: any, event?: MouseEvent) {
     event?.stopPropagation();
-    this.changeSelectedItems(item);
-    this.onChange(Array.from(this.selectedSet.keys()));
+
+    if (this.mode === 'multi') {
+      this.changeSelectedItems(item);
+      this.onChange(Array.from(this.selectedSet.keys()));
+    } else {
+      this.menuTrigger?.closeMenu();
+      this.changeSelectedItem(item);
+      this.onChange(Array.from(this.selectedSet.keys())[0]);
+    }
   }
 
   onMenuOpened() {
@@ -148,7 +158,17 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
     }
   }
 
+  protected changeSelectedItem(item: any) {
+    const itemId = item[this.idFieldName];
+
+    this.selectedSet.clear();
+    this.selectedSet.add(itemId);
+    this.selectItem.next(item);
+  }
+
   protected prioritizeItems(items: any[]): any[] {
+    if (this.mode === 'single') return items;
+
     let res: SortPriority;
 
     if (this.selectedSet.size === 0) {

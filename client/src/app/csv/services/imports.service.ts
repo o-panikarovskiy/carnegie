@@ -40,15 +40,15 @@ export class ImportsService {
     );
   }
 
-  importGenes(file: File): Observable<ImportProcessToken> {
-    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'genes' });
+  importGenes(file: File, separator: string): Observable<ImportProcessToken> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'genes', separator });
   }
 
-  importProteins(file: File): Observable<ImportProcessToken> {
-    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'proteins' });
+  importProteins(file: File, separator: string): Observable<ImportProcessToken> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'proteins', separator });
   }
 
-  importLocalizations(file: File): Observable<ImportProcessToken> {
-    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'localizations' });
+  importLocalizations(file: File, separator: string): Observable<ImportProcessToken> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'localizations', separator });
   }
 }

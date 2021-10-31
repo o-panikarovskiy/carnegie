@@ -4,6 +4,7 @@ import { AppError } from 'src/app/core/typings/common';
 import { Gene } from 'src/app/core/typings/gene';
 import { COMPLETE_IMPORT, COMPLETE_IMPORT_ITEM, ImportProcessToken, ImportsService, IMPORT_STATUSES } from 'src/app/csv/services/imports.service';
 import { ImportStatus, LogMessage, Payload } from 'src/app/csv/typings/upload';
+import { DoneEvent } from 'src/app/csv/upload/upload-form/upload-form.component';
 import { arrayToCSV } from 'src/app/csv/utils/array-to-csv';
 import { downloadBlob } from 'src/app/csv/utils/download-blob';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
@@ -49,7 +50,7 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
       });
   }
 
-  fileSelect(file: File) {
+  startImport({ file, separator }: DoneEvent) {
     this.logs = [];
     this.progress = 0;
     this.parseError = void 0;
@@ -57,7 +58,7 @@ export class UploadGenesComponent extends Destroyer implements OnInit {
     this.impToken.fileId = file.name;
 
     this.importsSrv
-      .importGenes(file)
+      .importGenes(file, separator)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         ({ fileId }) => {
