@@ -4,12 +4,13 @@ import { createReadStream } from 'fs';
 import { AppError } from '../../../errors/app-error.js';
 import { BAD_REQUEST } from '../../../errors/common-errors.js';
 import { StringAnyMap } from '../../../typings/index.js';
+import { ImportRequest } from '../models.js';
 
 export { readCSV };
 
-const readCSV = async (file: File, delimiter: string): Promise<readonly StringAnyMap[]> => {
+const readCSV = async (file: File, { delimiter, escape }: ImportRequest): Promise<readonly StringAnyMap[]> => {
   const results: any = [];
-  const parser = parse({ columns: true, delimiter });
+  const parser = parse({ columns: true, delimiter, escape });
 
   try {
     createReadStream(file.path).pipe(parser);

@@ -7,12 +7,13 @@ export type UploadRequest = {
   readonly separator: string;
 };
 
-export type Payload<T> = {
+export type Payload<T = any> = {
   readonly fileId: string;
   readonly rowNum: number;
   readonly progress: number;
   readonly error?: AppError;
   readonly item?: T;
+  readonly raw?: any;
 };
 
 export type LogMessage = {

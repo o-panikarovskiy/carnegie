@@ -26,7 +26,7 @@ const importRows = async <T>(
       items.push(item);
       sendToSocket<Payload<T>>(creator.email, { event, payload });
     } catch (error) {
-      const payload: Payload<T> = { fileId, rowNum, progress, error: parseError(error) };
+      const payload: Payload<T> = { fileId, rowNum, progress, raw, error: parseError(error) };
       sendToSocket<Payload<T>>(creator.email, { event, payload });
     }
   }

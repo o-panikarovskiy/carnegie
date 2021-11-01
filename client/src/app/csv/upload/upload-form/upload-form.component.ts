@@ -1,25 +1,23 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ImportParams } from 'src/app/csv/services/imports.service';
 
-export type DoneEvent = {
-  file: File;
-  separator: string;
-};
-
-export type SeparatorItem = {
+export type SplitItem = {
   readonly label: string;
   readonly id: string;
 };
 
-const SEPARATOR_ITEMS: readonly SeparatorItem[] = [
-  {
-    id: ';',
-    label: 'Semicolon ;',
-  },
-  {
-    id: ',',
-    label: 'Comma ,',
-  },
+const DELIMETERS: readonly SplitItem[] = [
+  { id: ';', label: ';' },
+  { id: ',', label: ',' },
+  { id: '\t', label: '⇥' },
+  { id: '|', label: '|' },
+] as const;
+
+const ESCAPES: readonly SplitItem[] = [
+  { id: '"', label: '"' },
+  { id: '""', label: '""' },
+  { id: '', label: 'none' },
 ] as const;
 
 @Component({
@@ -28,13 +26,18 @@ const SEPARATOR_ITEMS: readonly SeparatorItem[] = [
   styleUrls: ['./upload-form.component.scss'],
 })
 export class UploadFormComponent {
-  @Output() done = new EventEmitter<DoneEvent>();
+  @Input() importText = 'Start import';
+  @Input() disabled = false;
+  @Output() done = new EventEmitter<ImportParams>();
   @Output() sample = new EventEmitter<void>();
 
-  readonly separatorItems = SEPARATOR_ITEMS;
+  readonly escapes = ESCAPES;
+  readonly delimiters = DELIMETERS;
+
   readonly form = new FormGroup({
     file: new FormControl(void 0, { validators: Validators.required }),
-    separator: new FormControl(SEPARATOR_ITEMS[0].id),
+    escape: new FormControl(ESCAPES[0].id),
+    delimiter: new FormControl(DELIMETERS[0].id),
   });
 
   constructor() {}

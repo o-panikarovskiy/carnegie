@@ -2,6 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
+import { insertMethod } from '../../methods/index.js';
 import { importRows } from '../../upload/bl/import-rows.js';
 import { Localization } from '../models.js';
 import { insertLocalization } from '../repository/insert-localization.js';
@@ -24,5 +25,6 @@ const importLocalizations = async (fileId: string, creator: User, list: readonly
 
 const importLocalization = async (creator: User, raw: StringAnyMap): Promise<Localization> => {
   const req = await verifySchema<Localization>(schema, raw);
+  await insertMethod({ type: req.methodId });
   return insertLocalization(req);
 };

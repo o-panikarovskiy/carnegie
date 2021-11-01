@@ -14,7 +14,8 @@ import { ImportRequest, ImportTable } from '../models.js';
 export { uploadCSV };
 
 const schema = joi.object().keys({
-  separator: joi.string().allow(',', ';').default(','),
+  escape: joi.string().allow('"', '""', '').default('"'),
+  delimiter: joi.string().allow(',', ';', '|', '\t').default(','),
   table: joi.string().allow('genes', 'proteins', 'localizations').required(),
 });
 
@@ -29,13 +30,13 @@ const uploadCSV = async (ctx: Context): Promise<void> => {
   if (!file) throw new AppBadRequest('Empty request');
   if (Array.isArray(file)) throw new AppBadRequest('Array of files not allowed');
 
-  const { table, separator } = await verifySchema<ImportRequest>(schema, ctx.request.body);
+  const req = await verifySchema<ImportRequest>(schema, ctx.request.body);
 
-  const imp = IMPORTS[table];
+  const imp = IMPORTS[req.table];
   if (!imp) throw new AppBadRequest('Invalid import name');
 
   try {
-    const csv = await readCSV(file, separator);
+    const csv = await readCSV(file, req);
     const fileId = basename(file.path).replace('uload_', '');
 
     imp(fileId, ctx.state.user, csv); // don't wait

@@ -5,9 +5,10 @@ const createLocalizationTable = (): string => {
     CREATE TABLE IF NOT EXISTS "public"."localization" (
       "proteinId"            varchar(50) NOT NULL,
       "organelleId"          varchar(50) NOT NULL,
-      PRIMARY KEY            ("proteinId", "organelleId"),
-      "pubMedId"             varchar(50) NULL,
-      "methodId"             varchar(20) NULL,
+      "pubMedId"             varchar(50) NOT NULL,
+      "methodId"             varchar(20) NOT NULL,
+      PRIMARY KEY            ("proteinId", "organelleId", "pubMedId", "methodId"),
+      CONSTRAINT             "fkproteins" FOREIGN KEY ( "proteinId" ) REFERENCES "public"."proteins" ( "id" ),
       CONSTRAINT             "fkmethods" FOREIGN KEY ( "methodId" ) REFERENCES "public"."methods" ( "type" )
     );
   `;

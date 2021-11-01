@@ -1,54 +1,61 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Observable, pipe, UnaryFunction } from 'rxjs';
+import { filter, map, switchMap, takeWhile } from 'rxjs/operators';
 import { Message, SocketService } from 'src/app/core/services/socket.service';
 import { UploadService } from 'src/app/core/services/upload.service';
-import { StronglyKeyedMap } from 'src/app/core/typings/common';
-import { ImportStatus, Payload } from 'src/app/csv/typings/upload';
+import { Gene } from 'src/app/core/typings/gene';
+import { ImportStatus, LogMessage, Payload } from 'src/app/csv/typings/upload';
+import { formatLogMessage } from 'src/app/csv/utils/format-log-message';
 
 export const COMPLETE_IMPORT = 'import:complete';
 export const COMPLETE_IMPORT_ITEM = 'import:item:complete';
-export const IMPORT_STATUSES: StronglyKeyedMap<ImportStatus, string> = {
-  complete: 'completed',
-  uploading: 'uploading...',
-  importing: 'importing...',
-} as const;
 
 export type ImportProcessToken = { fileId: string };
+export type ImportParams = { file: File; escape: string; delimiter: string };
+
+export type ImportState = {
+  readonly progress?: number;
+  readonly status?: ImportStatus;
+  readonly logMsg?: LogMessage;
+};
 
 @Injectable()
 export class ImportsService {
+  private readonly progressPipe: UnaryFunction<Observable<ImportProcessToken>, Observable<ImportState>>;
+
   constructor(
     private uploadSrv: UploadService, //
     private socketSrv: SocketService,
-  ) {}
-
-  onUploadProgress(token: ImportProcessToken): Observable<number> {
-    return this.uploadSrv.progressUpload$.pipe(
-      filter(({ guids }) => {
-        return !!token?.fileId && guids.has(token.fileId);
+  ) {
+    this.progressPipe = pipe(
+      switchMap((token: ImportProcessToken) => {
+        return this.socketSrv.message$.pipe(
+          filter((msg): msg is Message<Payload<Gene>> => {
+            return !!token?.fileId && msg.payload?.fileId === token.fileId;
+          }),
+          takeWhile((msg) => msg.event !== COMPLETE_IMPORT, true),
+        );
       }),
-      map(({ progress }) => progress),
+      map(({ event, payload }): ImportState => {
+        if (event === COMPLETE_IMPORT) return { status: 'complete' };
+
+        const progress = payload.progress;
+        const status: ImportStatus = 'importing';
+        const logMsg = formatLogMessage(payload);
+        return { progress, status, logMsg };
+      }),
     );
   }
 
-  onImportProgress<T>(token: ImportProcessToken): Observable<Message<Payload<T>>> {
-    return this.socketSrv.message$.pipe(
-      filter((msg): msg is Message<Payload<T>> => {
-        return !!token?.fileId && msg.payload?.fileId === token.fileId;
-      }),
-    );
+  importGenes({ file, ...params }: ImportParams): Observable<ImportState> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'genes' }).pipe(this.progressPipe);
   }
 
-  importGenes(file: File, separator: string): Observable<ImportProcessToken> {
-    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'genes', separator });
+  importProteins({ file, ...params }: ImportParams): Observable<ImportState> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'proteins' }).pipe(this.progressPipe);
   }
 
-  importProteins(file: File, separator: string): Observable<ImportProcessToken> {
-    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'proteins', separator });
-  }
-
-  importLocalizations(file: File, separator: string): Observable<ImportProcessToken> {
-    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { table: 'localizations', separator });
+  importLocalizations({ file, ...params }: ImportParams): Observable<ImportState> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'localizations' }).pipe(this.progressPipe);
   }
 }

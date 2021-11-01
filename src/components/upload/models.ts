@@ -4,7 +4,8 @@ import { User } from '../auth/models.js';
 
 export type ImportRequest = {
   table: string;
-  separator: string;
+  escape: string;
+  delimiter: string;
 };
 
 export type Payload<T> = {
@@ -13,6 +14,7 @@ export type Payload<T> = {
   readonly progress: number;
   readonly error?: IAppError;
   readonly item?: T;
+  readonly raw?: any;
 };
 
 export type ImportTable<T = any> = (fileId: string, creator: User, list: readonly StringAnyMap[]) => Promise<readonly T[]>;
