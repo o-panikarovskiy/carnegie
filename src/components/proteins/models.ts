@@ -20,6 +20,8 @@ export type ProteinClient = Protein & {
   readonly method?: string | null;
   readonly pubMedId?: string | null;
   readonly organelleId?: string | null;
+  readonly geneAliases?: string | null;
+  readonly proteinAliases?: string | null;
 };
 
 export type ProteinRequest = ListRequest & {

@@ -15,6 +15,8 @@ export type Protein = {
   readonly method?: string | null;
   readonly pubMedId?: string | null;
   readonly organelleId?: string | null;
+  readonly geneAliases?: string | null;
+  readonly proteinAliases?: string | null;
 };
 
 export type NewProtein = Omit<Protein, 'id'>;

@@ -26,12 +26,14 @@ const allowedSort: (keyof ProteinClient)[] = [
   'method',
   'organelleId',
   'pubMedId',
+  'geneAliases',
+  'proteinAliases',
 ];
 
 const allowedAggFilters: FiltersSchema[] = [
-  { filterName: 'method', columnName: 'l."methodId"' }, //
-  { filterName: 'pubMedId', columnName: 'l."pubMedId"' },
-  { filterName: 'organelleId', columnName: 'l."organelleId"' },
+  { filterName: 'method', columnName: 'loc."methodId"' }, //
+  { filterName: 'pubMedId', columnName: 'loc."pubMedId"' },
+  { filterName: 'organelleId', columnName: 'loc."organelleId"' },
 ];
 
 const allowedMainFilters: FiltersSchema[] = [
@@ -51,21 +53,30 @@ const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Pro
   const whereMain = buildWhere(allowedMainFilters, values, mainConditions, filters);
 
   const text = `SELECT p.*,
-                       g."name" as gene,
-                       d."name" as domain,
-                       f."name" as family,
+                       g."name" as "gene",
+                       g."geneAliases" as "geneAliases",
+                       d."name" as "domain",
+                       f."name" as "family",
                        COUNT(*) OVER() AS total
                 FROM (
-                  SELECT p.*,
-                         STRING_AGG(DISTINCT l."methodId", '; ') AS "method",
-                         STRING_AGG(DISTINCT l."pubMedId", '; ') AS "pubMedId",
-                         STRING_AGG(DISTINCT l."organelleId", '; ') AS "organelleId"
-                   FROM "public"."proteins" as p
-                   LEFT JOIN "public"."localization" as l ON l."proteinId" = p."id"
+                   SELECT ptn.*,
+                          STRING_AGG(DISTINCT loc."methodId", '; ') AS "method",
+                          STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
+                          STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
+                          STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases"
+                   FROM "public"."proteins" as ptn
+                   LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."id"
+                   LEFT JOIN "public"."tags" as tag ON tag."key" = ptn."id"
                    ${whereAgg}
-                   GROUP BY p."id"
+                   GROUP BY ptn."id"
                 ) as p
-                LEFT JOIN "public"."genes" as g ON g."accession" = p."geneId"
+                LEFT JOIN (
+                   SELECT gen.*,
+                          STRING_AGG(DISTINCT tag."name", '; ') AS "geneAliases"
+                   FROM "public"."genes" as gen
+                   LEFT JOIN "public"."tags" as tag ON tag."key" = gen."accession"
+                   GROUP BY gen."accession"
+                ) as g ON g."accession" = p."geneId"
                 LEFT JOIN "public"."domains" as d ON d."id" = p."domainId"
                 LEFT JOIN "public"."families" as f ON f."id" = p."familyId"
                 ${whereMain}
@@ -85,8 +96,10 @@ const buildMainLike = (term: string, values: string[] = [], conditions: string[]
   const like = `(
                   p."name" ILIKE $${len}
               OR  p."id" ILIKE $${len}
+              OR  p."proteinAliases" ILIKE $${len}
               OR  p."description" ILIKE $${len}
               OR  g."name" ILIKE $${len}
+              OR  g."geneAliases" ILIKE $${len}
               OR  g."accession" ILIKE $${len}
               OR  d."name" ILIKE $${len}
               OR  f."name" ILIKE $${len}

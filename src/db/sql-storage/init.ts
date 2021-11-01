@@ -6,6 +6,7 @@ import { init as methodsInit } from '../../components/methods/index.js';
 import { init as pathways } from '../../components/pathways/index.js';
 import { init as proteinsInit } from '../../components/proteins/index.js';
 import { init as sharesInit } from '../../components/share/index.js';
+import { init as tagsInit } from '../../components/tags/index.js';
 import { logger } from '../../log/index.js';
 import { connect } from './connect.js';
 import { initAppPool } from './pool.js';
@@ -31,6 +32,7 @@ const init = async (): Promise<void> => {
       familiesInit(client),
       methodsInit(client),
       pathways(client),
+      tagsInit(client),
     ]);
 
     await Promise.all([

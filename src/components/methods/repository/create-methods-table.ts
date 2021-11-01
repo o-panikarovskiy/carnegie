@@ -1,6 +1,6 @@
-export { createLocalizationTable };
+export { createMethodsTable };
 
-const createLocalizationTable = (): string => {
+const createMethodsTable = (): string => {
   return `
     CREATE TABLE IF NOT EXISTS "public"."methods" (
       "type"                 varchar(20) NOT NULL PRIMARY KEY,

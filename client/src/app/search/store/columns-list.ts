@@ -69,6 +69,16 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     friendlyName: 'Organelle',
     dropdownItemName: 'Organelle',
   },
+  {
+    id: 'geneAliases',
+    friendlyName: 'Gene Aliases',
+    dropdownItemName: 'Gene Aliases',
+  },
+  {
+    id: 'proteinAliases',
+    friendlyName: 'Protein Aliases',
+    dropdownItemName: 'Protein Aliases',
+  },
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
