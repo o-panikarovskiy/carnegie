@@ -1,10 +1,4 @@
-<crng-upload-form
-  [disabled]="state.status === 'importing'"
-  class="form"
-  (done)="startImport($event)"
-  (sample)="sendSample()"
-  importText="Start import localizations"
-></crng-upload-form>
+<crng-upload-form [disabled]="state.status === 'importing'" class="form" (done)="startImport($event)" (sample)="sendSample()"></crng-upload-form>
 
 <div class="progress" *ngIf="state.status === 'importing'">
   <div class="title">{{ state.progress + '%' }}</div>

@@ -7,6 +7,7 @@ import { StringTMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { importGenes } from '../../genes/index.js';
 import { importLocalizations } from '../../localization/index.js';
+import { importPathways } from '../../pathways/bl/import-pathways.js';
 import { importProteins } from '../../proteins//index.js';
 import { readCSV } from '../bl/read-csv.js';
 import { ImportRequest, ImportTable } from '../models.js';
@@ -16,12 +17,13 @@ export { uploadCSV };
 const schema = joi.object().keys({
   escape: joi.string().allow('"', '""', '').default('"'),
   delimiter: joi.string().allow(',', ';', '|', '\t').default(','),
-  table: joi.string().allow('genes', 'proteins', 'localizations').required(),
+  table: joi.string().allow('genes', 'proteins', 'pathways', 'localizations').required(),
 });
 
 const IMPORTS: StringTMap<ImportTable> = {
   genes: importGenes,
   proteins: importProteins,
+  pathways: importPathways,
   localizations: importLocalizations,
 };
 

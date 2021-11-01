@@ -9,6 +9,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CSVImportRoutingModule } from 'src/app/csv/csv-routing.module';
 import { ImportsService } from 'src/app/csv/services/imports.service';
 import { UploadLocalizationsComponent } from 'src/app/csv/upload/upload-localizations/upload-localizations.component';
+import { UploadPathwaysComponent } from 'src/app/csv/upload/upload-pathways/upload-pathways.component';
 import { UploadProteinsComponent } from 'src/app/csv/upload/upload-proteins/upload-proteins.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UploadButtonComponent } from './upload/upload-button/upload-button.component';
@@ -23,6 +24,7 @@ import { UploadComponent } from './upload/upload.component';
     UploadButtonComponent,
     UploadGenesComponent,
     UploadProteinsComponent,
+    UploadPathwaysComponent,
     UploadLocalizationsComponent,
   ],
   imports: [

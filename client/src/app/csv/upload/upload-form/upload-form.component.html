@@ -1,6 +1,6 @@
 <form class="form" [formGroup]="form" (ngSubmit)="start()">
   <div class="block">
-    <h3 class="title"><a href="" class="link" (click)="downloadSample($event)">Check sample</a></h3>
+    <h3 class="title"><a href="" class="link" (click)="downloadSample($event)">Download sample</a></h3>
     <crng-upload-button (fileSelect)="form.get('file')?.setValue($event)">
       <span class="file-btn">{{ form.get('file')?.value?.name || 'Select File' }}</span>
     </crng-upload-button>
@@ -20,5 +20,5 @@
     </mat-button-toggle-group>
   </div>
 
-  <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="disabled || form.invalid">{{ importText }}</button>
+  <button type="submit" class="btn" mat-raised-button color="primary" [disabled]="disabled || form.invalid">Start</button>
 </form>

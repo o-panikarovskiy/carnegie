@@ -26,7 +26,6 @@ const ESCAPES: readonly SplitItem[] = [
   styleUrls: ['./upload-form.component.scss'],
 })
 export class UploadFormComponent {
-  @Input() importText = 'Start import';
   @Input() disabled = false;
   @Output() done = new EventEmitter<ImportParams>();
   @Output() sample = new EventEmitter<void>();

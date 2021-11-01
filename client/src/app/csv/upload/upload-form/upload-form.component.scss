@@ -18,6 +18,10 @@
   margin: 0;
 }
 
+.mat-button-toggle {
+  min-width: 46px;
+}
+
 .mat-button-toggle-checked {
   color: var(--color-primary);
   font-weight: bold;

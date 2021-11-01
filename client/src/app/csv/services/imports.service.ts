@@ -58,4 +58,8 @@ export class ImportsService {
   importLocalizations({ file, ...params }: ImportParams): Observable<ImportState> {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'localizations' }).pipe(this.progressPipe);
   }
+
+  importPathways({ file, ...params }: ImportParams): Observable<ImportState> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'pathways' }).pipe(this.progressPipe);
+  }
 }
