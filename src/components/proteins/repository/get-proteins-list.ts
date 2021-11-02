@@ -7,7 +7,7 @@ import { ColumnsSchema, FiltersSchema, ProteinClient, ProteinRequest, ProteinsLi
 export { getProteinsList };
 
 const columnsSchema: readonly ColumnsSchema[] = [
-  { columnName: 'id', aliasName: 'p."id"', isDefault: true }, //
+  { columnName: 'id', aliasName: 'p."id"', alwaysInclude: true }, //
   { columnName: 'geneId', aliasName: 'p."geneId"' },
   { columnName: 'domainId', aliasName: 'p."domainId"' },
   { columnName: 'familyId', aliasName: 'p."familyId"' },
@@ -40,9 +40,7 @@ const mainFiltersSchema: readonly FiltersSchema[] = [
 ] as const;
 
 const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
-  const columnsList = Array.from(new Set<TableColumn>(['id', ...(req.columns || [])]));
-
-  const columns = filterSelectedColumns(columnsSchema, columnsList);
+  const columns = filterSelectedColumns(columnsSchema, req.columns);
   const sortColumns = columns.map((c) => c.columnName);
   const selectColumns = columns.map((c) => c.aliasName).join(',\n');
   const { orderBy, skip, limit, orderDirection } = parseListReqOptions<ProteinClient>(req, sortColumns);
@@ -92,7 +90,7 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
 
 const filterSelectedColumns = (schema: readonly ColumnsSchema[], columns: readonly TableColumn[] = []): readonly ColumnsSchema[] => {
   const set = new Set<TableColumn>(columns);
-  return schema.filter((s) => set.has(s.columnName) || (set.size === 0 && s.isDefault));
+  return schema.filter((s) => s.alwaysInclude || set.has(s.columnName) || (set.size === 0 && s.isDefault));
 };
 
 const buildMainLike = (term: string, values: string[] = [], conditions: string[] = []) => {

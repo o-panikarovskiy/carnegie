@@ -44,6 +44,7 @@ export type ColumnsSchema = {
   readonly aliasName: string;
   readonly orderByName?: string;
   readonly isDefault?: boolean;
+  readonly alwaysInclude?: boolean;
 };
 
 export type SearchSelectConfig = {
