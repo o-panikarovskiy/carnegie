@@ -18,5 +18,3 @@ export type Protein = {
   readonly geneAliases?: string | null;
   readonly proteinAliases?: string | null;
 };
-
-export type NewProtein = Omit<Protein, 'id'>;

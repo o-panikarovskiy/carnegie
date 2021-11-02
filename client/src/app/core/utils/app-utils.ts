@@ -10,15 +10,14 @@ const indexBy = <T extends StringAnyMap>(arr: readonly T[], key: keyof T) => {
 };
 
 const omitEmptyProps = <T extends StringAnyMap>(object: T | undefined): T => {
-  if (typeof object === 'object' && object !== null) {
-    return Object.keys(object).reduce((acc, key) => {
-      if (object[key] !== null && object[key] !== undefined) {
-        (acc as any)[key] = object[key];
-      }
-      return acc;
-    }, {} as T);
-  }
-  return {} as T;
+  if (typeof object !== 'object' || object === null) return {} as T;
+
+  return Object.keys(object).reduce((acc, key) => {
+    if (isDefined(object[key])) {
+      (acc as any)[key] = object[key];
+    }
+    return acc;
+  }, {} as T);
 };
 
 const isDefined = (val: any) => {

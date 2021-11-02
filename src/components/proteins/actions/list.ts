@@ -11,6 +11,7 @@ const schema = joi.object().keys({
   skip: joi.number().positive().allow(0).default(0),
   limit: joi.number().positive().min(1).max(100).default(100),
   term: joi.string().optional().allow('').trim().max(512),
+  columns: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   gene: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   domain: joi.array().optional().items(joi.string().trim().guid()).max(100),
   family: joi.array().optional().items(joi.string().trim().guid()).max(100),
@@ -27,6 +28,7 @@ const schema = joi.object().keys({
  * @apiParam {number{0}} [skip=0] Skip (offset) items
  * @apiParam {number{1-100}} [limit=100] Max items per page (min 1, max 100)
  * @apiParam {string{0..512}} [term] Search term
+ * @apiParam {string[]} [columns] Table column names (max 100 items)
  * @apiParam {string[]} [gene] Filter by gene id (max 100 items)
  * @apiParam {string[]} [domain] Filter by domain id (max 100 items)
  * @apiParam {string[]} [family] Filter by family id (max 100 items)

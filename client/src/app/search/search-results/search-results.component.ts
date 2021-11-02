@@ -35,9 +35,9 @@ export class SearchResultsComponent extends Destroyer implements AfterViewInit, 
   }
 
   ngOnInit() {
-    this.store.filters$
+    this.store.viewParams$
       .pipe(
-        switchMap((filters) => this.store.loadProteins(filters)),
+        switchMap((vp) => this.store.loadProteins(vp)),
         takeUntil(this.destroy$),
       )
       .subscribe();

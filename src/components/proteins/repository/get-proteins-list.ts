@@ -2,93 +2,98 @@ import { DbClient } from '../../../db/sql-storage/models.js';
 import { pool } from '../../../db/sql-storage/pool.js';
 import { StringAnyMap } from '../../../typings/index.js';
 import { parseListReqOptions } from '../../../utils/parse-list-req-options.js';
-import { FiltersSchema, ProteinClient, ProteinRequest } from '../models.js';
+import { ColumnsSchema, FiltersSchema, ProteinClient, ProteinRequest, ProteinsListResult, SearchSelectConfig, TableColumn } from '../models.js';
 
-export { getProteinsList, ProteinsListResult };
+export { getProteinsList };
 
-type ProteinsListResult = {
-  proteins: readonly ProteinClient[];
-  total: number;
-};
+const columnsSchema: readonly ColumnsSchema[] = [
+  { columnName: 'id', aliasName: 'p."id"', isDefault: true }, //
+  { columnName: 'geneId', aliasName: 'p."geneId"' },
+  { columnName: 'domainId', aliasName: 'p."domainId"' },
+  { columnName: 'familyId', aliasName: 'p."familyId"' },
+  { columnName: 'name', aliasName: 'p."name"', isDefault: true },
+  { columnName: 'description', aliasName: 'p."description"' },
+  { columnName: 'length', aliasName: 'p."length"' },
+  { columnName: 'sequence', aliasName: 'p."sequence"' },
+  { columnName: 'species', aliasName: 'p."species"' },
+  { columnName: 'isEnzyme', aliasName: 'p."isEnzyme"' },
+  { columnName: 'gene', orderByName: 'g."name"', aliasName: 'g."name" AS "gene"' },
+  { columnName: 'domain', orderByName: 'd."name"', aliasName: 'd."name" AS "domain"' },
+  { columnName: 'family', orderByName: 'f."name"', aliasName: 'f."name" AS "family"' },
+  { columnName: 'method', aliasName: 'p."method"', isDefault: true },
+  { columnName: 'pubMedId', aliasName: 'p."pubMedId"' },
+  { columnName: 'organelleId', aliasName: 'p."organelleId"', isDefault: true },
+  { columnName: 'geneAliases', orderByName: 'g."geneAliases"', aliasName: 'g."geneAliases" AS "geneAliases"' },
+  { columnName: 'proteinAliases', aliasName: 'p."proteinAliases"' },
+] as const;
 
-const allowedSort: (keyof ProteinClient)[] = [
-  'id', //
-  'gene',
-  'geneId',
-  'domain',
-  'family',
-  'name',
-  'description',
-  'length',
-  'sequence',
-  'species',
-  'isEnzyme',
-  'method',
-  'organelleId',
-  'pubMedId',
-  'geneAliases',
-  'proteinAliases',
-];
-
-const allowedAggFilters: FiltersSchema[] = [
+const aggFiltersSchema: readonly FiltersSchema[] = [
   { filterName: 'method', columnName: 'loc."methodId"' }, //
   { filterName: 'pubMedId', columnName: 'loc."pubMedId"' },
   { filterName: 'organelleId', columnName: 'loc."organelleId"' },
-];
+] as const;
 
-const allowedMainFilters: FiltersSchema[] = [
+const mainFiltersSchema: readonly FiltersSchema[] = [
   { filterName: 'gene', columnName: 'g."accession"' }, //
   { filterName: 'domain', columnName: 'd."id"' },
   { filterName: 'family', columnName: 'f."id"' },
-];
+] as const;
 
-const getProteinsList = async (filters?: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
-  const { orderBy, skip, limit, orderDirection } = parseListReqOptions<ProteinClient>(filters, allowedSort);
+const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
+  const columnsList = Array.from(new Set<TableColumn>(['id', ...(req.columns || [])]));
+
+  const columns = filterSelectedColumns(columnsSchema, columnsList);
+  const sortColumns = columns.map((c) => c.columnName);
+  const selectColumns = columns.map((c) => c.aliasName).join(',\n');
+  const { orderBy, skip, limit, orderDirection } = parseListReqOptions<ProteinClient>(req, sortColumns);
 
   const values: string[] = [];
-  const whereAgg = buildWhere(allowedAggFilters, values, [], filters);
+  const whereAgg = buildWhere(aggFiltersSchema, values, [], req);
 
   const mainConditions: string[] = [];
-  buildMainLike(filters?.term || '', values, mainConditions);
-  const whereMain = buildWhere(allowedMainFilters, values, mainConditions, filters);
+  buildMainLike(req.term || '', values, mainConditions);
+  const whereMain = buildWhere(mainFiltersSchema, values, mainConditions, req);
 
-  const text = `SELECT p.*,
-                       g."name" as "gene",
-                       g."geneAliases" as "geneAliases",
-                       d."name" as "domain",
-                       f."name" as "family",
-                       COUNT(*) OVER() AS total
-                FROM (
-                   SELECT ptn.*,
-                          STRING_AGG(DISTINCT loc."methodId", '; ') AS "method",
-                          STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
-                          STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
-                          STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases"
-                   FROM "public"."proteins" as ptn
-                   LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."id"
-                   LEFT JOIN "public"."tags" as tag ON tag."key" = ptn."id"
-                   ${whereAgg}
-                   GROUP BY ptn."id"
-                ) as p
-                LEFT JOIN (
-                   SELECT gen.*,
-                          STRING_AGG(DISTINCT tag."name", '; ') AS "geneAliases"
-                   FROM "public"."genes" as gen
-                   LEFT JOIN "public"."tags" as tag ON tag."key" = gen."accession"
-                   GROUP BY gen."accession"
-                ) as g ON g."accession" = p."geneId"
-                LEFT JOIN "public"."domains" as d ON d."id" = p."domainId"
-                LEFT JOIN "public"."families" as f ON f."id" = p."familyId"
-                ${whereMain}
-                ORDER BY "${orderBy}" ${orderDirection}
-                LIMIT ${limit | 0}
-                OFFSET ${skip | 0};`;
+  const text = `
+  SELECT ${selectColumns},
+          COUNT(*) OVER() AS total
+  FROM (
+      SELECT ptn.*,
+            STRING_AGG(DISTINCT loc."methodId", '; ') AS "method",
+            STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
+            STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
+            STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases"
+      FROM "public"."proteins" as ptn
+      LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."id"
+      LEFT JOIN "public"."tags" as tag ON tag."key" = ptn."id"
+      ${whereAgg}
+      GROUP BY ptn."id"
+  ) as p
+  LEFT JOIN (
+      SELECT gen.*,
+            STRING_AGG(DISTINCT tag."name", '; ') AS "geneAliases"
+      FROM "public"."genes" as gen
+      LEFT JOIN "public"."tags" as tag ON tag."key" = gen."accession"
+      GROUP BY gen."accession"
+  ) as g ON g."accession" = p."geneId"
+  LEFT JOIN "public"."domains" as d ON d."id" = p."domainId"
+  LEFT JOIN "public"."families" as f ON f."id" = p."familyId"
+  ${whereMain}
+  ORDER BY "${orderBy}" ${orderDirection}
+  LIMIT ${limit | 0}
+  OFFSET ${skip | 0};`;
 
   const res = await (client || pool).query({ text, values });
   const rows = res.rows;
   const total: number = rows.length > 0 ? Number.parseFloat(rows[0].total) : -1;
 
   return { proteins: rows, total };
+};
+
+const filterSelectedColumns = (schema: readonly ColumnsSchema[], columns: readonly TableColumn[] = []): readonly ColumnsSchema[] => {
+  const set = new Set<TableColumn>(columns);
+  const config: SearchSelectConfig = { selectedColumns: [], orderByColumns: [] };
+  return schema.filter((s) => set.has(s.columnName) || (set.size === 0 && s.isDefault));
 };
 
 const buildMainLike = (term: string, values: string[] = [], conditions: string[] = []) => {
@@ -111,7 +116,7 @@ const buildMainLike = (term: string, values: string[] = [], conditions: string[]
   }
 };
 
-const buildWhere = (schema: FiltersSchema[], values: string[], conditions: string[], filters?: StringAnyMap): string => {
+const buildWhere = (schema: readonly FiltersSchema[], values: string[], conditions: string[], filters?: StringAnyMap): string => {
   schema.reduce((acc, af) => {
     const arr = filters?.[af.filterName];
     if (Array.isArray(arr) && arr.length > 0) {

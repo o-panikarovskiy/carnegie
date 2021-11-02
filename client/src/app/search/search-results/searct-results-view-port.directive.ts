@@ -26,14 +26,20 @@ export class SearchResultsViewPortDirective extends Destroyer implements AfterVi
           filter(() => this.isScrollGreaterThenLimit()),
           switchMap(() => {
             return forkJoin([
-              this.store.filters$.pipe(take(1)), //
+              this.store.viewParams$.pipe(take(1)), //
               this.store.proteins$.pipe(take(1)),
               this.store.proteinsTotal$.pipe(take(1)),
             ]);
           }),
           filter(([, proteins, total]) => proteins.length < total),
-          switchMap(([filters, proteins]) => {
-            return this.store.loadProteinsPage({ ...filters, skip: proteins.length });
+          switchMap(([viewParams, proteins]) => {
+            return this.store.loadProteinsPage({
+              ...viewParams,
+              filters: {
+                ...viewParams.filters,
+                skip: proteins.length,
+              },
+            });
           }),
           takeUntil(this.destroy$),
         )

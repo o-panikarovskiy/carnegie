@@ -24,20 +24,40 @@ export type ProteinClient = Protein & {
   readonly proteinAliases?: string | null;
 };
 
+export type TableColumn = keyof ProteinClient;
+
 export type ProteinRequest = ListRequest & {
   readonly term?: string | null;
   readonly genes?: readonly string[];
   readonly domains?: readonly string[];
   readonly families?: readonly string[];
+  readonly columns?: readonly TableColumn[];
 };
 
 export type FiltersSchema = {
-  readonly columnName: string;
   readonly filterName: string;
+  readonly columnName: string;
+};
+
+export type ColumnsSchema = {
+  readonly columnName: TableColumn;
+  readonly aliasName: string;
+  readonly orderByName?: string;
+  readonly isDefault?: boolean;
+};
+
+export type SearchSelectConfig = {
+  readonly selectedColumns: string[];
+  readonly orderByColumns: string[];
 };
 
 export type WhereConditionResult = {
   readonly where: string;
   readonly values: string[];
   readonly conditions: string[];
+};
+
+export type ProteinsListResult = {
+  readonly proteins: readonly ProteinClient[];
+  readonly total: number;
 };

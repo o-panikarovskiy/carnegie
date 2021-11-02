@@ -107,10 +107,10 @@ export class SearchStoreService {
     return this.dbs.getMethods(req);
   };
 
-  loadProteins = (filterParams: FilterParams): Observable<ProteinsListResult> => {
-    this.store.dispatch(loadProteinsList({ filterParams }));
+  loadProteins = (viewParams: ViewParams): Observable<ProteinsListResult> => {
+    this.store.dispatch(loadProteinsList({ viewParams }));
 
-    return this.sbs.getProteinsList(filterParams).pipe(
+    return this.sbs.getProteinsList(viewParams).pipe(
       map((result) => {
         this.store.dispatch(loadProteinsListSuccess(result));
         return result;
@@ -122,10 +122,10 @@ export class SearchStoreService {
     );
   };
 
-  loadProteinsPage = (filterParams: FilterParams): Observable<ProteinsListResult> => {
-    this.store.dispatch(loadProteinsPage({ filterParams }));
+  loadProteinsPage = (viewParams: ViewParams): Observable<ProteinsListResult> => {
+    this.store.dispatch(loadProteinsPage({ viewParams }));
 
-    return this.sbs.getProteinsList(filterParams).pipe(
+    return this.sbs.getProteinsList(viewParams).pipe(
       map((result) => {
         this.store.dispatch(loadProteinsPageSuccess(result));
         return result;
