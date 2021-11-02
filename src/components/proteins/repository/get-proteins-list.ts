@@ -2,7 +2,7 @@ import { DbClient } from '../../../db/sql-storage/models.js';
 import { pool } from '../../../db/sql-storage/pool.js';
 import { StringAnyMap } from '../../../typings/index.js';
 import { parseListReqOptions } from '../../../utils/parse-list-req-options.js';
-import { ColumnsSchema, FiltersSchema, ProteinClient, ProteinRequest, ProteinsListResult, SearchSelectConfig, TableColumn } from '../models.js';
+import { ColumnsSchema, FiltersSchema, ProteinClient, ProteinRequest, ProteinsListResult, TableColumn } from '../models.js';
 
 export { getProteinsList };
 
@@ -92,7 +92,6 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
 
 const filterSelectedColumns = (schema: readonly ColumnsSchema[], columns: readonly TableColumn[] = []): readonly ColumnsSchema[] => {
   const set = new Set<TableColumn>(columns);
-  const config: SearchSelectConfig = { selectedColumns: [], orderByColumns: [] };
   return schema.filter((s) => set.has(s.columnName) || (set.size === 0 && s.isDefault));
 };
 
