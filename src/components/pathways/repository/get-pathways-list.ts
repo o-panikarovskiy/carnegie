@@ -10,10 +10,10 @@ const getPathwaysList = async (options?: ListRequest, client?: DbClient): Promis
   const { orderBy, skip, limit, orderDirection } = parseListReqOptions<Pathway>(options, ['name']);
 
   const term = options?.search;
-  const where = term ? `WHERE "name" ILIKE $1` : '';
+  const where = term ? `WHERE "name" ILIKE $1 OR "id" ILIKE $1` : '';
   const values: string[] = term ? [`%${term}%`] : [];
 
-  const text = `SELECT *
+  const text = `SELECT "id", "name"
                 FROM "public"."pathways"
                 ${where}
                 ORDER BY "${orderBy}" ${orderDirection}

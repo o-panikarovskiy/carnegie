@@ -10,10 +10,10 @@ const getDomainsList = async (options?: ListRequest, client?: DbClient): Promise
   const { orderBy, skip, limit, orderDirection } = parseListReqOptions<Domain>(options, ['name']);
 
   const term = options?.search;
-  const where = term ? `WHERE "name" ILIKE $1` : '';
+  const where = term ? `WHERE "name" ILIKE $1 OR "interproId" ILIKE $1` : '';
   const values: string[] = term ? [`%${term}%`] : [];
 
-  const text = `SELECT *
+  const text = `SELECT "id", "name"
                 FROM "public"."domains"
                 ${where}
                 ORDER BY "${orderBy}" ${orderDirection}

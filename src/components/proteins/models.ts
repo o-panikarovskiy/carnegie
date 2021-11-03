@@ -2,8 +2,8 @@ import { ListRequest } from '../../typings/index.js';
 
 export type Protein = {
   readonly id: string;
+  readonly accession: string;
   readonly geneId?: string | null;
-  readonly domainId?: string | null;
   readonly familyId?: string | null;
   readonly name?: string | null;
   readonly description?: string | null;
@@ -16,6 +16,7 @@ export type Protein = {
 export type ProteinClient = Protein & {
   readonly geneName?: string | null;
   readonly domainName?: string | null;
+  readonly domainInterproId?: string | null;
   readonly familyName?: string | null;
   readonly method?: string | null;
   readonly pubMedId?: string | null;
@@ -28,14 +29,17 @@ export type TableColumn = keyof ProteinClient;
 
 export type ProteinRequest = ListRequest & {
   readonly term?: string | null;
-  readonly genes?: readonly string[];
-  readonly domains?: readonly string[];
-  readonly families?: readonly string[];
+  readonly geneId?: readonly string[];
+  readonly domainId?: readonly string[];
+  readonly familyId?: readonly string[];
+  readonly pubMedId?: readonly string[];
+  readonly organelleId?: readonly string[];
+  readonly method?: readonly string[];
   readonly columns?: readonly TableColumn[];
 };
 
 export type FiltersSchema = {
-  readonly filterName: TableColumn;
+  readonly filterName: string;
   readonly columnName: string;
 };
 

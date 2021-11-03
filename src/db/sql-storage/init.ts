@@ -27,7 +27,6 @@ const init = async (): Promise<void> => {
 
     await Promise.all([
       sharesInit(client), //
-      domainsInit(client),
       genesInit(client),
       familiesInit(client),
       methodsInit(client),
@@ -40,6 +39,7 @@ const init = async (): Promise<void> => {
     ]);
 
     await Promise.all([
+      domainsInit(client),
       localizationInit(client), //
     ]);
 

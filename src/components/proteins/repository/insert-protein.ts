@@ -6,8 +6,8 @@ export { insertProtein };
 
 const insertProtein = async (protein: Protein, client?: DbClient): Promise<Protein> => {
   const text = `INSERT INTO "public"."proteins"("id",
+                                                "accession",
                                                 "geneId",
-                                                "domainId",
                                                 "familyId",
                                                 "name",
                                                 "description",
@@ -19,7 +19,6 @@ const insertProtein = async (protein: Protein, client?: DbClient): Promise<Prote
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                 ON CONFLICT ("id")
                 DO UPDATE SET "geneId"        = excluded."geneId",
-                              "domainId"      = excluded."domainId",
                               "familyId"      = excluded."familyId",
                               "name"          = excluded."name",
                               "description"   = excluded."description",
@@ -31,8 +30,8 @@ const insertProtein = async (protein: Protein, client?: DbClient): Promise<Prote
 
   const values = [
     protein.id,
+    protein.accession,
     protein.geneId,
-    protein.domainId,
     protein.familyId,
     protein.name,
     protein.description,

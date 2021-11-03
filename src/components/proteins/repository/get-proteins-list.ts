@@ -8,10 +8,11 @@ export { getProteinsList };
 
 const columnsSchema: readonly ColumnsSchema[] = [
   { columnName: 'id', aliasName: 'p."id"', alwaysInclude: true }, //
+  { columnName: 'accession', aliasName: 'p."accession"' },
   { columnName: 'geneId', aliasName: 'p."geneId"' },
   { columnName: 'geneName', aliasName: 'g."name" AS "geneName"' },
-  { columnName: 'domainId', aliasName: 'p."domainId"' },
-  { columnName: 'domainName', aliasName: 'd."name" AS "domainName"' },
+  { columnName: 'domainName', aliasName: 'p."domainName"' },
+  { columnName: 'domainInterproId', aliasName: 'p."domainInterproId"' },
   { columnName: 'familyId', aliasName: 'p."familyId"' },
   { columnName: 'familyName', aliasName: 'f."name" AS "familyName"' },
   { columnName: 'name', aliasName: 'p."name"', isDefault: true },
@@ -31,11 +32,11 @@ const aggFiltersSchema: readonly FiltersSchema[] = [
   { filterName: 'method', columnName: 'loc."methodId"' }, //
   { filterName: 'pubMedId', columnName: 'loc."pubMedId"' },
   { filterName: 'organelleId', columnName: 'loc."organelleId"' },
+  { filterName: 'domainId', columnName: 'd."id"' },
 ] as const;
 
 const mainFiltersSchema: readonly FiltersSchema[] = [
   { filterName: 'geneId', columnName: 'g."accession"' }, //
-  { filterName: 'domainId', columnName: 'd."id"' },
   { filterName: 'familyId', columnName: 'f."id"' },
 ] as const;
 
@@ -57,12 +58,15 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
           COUNT(*) OVER() AS total
   FROM (
       SELECT ptn.*,
+            STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases",
             STRING_AGG(DISTINCT loc."methodId", '; ') AS "method",
             STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
             STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
-            STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases"
+            STRING_AGG(DISTINCT d."name", '; ') AS "domainName",
+            STRING_AGG(DISTINCT d."interproId", '; ') AS "domainInterproId"
       FROM "public"."proteins" as ptn
       LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."id"
+      LEFT JOIN "public"."domains" as d ON d."proteinId" = ptn."id"
       LEFT JOIN "public"."tags" as tag ON tag."key" = ptn."id"
       ${whereAgg}
       GROUP BY ptn."id"
@@ -74,7 +78,6 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
       LEFT JOIN "public"."tags" as tag ON tag."key" = gen."accession"
       GROUP BY gen."accession"
   ) as g ON g."accession" = p."geneId"
-  LEFT JOIN "public"."domains" as d ON d."id" = p."domainId"
   LEFT JOIN "public"."families" as f ON f."id" = p."familyId"
   ${whereMain}
   ORDER BY "${orderBy}" ${orderDirection}

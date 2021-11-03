@@ -8,11 +8,11 @@ import { downloadBlob } from 'src/app/csv/utils/download-blob';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
-  selector: 'crng-upload-proteins',
-  templateUrl: './upload-proteins.component.html',
-  styleUrls: ['./upload-proteins.component.scss'],
+  selector: 'crng-upload-domains',
+  templateUrl: './upload-domains.component.html',
+  styleUrls: ['./upload-domains.component.scss'],
 })
-export class UploadProteinsComponent extends Destroyer {
+export class UploadDomainsComponent extends Destroyer {
   state: ImportState = {};
   error?: AppError;
   logs: readonly LogMessage[] = [];
@@ -27,7 +27,7 @@ export class UploadProteinsComponent extends Destroyer {
     this.error = void 0;
 
     this.importsSrv
-      .importProteins(params)
+      .importDomains(params)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (state) => {
@@ -43,9 +43,9 @@ export class UploadProteinsComponent extends Destroyer {
 
   sendSample() {
     const csv = arrayToCSV([
-      ['id', 'accession', 'name', 'geneId', 'species', 'description', 'isEnzyme', 'sequence', 'length'],
-      ['unique protein id', 'protein accession', 'string', 'gene accession string', 'string', 'string', 'TRUE/FALSE', 'string', 'number'],
+      ['interproId', 'name', 'proteinId'], //
+      ['string', 'string', 'protein id'],
     ]);
-    downloadBlob(csv, 'proteins.csv', 'text/csv;charset=utf-8;');
+    downloadBlob(csv, 'domains.csv', 'text/csv;charset=utf-8;');
   }
 }

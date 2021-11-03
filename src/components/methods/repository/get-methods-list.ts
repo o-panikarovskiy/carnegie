@@ -13,7 +13,7 @@ const getMethodsList = async (options?: ListRequest, client?: DbClient): Promise
   const where = term ? `WHERE "type" ILIKE $1` : '';
   const values: string[] = term ? [`%${term}%`] : [];
 
-  const text = `SELECT *
+  const text = `SELECT "type"
                 FROM "public"."methods"
                 ${where}
                 ORDER BY "${orderBy}" ${orderDirection}

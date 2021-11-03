@@ -51,6 +51,10 @@ export class ImportsService {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'genes' }).pipe(this.progressPipe);
   }
 
+  importDomains({ file, ...params }: ImportParams): Observable<ImportState> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'domains' }).pipe(this.progressPipe);
+  }
+
   importProteins({ file, ...params }: ImportParams): Observable<ImportState> {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'proteins' }).pipe(this.progressPipe);
   }

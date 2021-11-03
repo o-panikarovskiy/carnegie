@@ -1,9 +1,10 @@
 export type Protein = {
   readonly id: string;
+  readonly accession: string;
   readonly geneId?: string | null;
   readonly geneName?: string | null;
-  readonly domainId?: string | null;
   readonly domainName?: string | null;
+  readonly domainInterproId?: string | null;
   readonly familyId?: string | null;
   readonly familyName?: string | null;
   readonly name?: string | null;
