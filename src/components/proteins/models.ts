@@ -14,9 +14,9 @@ export type Protein = {
 };
 
 export type ProteinClient = Protein & {
-  readonly gene?: string | null;
-  readonly domain?: string | null;
-  readonly family?: string | null;
+  readonly geneName?: string | null;
+  readonly domainName?: string | null;
+  readonly familyName?: string | null;
   readonly method?: string | null;
   readonly pubMedId?: string | null;
   readonly organelleId?: string | null;
@@ -35,14 +35,13 @@ export type ProteinRequest = ListRequest & {
 };
 
 export type FiltersSchema = {
-  readonly filterName: string;
+  readonly filterName: TableColumn;
   readonly columnName: string;
 };
 
 export type ColumnsSchema = {
   readonly columnName: TableColumn;
   readonly aliasName: string;
-  readonly orderByName?: string;
   readonly isDefault?: boolean;
   readonly alwaysInclude?: boolean;
 };

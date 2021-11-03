@@ -35,7 +35,7 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Enzyme',
   },
   {
-    id: 'gene',
+    id: 'geneName',
     friendlyName: 'Gene name',
     dropdownItemName: 'Gene name',
   },
@@ -45,12 +45,12 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Gene accession',
   },
   {
-    id: 'domain',
+    id: 'domainName',
     friendlyName: 'Domain',
     dropdownItemName: 'Domain name',
   },
   {
-    id: 'family',
+    id: 'familyName',
     friendlyName: 'Family',
     dropdownItemName: 'Family name',
   },

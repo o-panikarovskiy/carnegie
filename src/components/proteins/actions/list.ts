@@ -12,9 +12,9 @@ const schema = joi.object().keys({
   limit: joi.number().positive().min(1).max(100).default(100),
   term: joi.string().optional().allow('').trim().max(512),
   columns: joi.array().optional().items(joi.string().trim().max(50)).max(100),
-  gene: joi.array().optional().items(joi.string().trim().max(50)).max(100),
-  domain: joi.array().optional().items(joi.string().trim().guid()).max(100),
-  family: joi.array().optional().items(joi.string().trim().guid()).max(100),
+  geneId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
+  domainId: joi.array().optional().items(joi.string().trim().guid()).max(100),
+  familyId: joi.array().optional().items(joi.string().trim().guid()).max(100),
   method: joi.array().optional().items(joi.string().trim().max(20)).max(100),
   pubMedId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   organelleId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
@@ -29,9 +29,9 @@ const schema = joi.object().keys({
  * @apiParam {number{1-100}} [limit=100] Max items per page (min 1, max 100)
  * @apiParam {string{0..512}} [term] Search term
  * @apiParam {string[]} [columns] Table column names (max 100 items)
- * @apiParam {string[]} [gene] Filter by gene id (max 100 items)
- * @apiParam {string[]} [domain] Filter by domain id (max 100 items)
- * @apiParam {string[]} [family] Filter by family id (max 100 items)
+ * @apiParam {string[]} [geneId] Filter by gene id (max 100 items)
+ * @apiParam {string[]} [domainId] Filter by domain id (max 100 items)
+ * @apiParam {string[]} [familyId] Filter by family id (max 100 items)
  * @apiParam {string[]} [method] Filter by method (max 100 items)
  * @apiParam {string[]} [pubMedId] Filter by publication (max 100 items)
  * @apiParam {string[]} [organelleId] Filter by organelle id (max 100 items)
@@ -40,7 +40,7 @@ const schema = joi.object().keys({
  *   "sort":"name",
  *   "skip": 0,
  *   "limit": 100,
- *   "gene": ["AT1G50170", "AT1G50171"]
+ *   "geneId": ["AT1G50170", "AT1G50171"]
  * }
  * @apiError (400) InvalidRequestModel Invalid request model.
  * @apiSuccess (200) {Protein[]} proteins Proteins list

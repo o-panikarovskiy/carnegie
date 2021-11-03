@@ -9,21 +9,21 @@ export { getProteinsList };
 const columnsSchema: readonly ColumnsSchema[] = [
   { columnName: 'id', aliasName: 'p."id"', alwaysInclude: true }, //
   { columnName: 'geneId', aliasName: 'p."geneId"' },
+  { columnName: 'geneName', aliasName: 'g."name" AS "geneName"' },
   { columnName: 'domainId', aliasName: 'p."domainId"' },
+  { columnName: 'domainName', aliasName: 'd."name" AS "domainName"' },
   { columnName: 'familyId', aliasName: 'p."familyId"' },
+  { columnName: 'familyName', aliasName: 'f."name" AS "familyName"' },
   { columnName: 'name', aliasName: 'p."name"', isDefault: true },
   { columnName: 'description', aliasName: 'p."description"' },
   { columnName: 'length', aliasName: 'p."length"' },
   { columnName: 'sequence', aliasName: 'p."sequence"' },
   { columnName: 'species', aliasName: 'p."species"' },
   { columnName: 'isEnzyme', aliasName: 'p."isEnzyme"' },
-  { columnName: 'gene', orderByName: 'g."name"', aliasName: 'g."name" AS "gene"' },
-  { columnName: 'domain', orderByName: 'd."name"', aliasName: 'd."name" AS "domain"' },
-  { columnName: 'family', orderByName: 'f."name"', aliasName: 'f."name" AS "family"' },
   { columnName: 'method', aliasName: 'p."method"', isDefault: true },
   { columnName: 'pubMedId', aliasName: 'p."pubMedId"' },
   { columnName: 'organelleId', aliasName: 'p."organelleId"', isDefault: true },
-  { columnName: 'geneAliases', orderByName: 'g."geneAliases"', aliasName: 'g."geneAliases" AS "geneAliases"' },
+  { columnName: 'geneAliases', aliasName: 'g."geneAliases" AS "geneAliases"' },
   { columnName: 'proteinAliases', aliasName: 'p."proteinAliases"' },
 ] as const;
 
@@ -34,9 +34,9 @@ const aggFiltersSchema: readonly FiltersSchema[] = [
 ] as const;
 
 const mainFiltersSchema: readonly FiltersSchema[] = [
-  { filterName: 'gene', columnName: 'g."accession"' }, //
-  { filterName: 'domain', columnName: 'd."id"' },
-  { filterName: 'family', columnName: 'f."id"' },
+  { filterName: 'geneId', columnName: 'g."accession"' }, //
+  { filterName: 'domainId', columnName: 'd."id"' },
+  { filterName: 'familyId', columnName: 'f."id"' },
 ] as const;
 
 const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
