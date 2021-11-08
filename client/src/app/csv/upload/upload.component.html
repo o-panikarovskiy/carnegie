@@ -1,27 +1,17 @@
-<mat-tab-group class="tabs-list">
+<mat-tab-group class="tabs-list" *ngIf="isConnected">
   <mat-tab label="Genes">
-    <ng-template matTabContent>
-      <crng-upload-genes></crng-upload-genes>
-    </ng-template>
+    <crng-upload-genes></crng-upload-genes>
   </mat-tab>
   <mat-tab label="Proteins">
-    <ng-template matTabContent>
-      <crng-upload-proteins></crng-upload-proteins>
-    </ng-template>
+    <crng-upload-proteins></crng-upload-proteins>
   </mat-tab>
   <mat-tab label="Domains">
-    <ng-template matTabContent>
-      <crng-upload-domains></crng-upload-domains>
-    </ng-template>
+    <crng-upload-domains></crng-upload-domains>
   </mat-tab>
   <mat-tab label="Localizations">
-    <ng-template matTabContent>
-      <crng-upload-localizations></crng-upload-localizations>
-    </ng-template>
+    <crng-upload-localizations></crng-upload-localizations>
   </mat-tab>
   <mat-tab label="Pathway">
-    <ng-template matTabContent>
-      <crng-upload-pathways></crng-upload-pathways>
-    </ng-template>
+    <crng-upload-pathways></crng-upload-pathways>
   </mat-tab>
 </mat-tab-group>

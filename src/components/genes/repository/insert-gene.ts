@@ -1,5 +1,5 @@
 import * as pool from '../../../db/sql-storage/index.js';
-import { DbClient, QueryResult } from '../../../db/sql-storage/models.js';
+import { DbClient } from '../../../db/sql-storage/models.js';
 import { Gene } from '../models.js';
 
 export { insertGene };
@@ -9,11 +9,10 @@ const insertGene = async (gene: Gene, client?: DbClient): Promise<Gene> => {
                 VALUES ($1, $2, $3)
                 ON CONFLICT ("accession")
                 DO UPDATE SET "name"      = excluded."name",
-                              "symbol"    = excluded."symbol"
-                RETURNING *`;
+                              "symbol"    = excluded."symbol";`;
 
   const values = [gene.accession, gene.name, gene.symbol];
 
-  const res: QueryResult = await (client || pool).query({ text, values });
-  return res.rows[0] as Gene;
+  await (client || pool).query({ text, values });
+  return gene;
 };

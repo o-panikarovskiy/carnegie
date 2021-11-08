@@ -15,7 +15,7 @@ const schema = joi
     proteinId: joi.string().max(50).required(),
     organelleId: joi.string().max(50).required(),
     methodId: joi.string().trim().max(20).required(),
-    pubMedId: joi.string().trim().max(50).allow('', null),
+    pubMedId: joi.string().trim().max(50).required(),
   })
   .unknown(true);
 

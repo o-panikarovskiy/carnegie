@@ -12,12 +12,11 @@ const columnsSchema: readonly ColumnsSchema[] = [
   { columnName: 'geneId', aliasName: 'p."geneId"' },
   { columnName: 'geneName', aliasName: 'g."name" AS "geneName"' },
   { columnName: 'domainName', aliasName: 'p."domainName"' },
-  { columnName: 'domainInterproId', aliasName: 'p."domainInterproId"' },
+  { columnName: 'domainId', aliasName: 'p."domainId"' },
   { columnName: 'name', aliasName: 'p."name"', isDefault: true },
   { columnName: 'description', aliasName: 'p."description"' },
   { columnName: 'length', aliasName: 'p."length"' },
   { columnName: 'sequence', aliasName: 'p."sequence"' },
-  { columnName: 'func', aliasName: 'p."func"' },
   { columnName: 'species', aliasName: 'p."species"' },
   { columnName: 'isEnzyme', aliasName: 'p."isEnzyme"' },
   { columnName: 'method', aliasName: 'p."method"', isDefault: true },
@@ -28,7 +27,7 @@ const columnsSchema: readonly ColumnsSchema[] = [
 ] as const;
 
 const aggFiltersSchema: readonly FiltersSchema[] = [
-  { filterName: 'method', columnName: 'loc."methodId"' }, //
+  { filterName: 'methodId', columnName: 'loc."methodId"' }, //
   { filterName: 'pubMedId', columnName: 'loc."pubMedId"' },
   { filterName: 'organelleId', columnName: 'loc."organelleId"' },
   { filterName: 'domainId', columnName: 'd."id"' },
@@ -61,7 +60,7 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
             STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
             STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
             STRING_AGG(DISTINCT d."name", '; ') AS "domainName",
-            STRING_AGG(DISTINCT d."iprId", '; ') AS "domainInterproId"
+            STRING_AGG(DISTINCT d."id", '; ') AS "domainId"
       FROM "public"."proteins" as ptn
       LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."accession"
       LEFT JOIN "public"."domains" as d ON d."proteinId" = ptn."accession"
@@ -81,6 +80,8 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
   LIMIT ${limit | 0}
   OFFSET ${skip | 0};`;
 
+  console.log(text);
+
   const res = await (client || pool).query({ text, values });
   const rows = res.rows;
   const total: number = rows.length > 0 ? Number.parseFloat(rows[0].total) : -1;
@@ -97,13 +98,14 @@ const buildMainLike = (term: string, values: string[] = [], conditions: string[]
   const len = values.length + 1;
   const like = `(
                   p."name" ILIKE $${len}
-              OR  p."id" ILIKE $${len}
+              OR  p."uniProtId" ILIKE $${len}
               OR  p."proteinAliases" ILIKE $${len}
               OR  p."description" ILIKE $${len}
+              OR  p."domainName" ILIKE $${len}
+              OR  p."domainId" ILIKE $${len}
               OR  g."name" ILIKE $${len}
               OR  g."geneAliases" ILIKE $${len}
               OR  g."accession" ILIKE $${len}
-              OR  d."name" ILIKE $${len}
   )`;
 
   if (term) {

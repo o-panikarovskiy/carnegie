@@ -10,7 +10,6 @@ const createProteinsTable = (): string => {
       "description"     text NULL,
       "length"          integer NULL,
       "sequence"        text NULL,
-      "func"            text NULL,
       "species"         varchar(50) NULL,
       "isEnzyme"        boolean NULL,
       CONSTRAINT        "fkgenes" FOREIGN KEY ( "geneId" ) REFERENCES "public"."genes" ( "accession" ) ON DELETE CASCADE

@@ -47,6 +47,10 @@ export class ImportsService {
     );
   }
 
+  connect() {
+    return this.socketSrv.connect();
+  }
+
   importGenes({ file, ...params }: ImportParams): Observable<ImportState> {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'genes' }).pipe(this.progressPipe);
   }

@@ -1,20 +1,23 @@
 import * as pool from '../../../db/sql-storage/index.js';
-import { DbClient, QueryResult } from '../../../db/sql-storage/models.js';
-import { Domain, NewDomain } from '../models.js';
+import { DbClient } from '../../../db/sql-storage/models.js';
+import { Domain } from '../models.js';
 
 export { insertDomain };
 
-const insertDomain = async (domain: NewDomain, client?: DbClient): Promise<Domain> => {
-  const text = `INSERT INTO "public"."domains"("name", "iprId", "proteinId")
+const insertDomain = async (domain: Domain, client?: DbClient): Promise<Domain> => {
+  const text = `INSERT INTO "public"."domains"("id", "name", "proteinId")
                 VALUES ($1, $2, $3)
-                RETURNING *`;
+                ON CONFLICT ("id")
+                DO UPDATE SET "name"      = excluded."name",
+                              "proteinId" = excluded."proteinId";`;
 
   const values = [
-    domain.name, //
-    domain.iprId,
+    domain.id, //
+    domain.name,
     domain.proteinId,
   ];
 
-  const res: QueryResult = await (client || pool).query({ text, values });
-  return res.rows[0] as Domain;
+  await (client || pool).query({ text, values });
+
+  return domain;
 };

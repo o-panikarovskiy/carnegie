@@ -11,9 +11,9 @@ export { importDomains };
 const schema = joi
   .object()
   .keys({
+    id: joi.string().max(50).required(),
     name: joi.string().max(255).allow('', null),
     proteinId: joi.string().max(50).allow('', null),
-    iprId: joi.string().max(50).allow('', null),
   })
   .unknown(true);
 

@@ -30,11 +30,6 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Species',
   },
   {
-    id: 'func',
-    friendlyName: 'Function',
-    dropdownItemName: 'Function',
-  },
-  {
     id: 'sequence',
     friendlyName: 'Sequence',
     dropdownItemName: 'Sequence',
@@ -60,9 +55,9 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Domain name',
   },
   {
-    id: 'domainInterproId',
-    friendlyName: 'Domain Interpro Id',
-    dropdownItemName: 'Domain Interpro Id',
+    id: 'domainId',
+    friendlyName: 'Domain Id',
+    dropdownItemName: 'Domain Id',
   },
   {
     id: 'method',

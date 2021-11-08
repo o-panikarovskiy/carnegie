@@ -14,20 +14,17 @@ const insertProtein = async (protein: Protein, client?: DbClient): Promise<Prote
                                                 "length",
                                                 "sequence",
                                                 "species",
-                                                "func",
                                                 "isEnzyme"
                                               )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                ON CONFLICT
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                ON CONFLICT ("accession")
                 DO UPDATE SET "geneId"        = excluded."geneId",
                               "name"          = excluded."name",
                               "description"   = excluded."description",
                               "length"        = excluded."length",
                               "sequence"      = excluded."sequence",
                               "species"       = excluded."species",
-                              "func"          = excluded."func",
-                              "isEnzyme"      = excluded."isEnzyme"
-                RETURNING *`;
+                              "isEnzyme"      = excluded."isEnzyme";`;
 
   const values = [
     protein.accession,
@@ -38,11 +35,10 @@ const insertProtein = async (protein: Protein, client?: DbClient): Promise<Prote
     protein.length,
     protein.sequence,
     protein.species,
-    protein.func,
     protein.isEnzyme,
   ];
 
-  const res = await (client || pool).query({ text, values });
+  await (client || pool).query({ text, values });
 
-  return res.rows[0] as Protein;
+  return protein;
 };

@@ -11,7 +11,7 @@ import { importLocalizations } from '../../localization/index.js';
 import { importPathways } from '../../pathways/bl/import-pathways.js';
 import { importProteins } from '../../proteins//index.js';
 import { readCSV } from '../bl/read-csv.js';
-import { ImportRequest, ImportTable } from '../models.js';
+import { ImportRequest, ProcessImportTable } from '../models.js';
 
 export { uploadCSV };
 
@@ -21,7 +21,7 @@ const schema = joi.object().keys({
   table: joi.string().allow('genes', 'domains', 'proteins', 'pathways', 'localizations').required(),
 });
 
-const IMPORTS: StringTMap<ImportTable> = {
+const IMPORTS: StringTMap<ProcessImportTable> = {
   genes: importGenes,
   domains: importDomains,
   proteins: importProteins,

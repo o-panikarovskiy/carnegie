@@ -43,8 +43,8 @@ export class UploadProteinsComponent extends Destroyer {
 
   sendSample() {
     const csv = arrayToCSV([
-      ['uniProtId', 'accession', 'name', 'geneId', 'species', 'description', 'isEnzyme', 'sequence', 'func', 'length'],
-      ['unique protein id', 'protein accession', 'string', 'gene accession string', 'string', 'string', 'TRUE/FALSE', 'string', 'string', 'number'],
+      ['uniProtId', 'accession', 'name', 'geneId', 'species', 'description', 'isEnzyme', 'sequence', 'length'],
+      ['unique protein id', 'protein accession', 'string', 'gene accession string', 'string', 'string', 'TRUE/FALSE', 'string', 'number'],
     ]);
     downloadBlob(csv, 'proteins.csv', 'text/csv;charset=utf-8;');
   }

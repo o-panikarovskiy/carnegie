@@ -25,7 +25,7 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     idFieldName: 'type',
     labelFieldName: 'type',
     dataSourceName: 'loadMethods',
-    filterParamName: 'method',
+    filterParamName: 'methodId',
     buttonText: { '=0': 'Methods', '=1': '1 method', other: '# methods' },
     dropdownItemName: 'Methods',
   },

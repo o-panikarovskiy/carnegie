@@ -17,4 +17,4 @@ export type Payload<T> = {
   readonly raw?: any;
 };
 
-export type ImportTable<T = any> = (fileId: string, creator: User, list: readonly StringAnyMap[]) => Promise<readonly T[]>;
+export type ProcessImportTable<T = any> = (fileId: string, creator: User, list: readonly StringAnyMap[]) => Promise<readonly T[]>;

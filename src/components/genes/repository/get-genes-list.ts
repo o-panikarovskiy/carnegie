@@ -10,10 +10,10 @@ const getGenesList = async (options?: ListRequest, client?: DbClient): Promise<r
   const { orderBy, skip, limit, orderDirection } = parseListReqOptions<Gene>(options, ['name']);
 
   const term = options?.search;
-  const where = term ? `WHERE "name" ILIKE $1 OR "accession" ILIKE $1` : '';
+  const where = term ? `WHERE "name" ILIKE $1 OR "accession" ILIKE $1 OR "symbol" ILIKE $1` : '';
   const values: string[] = term ? [`%${term}%`] : [];
 
-  const text = `SELECT "id", "name"
+  const text = `SELECT "accession", "name"
                 FROM "public"."genes"
                 ${where}
                 ORDER BY "${orderBy}" ${orderDirection}
