@@ -5,13 +5,13 @@ import { Domain, NewDomain } from '../models.js';
 export { insertDomain };
 
 const insertDomain = async (domain: NewDomain, client?: DbClient): Promise<Domain> => {
-  const text = `INSERT INTO "public"."domains"("name", "interproId", "proteinId")
+  const text = `INSERT INTO "public"."domains"("name", "iprId", "proteinId")
                 VALUES ($1, $2, $3)
                 RETURNING *`;
 
   const values = [
     domain.name, //
-    domain.interproId,
+    domain.iprId,
     domain.proteinId,
   ];
 

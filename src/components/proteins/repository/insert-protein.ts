@@ -5,39 +5,40 @@ import { Protein } from '../models.js';
 export { insertProtein };
 
 const insertProtein = async (protein: Protein, client?: DbClient): Promise<Protein> => {
-  const text = `INSERT INTO "public"."proteins"("id",
+  const text = `INSERT INTO "public"."proteins"(
                                                 "accession",
+                                                "uniProtId",
                                                 "geneId",
-                                                "familyId",
                                                 "name",
                                                 "description",
                                                 "length",
                                                 "sequence",
                                                 "species",
+                                                "func",
                                                 "isEnzyme"
                                               )
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                ON CONFLICT ("id")
+                ON CONFLICT
                 DO UPDATE SET "geneId"        = excluded."geneId",
-                              "familyId"      = excluded."familyId",
                               "name"          = excluded."name",
                               "description"   = excluded."description",
                               "length"        = excluded."length",
                               "sequence"      = excluded."sequence",
                               "species"       = excluded."species",
+                              "func"          = excluded."func",
                               "isEnzyme"      = excluded."isEnzyme"
                 RETURNING *`;
 
   const values = [
-    protein.id,
     protein.accession,
+    protein.uniProtId,
     protein.geneId,
-    protein.familyId,
     protein.name,
     protein.description,
     protein.length,
     protein.sequence,
     protein.species,
+    protein.func,
     protein.isEnzyme,
   ];
 

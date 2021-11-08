@@ -1,5 +1,6 @@
 export type Tag = {
   readonly id: string;
-  readonly key: string;
+  readonly geneId?: string | null;
+  readonly proteinId?: string | null;
   readonly name: string;
 };

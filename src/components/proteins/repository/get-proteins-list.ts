@@ -7,18 +7,17 @@ import { ColumnsSchema, FiltersSchema, ProteinClient, ProteinRequest, ProteinsLi
 export { getProteinsList };
 
 const columnsSchema: readonly ColumnsSchema[] = [
-  { columnName: 'id', aliasName: 'p."id"', alwaysInclude: true }, //
+  { columnName: 'uniProtId', aliasName: 'p."uniProtId"', alwaysInclude: true }, //
   { columnName: 'accession', aliasName: 'p."accession"' },
   { columnName: 'geneId', aliasName: 'p."geneId"' },
   { columnName: 'geneName', aliasName: 'g."name" AS "geneName"' },
   { columnName: 'domainName', aliasName: 'p."domainName"' },
   { columnName: 'domainInterproId', aliasName: 'p."domainInterproId"' },
-  { columnName: 'familyId', aliasName: 'p."familyId"' },
-  { columnName: 'familyName', aliasName: 'f."name" AS "familyName"' },
   { columnName: 'name', aliasName: 'p."name"', isDefault: true },
   { columnName: 'description', aliasName: 'p."description"' },
   { columnName: 'length', aliasName: 'p."length"' },
   { columnName: 'sequence', aliasName: 'p."sequence"' },
+  { columnName: 'func', aliasName: 'p."func"' },
   { columnName: 'species', aliasName: 'p."species"' },
   { columnName: 'isEnzyme', aliasName: 'p."isEnzyme"' },
   { columnName: 'method', aliasName: 'p."method"', isDefault: true },
@@ -37,7 +36,6 @@ const aggFiltersSchema: readonly FiltersSchema[] = [
 
 const mainFiltersSchema: readonly FiltersSchema[] = [
   { filterName: 'geneId', columnName: 'g."accession"' }, //
-  { filterName: 'familyId', columnName: 'f."id"' },
 ] as const;
 
 const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<ProteinsListResult> => {
@@ -63,22 +61,21 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
             STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
             STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
             STRING_AGG(DISTINCT d."name", '; ') AS "domainName",
-            STRING_AGG(DISTINCT d."interproId", '; ') AS "domainInterproId"
+            STRING_AGG(DISTINCT d."iprId", '; ') AS "domainInterproId"
       FROM "public"."proteins" as ptn
-      LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."id"
-      LEFT JOIN "public"."domains" as d ON d."proteinId" = ptn."id"
-      LEFT JOIN "public"."tags" as tag ON tag."key" = ptn."id"
+      LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."accession"
+      LEFT JOIN "public"."domains" as d ON d."proteinId" = ptn."accession"
+      LEFT JOIN "public"."tags" as tag ON tag."proteinId" = ptn."accession"
       ${whereAgg}
-      GROUP BY ptn."id"
+      GROUP BY ptn."accession"
   ) as p
   LEFT JOIN (
       SELECT gen.*,
             STRING_AGG(DISTINCT tag."name", '; ') AS "geneAliases"
       FROM "public"."genes" as gen
-      LEFT JOIN "public"."tags" as tag ON tag."key" = gen."accession"
+      LEFT JOIN "public"."tags" as tag ON tag."geneId" = gen."accession"
       GROUP BY gen."accession"
   ) as g ON g."accession" = p."geneId"
-  LEFT JOIN "public"."families" as f ON f."id" = p."familyId"
   ${whereMain}
   ORDER BY "${orderBy}" ${orderDirection}
   LIMIT ${limit | 0}
@@ -107,7 +104,6 @@ const buildMainLike = (term: string, values: string[] = [], conditions: string[]
               OR  g."geneAliases" ILIKE $${len}
               OR  g."accession" ILIKE $${len}
               OR  d."name" ILIKE $${len}
-              OR  f."name" ILIKE $${len}
   )`;
 
   if (term) {

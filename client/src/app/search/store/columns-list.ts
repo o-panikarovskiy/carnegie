@@ -5,7 +5,12 @@ export { TABLE_COLUMNS_LIST, TABLE_COLUMNS_MAP_BY_ID, DEFAULT_TABLE_COLUMNS };
 
 const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   {
-    id: 'id',
+    id: 'accession',
+    friendlyName: 'Protein accession',
+    dropdownItemName: 'Protein accession',
+  },
+  {
+    id: 'uniProtId',
     friendlyName: 'ID',
     dropdownItemName: 'Protein ID',
   },
@@ -13,11 +18,6 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     id: 'name',
     friendlyName: 'Name',
     dropdownItemName: 'Protein name',
-  },
-  {
-    id: 'accession',
-    friendlyName: 'Protein accession',
-    dropdownItemName: 'Protein accession',
   },
   {
     id: 'description',
@@ -28,6 +28,11 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     id: 'species',
     friendlyName: 'Species',
     dropdownItemName: 'Species',
+  },
+  {
+    id: 'func',
+    friendlyName: 'Function',
+    dropdownItemName: 'Function',
   },
   {
     id: 'sequence',
@@ -60,11 +65,6 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     dropdownItemName: 'Domain Interpro Id',
   },
   {
-    id: 'familyName',
-    friendlyName: 'Family',
-    dropdownItemName: 'Family name',
-  },
-  {
     id: 'method',
     friendlyName: 'Method',
     dropdownItemName: 'Method',
@@ -92,4 +92,4 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
-const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['name', 'id', 'organelleId', 'method', 'geneId'] as const;
+const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['name', 'uniProtId', 'organelleId', 'method', 'geneId'] as const;

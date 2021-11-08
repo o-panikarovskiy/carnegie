@@ -22,14 +22,6 @@ const APP_FILTERS_LIST: readonly AppFilter[] = [
     dropdownItemName: 'Domains',
   },
   {
-    idFieldName: 'id',
-    labelFieldName: 'name',
-    dataSourceName: 'loadFamilies',
-    filterParamName: 'familyId',
-    buttonText: { '=0': 'Families', '=1': '1 family', other: '# families' },
-    dropdownItemName: 'Families',
-  },
-  {
     idFieldName: 'type',
     labelFieldName: 'type',
     dataSourceName: 'loadMethods',

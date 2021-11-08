@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
-import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
 import { Method } from 'src/app/core/typings/method';
 import { parseHttpError } from 'src/app/core/utils/parse-http-error';
+
 
 @Injectable()
 export class DictionariesBackendService {
@@ -26,17 +26,6 @@ export class DictionariesBackendService {
 
   getDomains(params?: ListRequest): Observable<readonly Domain[]> {
     return this.http.get('/api/domains/', { params }).pipe(
-      map((res: any) => {
-        return res.list;
-      }),
-      catchError((res: HttpErrorResponse): never => {
-        throw parseHttpError(res);
-      }),
-    );
-  }
-
-  getFamilies(params?: ListRequest): Observable<readonly Family[]> {
-    return this.http.get('/api/families/', { params }).pipe(
       map((res: any) => {
         return res.list;
       }),

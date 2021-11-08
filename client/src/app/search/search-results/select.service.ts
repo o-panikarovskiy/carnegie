@@ -53,7 +53,7 @@ export class SelectService {
 
       this._totalCount = total;
       this._checkedCount = set.size;
-      this._lastCkeckedId = set.size > 0 ? protein.id : void 0;
+      this._lastCkeckedId = set.size > 0 ? protein.accession : void 0;
 
       this.checkedSubj.next(new Set(set));
     });
@@ -76,7 +76,7 @@ export class SelectService {
     for (let idx = 0; idx < proteins.length; idx++) {
       const protein = proteins[idx];
       if (protein === shift) shiftIdx = idx;
-      if (protein.id === this._lastCkeckedId) lastIdx = idx;
+      if (protein.accession === this._lastCkeckedId) lastIdx = idx;
       if (shiftIdx > -1 && (lastIdx > -1 || !this._lastCkeckedId)) break;
     }
 

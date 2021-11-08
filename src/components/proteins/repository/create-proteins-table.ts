@@ -3,18 +3,17 @@ export { createProteinsTable };
 const createProteinsTable = (): string => {
   return `
     CREATE TABLE IF NOT EXISTS "public"."proteins" (
-      "id"              varchar(50) PRIMARY KEY,
-      "accession"       varchar(50) NOT NULL UNIQUE,
-      "geneId"          varchar(50) NULL,
-      "familyId"        uuid NULL,
+      "accession"       varchar(50) PRIMARY KEY,
+      "uniProtId"       varchar(50) NOT NULL UNIQUE,
+      "geneId"          varchar(50) NOT NULL,
       "name"            varchar(255) NULL,
       "description"     text NULL,
       "length"          integer NULL,
       "sequence"        text NULL,
-      "species"         text NULL,
+      "func"            text NULL,
+      "species"         varchar(50) NULL,
       "isEnzyme"        boolean NULL,
-      CONSTRAINT        "fkgenes" FOREIGN KEY ( "geneId" ) REFERENCES "public"."genes" ( "accession" ) ON DELETE CASCADE,
-      CONSTRAINT        "fkfamily" FOREIGN KEY ( "familyId" ) REFERENCES "public"."families" ( "id" ) ON DELETE CASCADE
+      CONSTRAINT        "fkgenes" FOREIGN KEY ( "geneId" ) REFERENCES "public"."genes" ( "accession" ) ON DELETE CASCADE
     );
 
     CREATE INDEX IF NOT EXISTS proteins_lower_case_name ON "public"."proteins" (lower("name"));

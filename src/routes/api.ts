@@ -2,7 +2,6 @@ import Router from 'koa-router';
 import { createRouter as auth } from '../components/auth/actions/router.js';
 import { createRouter as common } from '../components/common/actions/router.js';
 import { createRouter as domains } from '../components/domains/actions/router.js';
-import { createRouter as families } from '../components/families/actions/router.js';
 import { createRouter as genes } from '../components/genes/actions/router.js';
 import { createRouter as methods } from '../components/methods/actions/router.js';
 import { createRouter as search } from '../components/proteins/actions/router.js';
@@ -16,7 +15,6 @@ const nested: Router[] = [
   common(),
   domains(),
   genes(),
-  families(),
   search(),
   upload(),
   share(),

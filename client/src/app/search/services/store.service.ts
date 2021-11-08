@@ -5,7 +5,6 @@ import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { DictionariesBackendService } from 'src/app/core/services/dictionaries-backend.service';
 import { AppError, ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
-import { Family } from 'src/app/core/typings/family';
 import { Gene } from 'src/app/core/typings/gene';
 import { Method } from 'src/app/core/typings/method';
 import { Protein } from 'src/app/core/typings/protein';
@@ -97,10 +96,6 @@ export class SearchStoreService {
 
   loadDomains = (req?: ListRequest): Observable<readonly Domain[]> => {
     return this.dbs.getDomains(req);
-  };
-
-  loadFamilies = (req?: ListRequest): Observable<readonly Family[]> => {
-    return this.dbs.getFamilies(req);
   };
 
   loadMethods = (req?: ListRequest): Observable<readonly Method[]> => {
