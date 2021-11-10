@@ -70,4 +70,8 @@ export class ImportsService {
   importPathways({ file, ...params }: ImportParams): Observable<ImportState> {
     return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'pathways' }).pipe(this.progressPipe);
   }
+
+  importTags({ file, ...params }: ImportParams): Observable<ImportState> {
+    return this.uploadSrv.upload<ImportProcessToken>(`api/upload/csv`, [file], { ...params, table: 'tags' }).pipe(this.progressPipe);
+  }
 }

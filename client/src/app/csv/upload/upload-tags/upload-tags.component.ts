@@ -8,11 +8,11 @@ import { downloadBlob } from 'src/app/csv/utils/download-blob';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
-  selector: 'crng-upload-localizations',
-  templateUrl: './upload-localizations.component.html',
-  styleUrls: ['./upload-localizations.component.scss'],
+  selector: 'crng-upload-tags',
+  templateUrl: './upload-tags.component.html',
+  styleUrls: ['./upload-tags.component.scss'],
 })
-export class UploadLocalizationsComponent extends Destroyer {
+export class UploadTagsComponent extends Destroyer {
   state: ImportState = {};
   error?: AppError;
   logs: readonly LogMessage[] = [];
@@ -27,7 +27,7 @@ export class UploadLocalizationsComponent extends Destroyer {
     this.error = void 0;
 
     this.importsSrv
-      .importLocalizations(params)
+      .importTags(params)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (state) => {
@@ -43,10 +43,9 @@ export class UploadLocalizationsComponent extends Destroyer {
 
   sendSample() {
     const csv = arrayToCSV([
-      ['proteinId', 'organelleId', 'pubMedId', 'methodId'],
-      ['protein accession string', 'organelle id', 'string', 'method type'],
+      ['proteinId', 'geneId', 'name'],
+      ['unique accession id (required if geneId is empty)', 'unique accession id (required if proteinId is empty)', 'string (required)'],
     ]);
-
-    downloadBlob(csv, 'localizations.csv', 'text/csv;charset=utf-8;');
+    downloadBlob(csv, 'aliases.csv', 'text/csv;charset=utf-8;');
   }
 }

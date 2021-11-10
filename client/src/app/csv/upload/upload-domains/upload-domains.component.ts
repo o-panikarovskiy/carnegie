@@ -44,7 +44,7 @@ export class UploadDomainsComponent extends Destroyer {
   sendSample() {
     const csv = arrayToCSV([
       ['interproId', 'name', 'proteinId'], //
-      ['string', 'string', 'protein id'],
+      ['string', 'string', 'protein accession string'],
     ]);
     downloadBlob(csv, 'domains.csv', 'text/csv;charset=utf-8;');
   }

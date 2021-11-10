@@ -4,7 +4,7 @@ import { APP_INVALID_REQ_MODEL } from '../errors/common-errors.js';
 
 export { verifySchema };
 
-const verifySchema = async <T>(schema: joi.ObjectSchema, rawValue: unknown): Promise<T> => {
+const verifySchema = async <T>(schema: joi.Schema, rawValue: unknown): Promise<T> => {
   try {
     return await schema.validateAsync(rawValue);
   } catch (error) {

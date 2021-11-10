@@ -10,16 +10,11 @@ import { importGenes } from '../../genes/index.js';
 import { importLocalizations } from '../../localization/index.js';
 import { importPathways } from '../../pathways/bl/import-pathways.js';
 import { importProteins } from '../../proteins//index.js';
+import { importTags } from '../../tags/bl/import-tags.js';
 import { readCSV } from '../bl/read-csv.js';
 import { ImportRequest, ProcessImportTable } from '../models.js';
 
 export { uploadCSV };
-
-const schema = joi.object().keys({
-  escape: joi.string().allow('"', '""', '').default('"'),
-  delimiter: joi.string().allow(',', ';', '|', '\t').default(','),
-  table: joi.string().allow('genes', 'domains', 'proteins', 'pathways', 'localizations').required(),
-});
 
 const IMPORTS: StringTMap<ProcessImportTable> = {
   genes: importGenes,
@@ -27,7 +22,17 @@ const IMPORTS: StringTMap<ProcessImportTable> = {
   proteins: importProteins,
   pathways: importPathways,
   localizations: importLocalizations,
+  tags: importTags,
 };
+
+const schema = joi.object().keys({
+  escape: joi.string().allow('"', '""', '').default('"'),
+  delimiter: joi.string().allow(',', ';', '|', '\t').default(','),
+  table: joi
+    .string()
+    .allow(...Object.keys(IMPORTS))
+    .required(),
+});
 
 const uploadCSV = async (ctx: Context): Promise<void> => {
   const file = ctx.request.files?.file;
