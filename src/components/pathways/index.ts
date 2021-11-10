@@ -1,2 +1,2 @@
 export { init } from './repository/init.js';
-export { insertPathway } from './repository/insert-pathway.js';
+export { importPathways } from './bl/import-pathways.js';

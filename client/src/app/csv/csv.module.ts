@@ -12,6 +12,7 @@ import { UploadDomainsComponent } from 'src/app/csv/upload/upload-domains/upload
 import { UploadLocalizationsComponent } from 'src/app/csv/upload/upload-localizations/upload-localizations.component';
 import { UploadPathwaysComponent } from 'src/app/csv/upload/upload-pathways/upload-pathways.component';
 import { UploadProteinsComponent } from 'src/app/csv/upload/upload-proteins/upload-proteins.component';
+import { UploadReactionsComponent } from 'src/app/csv/upload/upload-reactions/upload-reactions.component';
 import { UploadTagsComponent } from 'src/app/csv/upload/upload-tags/upload-tags.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UploadButtonComponent } from './upload/upload-button/upload-button.component';
@@ -29,6 +30,7 @@ import { UploadComponent } from './upload/upload.component';
     UploadDomainsComponent,
     UploadProteinsComponent,
     UploadPathwaysComponent,
+    UploadReactionsComponent,
     UploadLocalizationsComponent,
   ],
   imports: [

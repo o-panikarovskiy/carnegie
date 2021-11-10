@@ -7,7 +7,8 @@ export { insertPathway };
 const insertPathway = async (pw: Pathway, client?: DbClient): Promise<Pathway> => {
   const text = `INSERT INTO "public"."pathways"("id", "name")
                 VALUES ($1, $2)
-                ON CONFLICT DO NOTHING;`;
+                ON CONFLICT ("id")
+                DO UPDATE SET "name" = excluded."name";`;
 
   const values = [
     pw.id, //

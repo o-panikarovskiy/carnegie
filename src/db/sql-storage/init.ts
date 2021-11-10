@@ -4,6 +4,7 @@ import { init as localizationInit } from '../../components/localization/index.js
 import { init as methodsInit } from '../../components/methods/index.js';
 import { init as pathways } from '../../components/pathways/index.js';
 import { init as proteinsInit } from '../../components/proteins/index.js';
+import { init as reactionsInit } from '../../components/reactions/index.js';
 import { init as sharesInit } from '../../components/share/index.js';
 import { init as tagsInit } from '../../components/tags/index.js';
 import { logger } from '../../log/index.js';
@@ -38,6 +39,7 @@ const init = async (): Promise<void> => {
     await Promise.all([
       tagsInit(client),
       domainsInit(client),
+      reactionsInit(client),
       localizationInit(client), //
     ]);
 

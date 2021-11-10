@@ -8,8 +8,9 @@ import { verifySchema } from '../../../utils/joi.js';
 import { importDomains } from '../../domains/index.js';
 import { importGenes } from '../../genes/index.js';
 import { importLocalizations } from '../../localization/index.js';
-import { importPathways } from '../../pathways/bl/import-pathways.js';
+import { importPathways } from '../../pathways/index.js';
 import { importProteins } from '../../proteins//index.js';
+import { importReactions } from '../../reactions/index.js';
 import { importTags } from '../../tags/bl/import-tags.js';
 import { readCSV } from '../bl/read-csv.js';
 import { ImportRequest, ProcessImportTable } from '../models.js';
@@ -21,6 +22,7 @@ const IMPORTS: StringTMap<ProcessImportTable> = {
   domains: importDomains,
   proteins: importProteins,
   pathways: importPathways,
+  reactions: importReactions,
   localizations: importLocalizations,
   tags: importTags,
 };
