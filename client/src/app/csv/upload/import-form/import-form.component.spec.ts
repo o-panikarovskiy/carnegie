@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UploadReactionsComponent } from './upload-reactions.component';
+import { ImportFormComponent } from './import-form.component';
 
-describe('UploadReactionsComponent', () => {
-  let component: UploadReactionsComponent;
-  let fixture: ComponentFixture<UploadReactionsComponent>;
+describe('ImportFormComponent', () => {
+  let component: ImportFormComponent;
+  let fixture: ComponentFixture<ImportFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UploadReactionsComponent],
+      declarations: [ImportFormComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploadReactionsComponent);
+    fixture = TestBed.createComponent(ImportFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
