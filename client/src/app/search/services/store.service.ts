@@ -7,7 +7,9 @@ import { AppError, ListRequest } from 'src/app/core/typings/common';
 import { Domain } from 'src/app/core/typings/domain';
 import { Gene } from 'src/app/core/typings/gene';
 import { Method } from 'src/app/core/typings/method';
+import { Pathway } from 'src/app/core/typings/pathway';
 import { Protein } from 'src/app/core/typings/protein';
+import { Reaction } from 'src/app/core/typings/reaction';
 import { SearchBackendService } from 'src/app/search/services/search-backend.service';
 import { ViewSettingsBackendService } from 'src/app/search/services/view-params-backend.service';
 import {
@@ -100,6 +102,14 @@ export class SearchStoreService {
 
   loadMethods = (req?: ListRequest): Observable<readonly Method[]> => {
     return this.dbs.getMethods(req);
+  };
+
+  loadReactions = (req?: ListRequest): Observable<readonly Reaction[]> => {
+    return this.dbs.getReactions(req);
+  };
+
+  loadPathways = (req?: ListRequest): Observable<readonly Pathway[]> => {
+    return this.dbs.getPathways(req);
   };
 
   loadProteins = (viewParams: ViewParams): Observable<ProteinsListResult> => {

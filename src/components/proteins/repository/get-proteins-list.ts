@@ -19,11 +19,17 @@ const columnsSchema: readonly ColumnsSchema[] = [
   { columnName: 'sequence', aliasName: 'p."sequence"' },
   { columnName: 'species', aliasName: 'p."species"' },
   { columnName: 'isEnzyme', aliasName: 'p."isEnzyme"' },
-  { columnName: 'method', aliasName: 'p."method"', isDefault: true },
+  { columnName: 'methodId', aliasName: 'p."methodId"', isDefault: true },
   { columnName: 'pubMedId', aliasName: 'p."pubMedId"' },
   { columnName: 'organelleId', aliasName: 'p."organelleId"', isDefault: true },
   { columnName: 'geneAliases', aliasName: 'g."geneAliases" AS "geneAliases"' },
   { columnName: 'proteinAliases', aliasName: 'p."proteinAliases"' },
+  { columnName: 'reactionId', aliasName: 'p."reactionId"' },
+  { columnName: 'reactionName', aliasName: 'p."reactionName"' },
+  { columnName: 'reactionECNumber', aliasName: 'p."reactionECNumber"' },
+  { columnName: 'reactionMetaDomain', aliasName: 'p."reactionMetaDomain"' },
+  { columnName: 'pathwayId', aliasName: 'p."pathwayId"' },
+  { columnName: 'pathwayName', aliasName: 'p."pathwayName"' },
 ] as const;
 
 const aggFiltersSchema: readonly FiltersSchema[] = [
@@ -31,6 +37,8 @@ const aggFiltersSchema: readonly FiltersSchema[] = [
   { filterName: 'pubMedId', columnName: 'loc."pubMedId"' },
   { filterName: 'organelleId', columnName: 'loc."organelleId"' },
   { filterName: 'domainId', columnName: 'd."id"' },
+  { filterName: 'pathwayId', columnName: 'pwy."id"' },
+  { filterName: 'reactionId', columnName: 'rxn."id"' },
 ] as const;
 
 const mainFiltersSchema: readonly FiltersSchema[] = [
@@ -56,13 +64,22 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
   FROM (
       SELECT ptn.*,
             STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases",
-            STRING_AGG(DISTINCT loc."methodId", '; ') AS "method",
+            STRING_AGG(DISTINCT loc."methodId", '; ') AS "methodId",
             STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
             STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
             STRING_AGG(DISTINCT d."name", '; ') AS "domainName",
-            STRING_AGG(DISTINCT d."id", '; ') AS "domainId"
+            STRING_AGG(DISTINCT d."id", '; ') AS "domainId",
+            STRING_AGG(DISTINCT rxn."id", '; ') AS "reactionId",
+            STRING_AGG(DISTINCT rxn."name", '; ') AS "reactionName",
+            STRING_AGG(DISTINCT rxn."ecNumber", '; ') AS "reactionECNumber",
+            STRING_AGG(DISTINCT rxn."metaDomain", '; ') AS "reactionMetaDomain",
+            STRING_AGG(DISTINCT pwy."id", '; ') AS "pathwayId",
+            STRING_AGG(DISTINCT pwy."name", '; ') AS "pathwayName"
       FROM "public"."proteins" as ptn
       LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."accession"
+      LEFT JOIN "public"."rxnprnpwy" as rpp ON rpp."proteinId" = ptn."accession"
+      LEFT JOIN "public"."pathways" as pwy ON rpp."pathwayId" = pwy."id"
+      LEFT JOIN "public"."reactions" as rxn ON rpp."reactionId" = rxn."id"
       LEFT JOIN "public"."domains" as d ON d."proteinId" = ptn."accession"
       LEFT JOIN "public"."tags" as tag ON tag."proteinId" = ptn."accession"
       ${whereAgg}
@@ -79,8 +96,6 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
   ORDER BY "${orderBy}" ${orderDirection}
   LIMIT ${limit | 0}
   OFFSET ${skip | 0};`;
-
-  console.log(text);
 
   const res = await (client || pool).query({ text, values });
   const rows = res.rows;

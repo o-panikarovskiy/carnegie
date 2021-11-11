@@ -56,11 +56,11 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   },
   {
     id: 'domainId',
-    friendlyName: 'Domain Id',
-    dropdownItemName: 'Domain Id',
+    friendlyName: 'Domain ID',
+    dropdownItemName: 'Domain ID',
   },
   {
-    id: 'method',
+    id: 'methodId',
     friendlyName: 'Method',
     dropdownItemName: 'Method',
   },
@@ -84,7 +84,37 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     friendlyName: 'Protein Aliases',
     dropdownItemName: 'Protein Aliases',
   },
+  {
+    id: 'pathwayId',
+    friendlyName: 'Pathaway ID',
+    dropdownItemName: 'Pathaway ID',
+  },
+  {
+    id: 'pathwayName',
+    friendlyName: 'Pathaway Name',
+    dropdownItemName: 'Pathaway Name',
+  },
+  {
+    id: 'reactionId',
+    friendlyName: 'Reaction ID',
+    dropdownItemName: 'Reaction ID',
+  },
+  {
+    id: 'reactionName',
+    friendlyName: 'Reaction Name',
+    dropdownItemName: 'Reaction Name',
+  },
+  {
+    id: 'reactionECNumber',
+    friendlyName: 'Reaction EC Number',
+    dropdownItemName: 'Reaction EC Number',
+  },
+  {
+    id: 'reactionMetaDomain',
+    friendlyName: 'Reaction Metadomain',
+    dropdownItemName: 'Reaction Metadomain',
+  },
 ] as const;
 
 const TABLE_COLUMNS_MAP_BY_ID = indexBy<TableColumn>(TABLE_COLUMNS_LIST, 'id');
-const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['name', 'uniProtId', 'organelleId', 'method', 'geneId'] as const;
+const DEFAULT_TABLE_COLUMNS: readonly ProteinColumn[] = ['name', 'uniProtId', 'organelleId', 'methodId', 'geneId'] as const;

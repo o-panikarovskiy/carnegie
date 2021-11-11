@@ -16,8 +16,14 @@ export type ProteinClient = Protein & {
   readonly geneName?: string | null;
   readonly domainName?: string | null;
   readonly domainId?: string | null;
-  readonly method?: string | null;
+  readonly methodId?: string | null;
   readonly pubMedId?: string | null;
+  readonly reactionId?: string | null;
+  readonly reactionName?: string | null;
+  readonly reactionECNumber?: string | null;
+  readonly reactionMetaDomain?: string | null;
+  readonly pathwayId?: string | null;
+  readonly pathwayName?: string | null;
   readonly organelleId?: string | null;
   readonly geneAliases?: string | null;
   readonly proteinAliases?: string | null;
@@ -31,12 +37,14 @@ export type ProteinRequest = ListRequest & {
   readonly domainId?: readonly string[];
   readonly pubMedId?: readonly string[];
   readonly organelleId?: readonly string[];
-  readonly method?: readonly string[];
+  readonly methodId?: readonly string[];
+  readonly reactionId?: readonly string[];
+  readonly pathwayId?: readonly string[];
   readonly columns?: readonly TableColumn[];
 };
 
 export type FiltersSchema = {
-  readonly filterName: string;
+  readonly filterName: TableColumn;
   readonly columnName: string;
 };
 

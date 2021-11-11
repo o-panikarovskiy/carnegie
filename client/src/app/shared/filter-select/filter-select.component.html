@@ -19,8 +19,8 @@
       <input type="text" class="input" #searchInput (click)="$event.stopPropagation()" [placeholder]="searchPlaceholder" [formControl]="searchControl" />
     </div>
 
-    <div class="menu-scroll">
-      <div mat-menu-item="" crngDisableFocus="" *ngFor="let item of filteredItems | async | slice: 0:100; trackBy: identify" (click)="$event.stopPropagation()">
+    <div class="menu-scroll" (click)="$event.stopPropagation()">
+      <div class="mat-menu-item" *ngFor="let item of filteredItems | async | slice: 0:100; trackBy: identify">
         <mat-checkbox
           [checked]="selectedSet.has(item[idFieldName])"
           (change)="clickOnItem(item)"

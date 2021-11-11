@@ -14,6 +14,8 @@ const schema = joi.object().keys({
   columns: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   geneId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   domainId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
+  pathwayId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
+  reactionId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   methodId: joi.array().optional().items(joi.string().trim().max(20)).max(100),
   pubMedId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
   organelleId: joi.array().optional().items(joi.string().trim().max(50)).max(100),
@@ -30,6 +32,8 @@ const schema = joi.object().keys({
  * @apiParam {string[]} [columns] Table column names (max 100 items)
  * @apiParam {string[]} [geneId] Filter by gene id (max 100 items)
  * @apiParam {string[]} [domainId] Filter by domain id (max 100 items)
+ * @apiParam {string[]} [pathwayId] Filter by domain id (max 100 items)
+ * @apiParam {string[]} [reactionId] Filter by domain id (max 100 items)
  * @apiParam {string[]} [methodId] Filter by method (max 100 items)
  * @apiParam {string[]} [pubMedId] Filter by publication (max 100 items)
  * @apiParam {string[]} [organelleId] Filter by organelle id (max 100 items)

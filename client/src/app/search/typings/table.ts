@@ -12,7 +12,7 @@ export type AppFilter = {
   readonly labelFieldName: string;
   readonly alternativeLabelFieldName?: string;
   readonly dataSourceName: string;
-  readonly filterParamName: string;
+  readonly filterParamName: ProteinColumn;
   readonly dropdownItemName: string;
   readonly buttonText: StringStringMap;
 };

@@ -20,12 +20,9 @@
       [selectedIds]="filtersList"
       (selectItem)="applyFilterParam($event.filterParamName, [])"
       (unselectItem)="applyFilterParam($event.filterParamName, null)"
-    ></crng-active-filters-select>
-    <crng-table-columns-select
-      [selectedIds]="viewParams.columns"
-      (selectItem)="showColumn($event)"
-      (unselectItem)="hideColumn($event)"
-    ></crng-table-columns-select>
+    >
+    </crng-active-filters-select>
+    <crng-table-columns-select [selectedIds]="viewParams.columns" (apply)="applyTableColumns($event)"></crng-table-columns-select>
   </ng-container>
 </div>
 

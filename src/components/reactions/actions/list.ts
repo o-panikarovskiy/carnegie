@@ -2,9 +2,9 @@ import joi from 'joi';
 import { Context } from 'koa';
 import { ListRequest } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
-import { getPathwaysList } from '../repository/get-reactions-list.js';
+import { getReactionsList } from '../repository/get-reactions-list.js';
 
-export { pathwaysList };
+export { reactionsList };
 
 const schema = joi.object().keys({
   search: joi.string().trim().max(50).allow('', null),
@@ -14,9 +14,9 @@ const schema = joi.object().keys({
 });
 
 /**
- * @apiGroup Pathways
- * @apiName GetPathwaysList
- * @api {post} /pathways/ Get pathways list
+ * @apiGroup Reactions
+ * @apiName GetReactionsList
+ * @api {post} /reactions/ Get reactions list
  * @apiParam {string{0..50}} [sort=name] Sort field. Set prefix "-" for change direction. For example: -name.
  * @apiParam {number{0}} [skip=0] Skip (offset) items
  * @apiParam {number{1-100}} [limit=100] Max items per page (min 1, max 100)
@@ -34,7 +34,7 @@ const schema = joi.object().keys({
  * {
  *   "list": [
  *     {
- *       "id": "PWY-6773",
+ *       "id": "RXN-11354",
  *       "name": "..."
  *     },
  *     {
@@ -48,9 +48,9 @@ const schema = joi.object().keys({
  * }
  */
 
-const pathwaysList = async (ctx: Context): Promise<void> => {
+const reactionsList = async (ctx: Context): Promise<void> => {
   const req = await verifySchema<ListRequest>(schema, ctx.request.query);
-  const list = await getPathwaysList(req);
+  const list = await getReactionsList(req);
 
   ctx.body = { list };
 };

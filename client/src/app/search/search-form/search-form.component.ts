@@ -5,7 +5,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { putToClipboard } from 'src/app/core/utils/dom.utils';
 import { SearchStoreService } from 'src/app/search/services/store.service';
 import { APP_FILTERS_MAP_BY_PARAM_NAME } from 'src/app/search/store/filters-list';
-import { FilterParamValue, TableColumn } from 'src/app/search/typings/table';
+import { FilterParamValue, ProteinColumn } from 'src/app/search/typings/table';
 import { Destroyer } from 'src/app/shared/abstract/destroyer';
 
 @Component({
@@ -43,12 +43,8 @@ export class SearchFormComponent extends Destroyer {
     this.store.mergeFilters({ [key]: value });
   }
 
-  showColumn(column: TableColumn) {
-    this.store.showColumn(column.id);
-  }
-
-  hideColumn(column: TableColumn) {
-    this.store.hideColumn(column.id);
+  applyTableColumns(columns: readonly ProteinColumn[]) {
+    this.store.setTableColumns(columns);
   }
 
   shareView() {

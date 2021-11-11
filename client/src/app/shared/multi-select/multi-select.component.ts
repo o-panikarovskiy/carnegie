@@ -45,7 +45,7 @@ export abstract class BaseMultiSelectComponent implements OnChanges, ControlValu
 
   itemsCount = 0;
   selectedText = '';
-  filteredItems: Observable<any[]>;
+  filteredItems: Observable<readonly any[]>;
   selectedSet = new Set<string>();
 
   searchControl = new FormControl();

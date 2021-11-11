@@ -1,12 +1,12 @@
 import Router from 'koa-router';
-import { pathwaysList } from './list.js';
+import { reactionsList } from './list.js';
 
 export { createRouter };
 
 const createRouter = () => {
-  const router = new Router({ prefix: '/methods' });
+  const router = new Router({ prefix: '/reactions' });
 
-  router.get('/', pathwaysList);
+  router.get('/', reactionsList);
 
   return router;
 };

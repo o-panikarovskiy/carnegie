@@ -11,9 +11,15 @@ export type Protein = {
   readonly geneName?: string | null;
   readonly domainName?: string | null;
   readonly domainId?: string | null;
-  readonly method?: string | null;
+  readonly methodId?: string | null;
   readonly pubMedId?: string | null;
   readonly organelleId?: string | null;
+  readonly reactionId?: string | null;
+  readonly reactionName?: string | null;
+  readonly reactionECNumber?: string | null;
+  readonly reactionMetaDomain?: string | null;
+  readonly pathwayId?: string | null;
+  readonly pathwayName?: string | null;
   readonly geneAliases?: string | null;
   readonly proteinAliases?: string | null;
 };
