@@ -22,15 +22,15 @@ export class LoginFormComponent {
     if (this.loginForm.invalid) return;
 
     this.loginForm.disable();
-    this.authStore.signIn(this.loginForm.value).subscribe(
-      () => {
+    this.authStore.signIn(this.loginForm.value).subscribe({
+      next: () => {
         this.loginForm.enable();
         this.signedIn.next();
       },
-      (err: AppError) => {
+      error: (err: AppError) => {
         this.loginForm.enable();
         this.loginForm.setErrors({ serverError: err });
       },
-    );
+    });
   }
 }
