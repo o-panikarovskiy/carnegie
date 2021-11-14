@@ -5,24 +5,38 @@ import { Paper } from '../models.js';
 export { insertPaper };
 
 const insertPaper = async (paper: Paper, client?: DbClient): Promise<Paper> => {
-  const text = `INSERT INTO "public"."papers"("id", "title", "abstract", "journal", "volume", "year", "startPage")
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+  const text = `INSERT INTO "public"."papers"(
+                                              "id",
+                                              "title",
+                                              "journal",
+                                              "pages",
+                                              "issn",
+                                              "essn",
+                                              "volume",
+                                              "issue",
+                                              "pubDate"
+                                              )
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                 ON CONFLICT ("id")
                 DO UPDATE SET "title"      = excluded."title",
-                              "abstract"   = excluded."abstract",
                               "journal"    = excluded."journal",
+                              "pages"      = excluded."pages",
+                              "issn"       = excluded."issn",
+                              "essn"       = excluded."essn",
                               "volume"     = excluded."volume",
-                              "year"       = excluded."year",
-                              "startPage"  = excluded."startPage";`;
+                              "issue"      = excluded."issue",
+                              "pubDate"    = excluded."pubDate";`;
 
   const values = [
     paper.id, //
     paper.title,
-    paper.abstract,
     paper.journal,
+    paper.pages,
+    paper.issn,
+    paper.essn,
     paper.volume,
-    paper.year,
-    paper.startPage,
+    paper.issue,
+    paper.pubDate,
   ];
 
   await (client || pool).query({ text, values });

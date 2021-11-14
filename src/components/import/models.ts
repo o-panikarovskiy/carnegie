@@ -12,12 +12,13 @@ export type ImportResponse = {
   readonly importToken: string;
 };
 
-export type Payload<T> = ImportResponse & {
-  readonly rowNum: number;
-  readonly progress: number;
+export type Payload<T = any> = ImportResponse & {
+  readonly id: string | number;
+  readonly progress?: number;
   readonly error?: IAppError;
   readonly item?: T;
   readonly raw?: any;
+  readonly msg?: string;
 };
 
 export type ProcessImportTable<T = any> = (importToken: string, creator: User) => Promise<readonly T[]>;

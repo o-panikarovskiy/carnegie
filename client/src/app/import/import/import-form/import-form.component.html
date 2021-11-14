@@ -1,6 +1,6 @@
 <crng-upload-form [disabled]="state.status === 'importing'" class="form" (done)="startImport.next($event)" (sample)="downloadSample.next()"></crng-upload-form>
 
-<div class="progress" *ngIf="state.status === 'importing'">
+<div class="progress" *ngIf="state.status === 'importing' && state.progress !== undefined">
   <div class="title">{{ state.progress + '%' }}</div>
   <mat-progress-bar mode="determinate" [value]="state.progress"></mat-progress-bar>
 </div>

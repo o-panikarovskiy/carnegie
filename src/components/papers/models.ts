@@ -1,9 +1,11 @@
 export type Paper = {
   readonly id: string;
   readonly title?: string | null;
-  readonly abstract?: string | null;
   readonly journal?: string | null;
-  readonly volume?: string | null;
-  readonly year?: number | null;
-  readonly startPage?: number | null;
+  readonly pages?: string | null;
+  readonly issn?: string | null;
+  readonly essn?: string | null;
+  readonly volume?: number | null;
+  readonly issue?: number | null;
+  readonly pubDate?: Date | string | null;
 };

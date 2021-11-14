@@ -21,9 +21,9 @@ const schema = joi.object().keys({
 });
 
 const importTable = async (ctx: ParameterizedContext<DefaultState, DefaultContext, ImportResponse>): Promise<void> => {
-  const req = await verifySchema<ImportRequest>(schema, ctx.request.body);
+  const { table } = await verifySchema<ImportRequest>(schema, { table: ctx.params.table });
 
-  const imp = IMPORTS[req.table];
+  const imp = IMPORTS[table];
   if (!imp) throw new AppBadRequest('Invalid import name');
 
   const importToken = getRandomString(48);

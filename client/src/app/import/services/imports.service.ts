@@ -13,7 +13,6 @@ import { downloadBlob } from 'src/app/import/utils/download-blob';
 import { formatLogMessage } from 'src/app/import/utils/format-log-message';
 
 export const COMPLETE_IMPORT = 'import:complete';
-export const COMPLETE_IMPORT_ITEM = 'import:item:complete';
 
 export type ImportProcessToken = { importToken: string };
 export type ImportParams = { file: File; escape: string; delimiter: string };
@@ -95,7 +94,7 @@ export class ImportsService {
     }
 
     return this.http
-      .post(`/api/import`, { table })
+      .post(`/api/import/${table}`, {})
       .pipe(
         map((res: any): ImportProcessToken => {
           return { importToken: res.importToken };
