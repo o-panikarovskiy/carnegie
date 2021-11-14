@@ -2,8 +2,9 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
+import { importCSVRows } from '../../import/index.js';
 import { insertMethod } from '../../methods/index.js';
-import { importRows } from '../../upload/bl/import-rows.js';
+import { insertPaper } from '../../papers/index.js';
 import { Localization } from '../models.js';
 import { insertLocalization } from '../repository/insert-localization.js';
 
@@ -20,11 +21,16 @@ const schema = joi
   .unknown(true);
 
 const importLocalizations = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Localization[]> => {
-  return importRows<Localization>(fileId, creator, list, importLocalization);
+  return importCSVRows<Localization>(fileId, creator, list, importLocalization);
 };
 
 const importLocalization = async (creator: User, raw: StringAnyMap): Promise<Localization> => {
   const req = await verifySchema<Localization>(schema, raw);
-  await insertMethod({ type: req.methodId });
+
+  await Promise.all([
+    insertPaper({ id: req.pubMedId }), //
+    insertMethod({ type: req.methodId }),
+  ]);
+
   return insertLocalization(req);
 };

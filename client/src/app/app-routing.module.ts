@@ -28,7 +28,7 @@ const routes: Routes = [
   {
     path: 'import',
     canLoad: [AuthGuard],
-    loadChildren: () => import('./csv/csv.module').then((m) => m.CSVImportModule),
+    loadChildren: () => import('./import/import.module').then((m) => m.ImportModule),
   },
 
   {

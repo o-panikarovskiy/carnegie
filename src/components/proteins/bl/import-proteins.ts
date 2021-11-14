@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importRows } from '../../upload/bl/import-rows.js';
+import { importCSVRows } from '../../import/index.js';
 import { Protein } from '../models.js';
 import { insertProtein } from '../repository/insert-protein.js';
 
@@ -27,7 +27,7 @@ const schema = joi
   .unknown(true);
 
 const importProteins = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Protein[]> => {
-  return importRows<Protein>(fileId, creator, list, importProtein);
+  return importCSVRows<Protein>(fileId, creator, list, importProtein);
 };
 
 const importProtein = async (creator: User, raw: StringAnyMap): Promise<Protein> => {

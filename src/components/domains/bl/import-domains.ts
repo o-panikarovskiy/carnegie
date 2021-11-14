@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importRows } from '../../upload/bl/import-rows.js';
+import { importCSVRows } from '../../import/index.js';
 import { Domain } from '../models.js';
 import { insertDomain } from '../repository/insert-domain.js';
 
@@ -18,7 +18,7 @@ const schema = joi
   .unknown(true);
 
 const importDomains = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Domain[]> => {
-  return importRows<Domain>(fileId, creator, list, importDomain);
+  return importCSVRows<Domain>(fileId, creator, list, importDomain);
 };
 
 const importDomain = async (creator: User, raw: StringAnyMap): Promise<Domain> => {

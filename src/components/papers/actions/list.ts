@@ -2,9 +2,9 @@ import joi from 'joi';
 import { Context } from 'koa';
 import { ListRequest } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
-import { getDomainsList } from '../repository/get-domains-list.js';
+import { getPapersList } from '../repository/get-papers-list.js';
 
-export { domainsList };
+export { papersList };
 
 const schema = joi.object().keys({
   search: joi.string().trim().max(50).allow('', null),
@@ -14,9 +14,9 @@ const schema = joi.object().keys({
 });
 
 /**
- * @apiGroup Domains
- * @apiName GetDomainsList
- * @api {post} /domains/ Get domains list
+ * @apiGroup Papers
+ * @apiName GetPapersList
+ * @api {post} /papers/ Get papers list
  * @apiParam {string{0..50}} [sort=name] Sort field. Set prefix "-" for change direction. For example: -name.
  * @apiParam {number{0}} [skip=0] Skip (offset) items
  * @apiParam {number{1-100}} [limit=100] Max items per page (min 1, max 100)
@@ -28,14 +28,14 @@ const schema = joi.object().keys({
  *   "limit": 100
  * }
  * @apiError (400) InvalidRequestModel Invalid request model.
- * @apiSuccess (200) {Domain[]} list Domains list
+ * @apiSuccess (200) {Paper[]} list Papers list
  * @apiSuccessExample Success Response:
  * 200 OK
  * {
  *   "list": [
  *     {
  *       "id": "...",
- *       "name": "domain 1"
+ *       "title": "paper 1"
  *     },
  *     {
  *       ...
@@ -47,9 +47,9 @@ const schema = joi.object().keys({
  *   ]
  * }
  */
-const domainsList = async (ctx: Context): Promise<void> => {
+const papersList = async (ctx: Context): Promise<void> => {
   const req = await verifySchema<ListRequest>(schema, ctx.request.query);
-  const list = await getDomainsList(req);
+  const list = await getPapersList(req);
 
   ctx.body = { list };
 };

@@ -9,7 +9,8 @@ const createLocalizationTable = (): string => {
       "methodId"             varchar(20) NOT NULL,
       PRIMARY KEY            ("proteinId", "organelleId", "pubMedId", "methodId"),
       CONSTRAINT             "fkproteins" FOREIGN KEY ( "proteinId" ) REFERENCES "public"."proteins" ( "accession" ),
-      CONSTRAINT             "fkmethods" FOREIGN KEY ( "methodId" ) REFERENCES "public"."methods" ( "type" )
+      CONSTRAINT             "fkmethods" FOREIGN KEY ( "methodId" ) REFERENCES "public"."methods" ( "type" ),
+      CONSTRAINT             "fkpapers" FOREIGN KEY ( "pubMedId" ) REFERENCES "public"."papers" ( "id" )
     );
   `;
 };
