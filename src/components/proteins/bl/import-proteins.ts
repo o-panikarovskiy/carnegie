@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importCSVRows } from '../../import/index.js';
+import { importItems } from '../../import/index.js';
 import { Protein } from '../models.js';
 import { insertProtein } from '../repository/insert-protein.js';
 
@@ -26,11 +26,11 @@ const schema = joi
   })
   .unknown(true);
 
-const importProteins = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Protein[]> => {
-  return importCSVRows<Protein>(fileId, creator, list, importProtein);
+const importProteins = async (token: string, creator: User, rows: readonly StringAnyMap[]): Promise<readonly Protein[]> => {
+  return importItems<Protein>({ token, creator, rows, createItem });
 };
 
-const importProtein = async (creator: User, raw: StringAnyMap): Promise<Protein> => {
+const createItem = async (creator: User, raw: StringAnyMap): Promise<Protein> => {
   const req = await verifySchema<Protein>(schema, raw);
   return insertProtein(req);
 };

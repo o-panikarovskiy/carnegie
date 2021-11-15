@@ -5,7 +5,6 @@ import { catchError, filter, map, switchMap, takeWhile } from 'rxjs/operators';
 import { Message, SocketService } from 'src/app/core/services/socket.service';
 import { UploadService } from 'src/app/core/services/upload.service';
 import { StringTMap } from 'src/app/core/typings/common';
-import { Gene } from 'src/app/core/typings/gene';
 import { parseHttpError } from 'src/app/core/utils/parse-http-error';
 import { ImportStatus, LogMessage, Payload } from 'src/app/import/typings/upload';
 import { arrayToCSV } from 'src/app/import/utils/array-to-csv';
@@ -14,7 +13,7 @@ import { formatLogMessage } from 'src/app/import/utils/format-log-message';
 
 export const COMPLETE_IMPORT = 'import:complete';
 
-export type ImportProcessToken = { importToken: string };
+export type ImportProcessToken = { token: string };
 export type ImportParams = { file: File; escape: string; delimiter: string };
 
 export type ImportState = {
@@ -64,20 +63,23 @@ export class ImportsService {
     private readonly http: HttpClient,
   ) {
     this.progressPipe = pipe(
-      switchMap((token: ImportProcessToken) => {
+      switchMap((res: ImportProcessToken) => {
         return this.socketSrv.message$.pipe(
-          filter((msg): msg is Message<Payload<Gene>> => {
-            return !!token?.importToken && msg.payload?.importToken === token.importToken;
+          filter((msg): msg is Message<Payload> => {
+            return !!res?.token && msg.payload?.token === res.token;
           }),
           takeWhile((msg) => msg.event !== COMPLETE_IMPORT, true),
         );
       }),
       map(({ event, payload }): ImportState => {
-        if (event === COMPLETE_IMPORT) return { status: 'complete' };
+        const logMsg = formatLogMessage(payload);
+
+        if (event === COMPLETE_IMPORT) {
+          return { status: 'complete', progress: 100, logMsg };
+        }
 
         const progress = payload.progress;
         const status: ImportStatus = 'importing';
-        const logMsg = formatLogMessage(payload);
         return { progress, status, logMsg };
       }),
     );
@@ -97,7 +99,7 @@ export class ImportsService {
       .post(`/api/import/${table}`, {})
       .pipe(
         map((res: any): ImportProcessToken => {
-          return { importToken: res.importToken };
+          return { token: res.token };
         }),
         catchError((res: HttpErrorResponse): never => {
           throw parseHttpError(res);

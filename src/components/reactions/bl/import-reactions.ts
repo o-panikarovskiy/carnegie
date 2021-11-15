@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importCSVRows } from '../../import/index.js';
+import { importItems } from '../../import/index.js';
 import { Reaction, RxnPrnPwy } from '../models.js';
 import { insertReactionLink } from '../repository/insert-reaction-link.js';
 import { insertReaction } from '../repository/insert-reaction.js';
@@ -23,11 +23,11 @@ const schema = joi
   })
   .unknown(true);
 
-const importReactions = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Reaction[]> => {
-  return importCSVRows<Reaction>(fileId, creator, list, importReaction);
+const importReactions = async (token: string, creator: User, rows: readonly StringAnyMap[]): Promise<readonly Reaction[]> => {
+  return importItems<Reaction>({ token, creator, rows, createItem });
 };
 
-const importReaction = async (creator: User, raw: StringAnyMap): Promise<Reaction> => {
+const createItem = async (creator: User, raw: StringAnyMap): Promise<Reaction> => {
   const req = await verifySchema<Reaction | ReactionUnionType>(schema, raw);
 
   const reaction = await insertReaction(req);

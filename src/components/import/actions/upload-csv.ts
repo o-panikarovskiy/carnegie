@@ -48,11 +48,11 @@ const uploadCSV = async (ctx: ParameterizedContext<DefaultState, DefaultContext,
 
   try {
     const csv = await readCSV(file, req);
-    const importToken = basename(file.path).replace('uload_', '');
+    const token = basename(file.path).replace('uload_', '');
 
-    imp(importToken, ctx.state.user, csv); // don't wait
+    imp(token, ctx.state.user, csv); // don't wait
 
-    ctx.body = { importToken };
+    ctx.body = { token };
   } finally {
     unlink(file.path, () => void 0);
   }

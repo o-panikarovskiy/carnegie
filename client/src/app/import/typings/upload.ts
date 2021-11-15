@@ -1,4 +1,4 @@
-import { AppError } from 'src/app/core/typings/common';
+import { AppError, StringAnyMap } from 'src/app/core/typings/common';
 
 export type ImportStatus = 'uploading' | 'importing' | 'complete';
 
@@ -7,14 +7,12 @@ export type UploadRequest = {
   readonly separator: string;
 };
 
-export type Payload<T = any> = {
-  readonly importToken: string;
-  readonly id: string;
+export type Payload = {
+  readonly msg?: string;
+  readonly row?: StringAnyMap;
+  readonly idx?: string | number;
   readonly progress?: number;
   readonly error?: AppError;
-  readonly item?: T;
-  readonly raw?: any;
-  readonly msg?: string;
 };
 
 export type LogMessage = {

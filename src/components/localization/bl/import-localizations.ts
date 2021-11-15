@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importCSVRows } from '../../import/index.js';
+import { importItems } from '../../import/index.js';
 import { insertMethod } from '../../methods/index.js';
 import { insertPaper } from '../../papers/index.js';
 import { Localization } from '../models.js';
@@ -20,11 +20,11 @@ const schema = joi
   })
   .unknown(true);
 
-const importLocalizations = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Localization[]> => {
-  return importCSVRows<Localization>(fileId, creator, list, importLocalization);
+const importLocalizations = async (token: string, creator: User, rows: readonly StringAnyMap[]): Promise<readonly Localization[]> => {
+  return importItems<Localization>({ token, creator, rows, createItem });
 };
 
-const importLocalization = async (creator: User, raw: StringAnyMap): Promise<Localization> => {
+const createItem = async (creator: User, raw: StringAnyMap): Promise<Localization> => {
   const req = await verifySchema<Localization>(schema, raw);
 
   await Promise.all([

@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importCSVRows } from '../../import/index.js';
+import { importItems } from '../../import/index.js';
 import { Tag } from '../models.js';
 import { insertTag } from '../repository/insert-tag.js';
 
@@ -26,11 +26,11 @@ const geneSchema = joi
 
 const schema = joi.alternatives().try(proteinSchema, geneSchema);
 
-const importTags = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Tag[]> => {
-  return importCSVRows<Tag>(fileId, creator, list, importTag);
+const importTags = async (token: string, creator: User, rows: readonly StringAnyMap[]): Promise<readonly Tag[]> => {
+  return importItems<Tag>({ token, creator, rows, createItem });
 };
 
-const importTag = async (creator: User, raw: StringAnyMap): Promise<Tag> => {
+const createItem = async (creator: User, raw: StringAnyMap): Promise<Tag> => {
   const req = await verifySchema<Tag>(schema, raw);
   return insertTag(req);
 };

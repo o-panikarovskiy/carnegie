@@ -26,8 +26,8 @@ const importTable = async (ctx: ParameterizedContext<DefaultState, DefaultContex
   const imp = IMPORTS[table];
   if (!imp) throw new AppBadRequest('Invalid import name');
 
-  const importToken = getRandomString(48);
-  imp(importToken, ctx.state.user); // don't wait
+  const token = getRandomString(48);
+  imp(token, ctx.state.user); // don't wait
 
-  ctx.body = { importToken };
+  ctx.body = { token };
 };

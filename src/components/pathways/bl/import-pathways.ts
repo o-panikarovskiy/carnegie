@@ -2,7 +2,7 @@ import joi from 'joi';
 import { StringAnyMap } from '../../../typings/index.js';
 import { verifySchema } from '../../../utils/joi.js';
 import { User } from '../../auth/models.js';
-import { importCSVRows } from '../../import/index.js';
+import { importItems } from '../../import/index.js';
 import { Pathway } from '../models.js';
 import { insertPathway } from '../repository/insert-pathway.js';
 
@@ -16,11 +16,11 @@ const schema = joi
   })
   .unknown(true);
 
-const importPathways = async (fileId: string, creator: User, list: readonly StringAnyMap[]): Promise<readonly Pathway[]> => {
-  return importCSVRows<Pathway>(fileId, creator, list, importPathway);
+const importPathways = async (token: string, creator: User, rows: readonly StringAnyMap[]): Promise<readonly Pathway[]> => {
+  return importItems<Pathway>({ token, creator, rows, createItem });
 };
 
-const importPathway = async (creator: User, raw: StringAnyMap): Promise<Pathway> => {
+const createItem = async (creator: User, raw: StringAnyMap): Promise<Pathway> => {
   const req = await verifySchema<Pathway>(schema, raw);
   return insertPathway(req);
 };

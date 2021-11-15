@@ -23,9 +23,9 @@ const parseXMLRecord = (rec: any): Paper | undefined => {
   const issn = rec.ISSN;
   const essn = rec.ESSN;
   const title = rec.Title;
-  const issue = rec.Issue;
+  const issue: number = rec.Issue | 0;
   const pages = rec.Pages;
-  const volume = rec.Volume;
+  const volume: number = rec.Volume | 0;
   const journal = rec.FullJournalName;
   const pubDate = rec.SortPubDate ? parseDate(rec.SortPubDate) : void 0;
 
