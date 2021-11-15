@@ -46,7 +46,7 @@ const processBatch = async (token: string, creator: User, batch: readonly string
 const fetchBatch = async (token: string, creator: User, batch: readonly string[], range: Range): Promise<readonly Paper[]> => {
   const { progress, from, to } = range;
   try {
-    sendImportProgress(token, creator, { progress, msg: `Fetching ${from + 1}-${to} papers from NCBI...` });
+    sendImportProgress(token, creator, { progress, msg: `Fetching ${from + 1}-${to} items from NCBI...` });
     return await fetchFromNCBI(batch);
   } catch (error) {
     sendImportProgress(token, creator, { progress, error });
