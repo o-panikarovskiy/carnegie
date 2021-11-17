@@ -15,14 +15,16 @@
   },
   "homepage": "https://github.com/o-panikarovskiy/carnegie#readme",
   "scripts": {
-    "start": "tsc && export NODE_ENV=develop && node ./dist/server.js",
+    "pm2:dev": "pm2 start ecosystem.json --no-daemon --only api-dev",
+    "pm2:local": "pm2 start ecosystem.json --no-daemon --only api-local",
+    "start": "tsc && node ./dist/server.js --config app.dev.json",
     "build": "tsc && npm run lint",
     "lint": "eslint . --ext .ts",
     "tsc": "tsc",
     "docs": "rm -rf ./doc || true && npx apidoc -f \".*\\.ts$\" -i ./src -o ./doc",
     "clear": " find ./src -type f \\( -name \"*.map\" -or -name \"*.js\" \\) -delete",
     "deploy": "./deploy.sh",
-    "pretest": "tsc && export NODE_ENV=test && node src/tests/init.js",
+    "pretest": "tsc && node src/tests/init.js",
     "test": "ava",
     "posttest": "node src/tests/clear.js"
   },
@@ -40,6 +42,7 @@
     "koa-static": "5.0.0",
     "ms": "2.1.3",
     "pg": "8.7.1",
+    "pm2": "5.1.2",
     "pug": "3.0.2",
     "socket.io": "4.3.1",
     "yargs": "17.2.1"
@@ -74,9 +77,6 @@
     "files": [
       "**/*.spec.js"
     ],
-    "environmentVariables": {
-      "NODE_ENV": "test"
-    },
     "concurrency": 5,
     "verbose": true,
     "failFast": true

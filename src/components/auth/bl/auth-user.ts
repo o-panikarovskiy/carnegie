@@ -1,4 +1,4 @@
-import { appConfig, NODE_ENV } from '../../../config/index.js';
+import { appConfig } from '../../../config/index.js';
 import { AppBadRequest, AppNotImplemented } from '../../../errors/app-error.js';
 import { SignInRes, User } from '../models.js';
 import { signToken } from '../utils/sign-token.js';
@@ -6,7 +6,7 @@ import { signToken } from '../utils/sign-token.js';
 export { authenticateUser };
 
 const authenticateUser = async (email: string, password: string): Promise<SignInRes> => {
-  if (NODE_ENV === 'production') {
+  if (appConfig.env === 'production') {
     throw new AppNotImplemented();
   }
 

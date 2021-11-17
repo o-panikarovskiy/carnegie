@@ -1,10 +1,10 @@
-import { NODE_ENV } from '../config/index.js';
+import { appConfig } from '../config/index.js';
 import * as db from '../db/index.js';
 import { logger } from '../log/index.js';
 
 (async () => {
-  if (NODE_ENV !== 'test') {
-    console.error(`NODE_ENV must be set to "test" value`);
+  if (appConfig.env !== 'test') {
+    console.error(`Config "env" must be set to "test" value`);
     return;
   }
 

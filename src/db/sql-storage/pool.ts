@@ -1,5 +1,5 @@
 import pg from 'pg';
-import { appConfig, NODE_ENV } from '../../config/index.js';
+import { appConfig } from '../../config/index.js';
 import { logError } from '../../errors/log-error.js';
 
 export { pool, poolConfig, initAppPool };
@@ -9,7 +9,7 @@ let poolConfig: pg.PoolConfig;
 
 const initAppPool = () => {
   poolConfig = appConfig.postreSql;
-  if (NODE_ENV === 'test') {
+  if (appConfig.env === 'test') {
     poolConfig.database = 'test';
   }
 

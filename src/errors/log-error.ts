@@ -6,7 +6,7 @@ export { logError, isLogError };
 
 const logError = (error: Error): void => {
   if (isLogError(error)) {
-    logger.error(errorToObject(error));
+    (logger || console)?.error(errorToObject(error));
   }
 };
 

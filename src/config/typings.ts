@@ -3,6 +3,7 @@ import { LogLevel } from '../log/typings.js';
 export type NodeEnv = 'test' | 'local' | 'develop' | 'pp' | 'production';
 
 export type AppConfig = {
+  readonly env: string;
   readonly rootPath: string;
   readonly logLevel: keyof typeof LogLevel;
   readonly host: HostSettings;

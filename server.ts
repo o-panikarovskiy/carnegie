@@ -1,6 +1,6 @@
 import * as http from 'http';
 import { createApp } from './src/app.js';
-import { appConfig, NODE_ENV } from './src/config/index.js';
+import { appConfig } from './src/config/index.js';
 import * as db from './src/db/index.js';
 import { catchUncaughtException, catchUnhandledRejection } from './src/errors/index.js';
 import { logger } from './src/log/index.js';
@@ -19,10 +19,6 @@ const onAbortSignal = async (server: http.Server) => {
 };
 
 const main = async () => {
-  if (!NODE_ENV) {
-    throw new Error('NODE_ENV not defined!');
-  }
-
   const app = createApp();
 
   logger.info(`Connect to databases...`);
@@ -38,7 +34,7 @@ const main = async () => {
 
   process.on('SIGINT', () => onAbortSignal(httpServer));
 
-  logger.info(`Server started on port ${port} in ${NODE_ENV} mode.`);
+  logger.info(`Server started on port ${port} in ${appConfig.env} mode.`);
   return httpServer;
 };
 

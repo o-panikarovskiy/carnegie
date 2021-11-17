@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "api",
+      "script": "/opt/crng/dist/server.js",
+      "watch": ["/opt/crng/dist", "/opt/crng/public"],
+      "args": "--config ./app.dev.json"
+    }
+  ]
+}

@@ -22,10 +22,7 @@ node_modules/
 .eslintcache
 
 # server config files
-/local.json
-/develop.json
-/production.json
-/pre-production.json
+/app.*.json
 
 # App
 src/**/*.js
@@ -34,3 +31,4 @@ src/**/*.map
 dist
 public
 doc
+crng.zip
