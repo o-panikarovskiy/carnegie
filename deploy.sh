@@ -1,7 +1,8 @@
-echo '=========== Server ==========='
-npm run build
 echo '=========== Client ==========='
 cd client
+npm run build
+cd ..
+echo '=========== Server ==========='
 npm run build
 echo '=========== ZIP ==========='
 zip -r9 crng.zip dist/ public/ package.json
@@ -22,3 +23,4 @@ npm i;
 '
 
 ssh -t oleg@159.89.24.192 $CMD
+rm -rf crng.zip

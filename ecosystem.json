@@ -4,6 +4,7 @@
       "name": "api",
       "script": "/opt/crng/dist/server.js",
       "watch": ["/opt/crng/dist", "/opt/crng/public"],
+      "watch_delay": 1000,
       "args": "--config ./app.dev.json"
     }
   ]
