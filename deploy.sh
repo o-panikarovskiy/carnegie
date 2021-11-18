@@ -5,7 +5,8 @@ cd ..
 echo '=========== Server ==========='
 npm run build
 echo '=========== ZIP ==========='
-zip -r9 crng.zip dist/ public/ package.json
+zip -rq9 crng.zip dist/ public/ package.json package-lock.json
+echo 'crng.zip created'
 echo '=========== MOVE TO SERVER ==========='
 scp crng.zip oleg@159.89.24.192:/home/oleg/carnegie
 scp app.dev.json oleg@159.89.24.192:/home/oleg/carnegie
