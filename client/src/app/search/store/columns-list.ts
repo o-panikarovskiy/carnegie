@@ -66,8 +66,8 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   },
   {
     id: 'pubMedId',
-    friendlyName: 'Pub MedID',
-    dropdownItemName: 'Pub MedID',
+    friendlyName: 'PubMed ID',
+    dropdownItemName: 'PubMed ID',
   },
   {
     id: 'organelleId',
@@ -86,13 +86,13 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
   },
   {
     id: 'pathwayId',
-    friendlyName: 'Pathaway ID',
-    dropdownItemName: 'Pathaway ID',
+    friendlyName: 'Pathway ID',
+    dropdownItemName: 'Pathway ID',
   },
   {
     id: 'pathwayName',
-    friendlyName: 'Pathaway Name',
-    dropdownItemName: 'Pathaway Name',
+    friendlyName: 'Pathway Name',
+    dropdownItemName: 'Pathway Name',
   },
   {
     id: 'reactionId',
