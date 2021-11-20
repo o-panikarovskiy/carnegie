@@ -22,7 +22,7 @@ const columnsSchema: readonly ColumnsSchema[] = [
   { columnName: 'methodId', aliasName: 'p."methodId"', isDefault: true },
   { columnName: 'pubMedId', aliasName: 'p."pubMedId"' },
   { columnName: 'organelleId', aliasName: 'p."organelleId"', isDefault: true },
-  { columnName: 'geneAliases', aliasName: 'g."geneAliases" AS "geneAliases"' },
+  // { columnName: 'geneAliases', aliasName: 'g."geneAliases" AS "geneAliases"' },
   { columnName: 'proteinAliases', aliasName: 'p."proteinAliases"' },
   { columnName: 'reactionId', aliasName: 'p."reactionId"' },
   { columnName: 'reactionName', aliasName: 'p."reactionName"' },

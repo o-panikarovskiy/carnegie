@@ -74,11 +74,11 @@ const TABLE_COLUMNS_LIST: readonly TableColumn[] = [
     friendlyName: 'Organelle',
     dropdownItemName: 'Organelle',
   },
-  {
-    id: 'geneAliases',
-    friendlyName: 'Gene Aliases',
-    dropdownItemName: 'Gene Aliases',
-  },
+  // {
+  //   id: 'geneAliases',
+  //   friendlyName: 'Gene Aliases',
+  //   dropdownItemName: 'Gene Aliases',
+  // },
   {
     id: 'proteinAliases',
     friendlyName: 'Protein Aliases',
