@@ -25,11 +25,16 @@
       </td>
     </ng-container>
 
-    <ng-container *ngFor="let col of displayedColumns; let idx = index" [matColumnDef]="col">
+    <ng-container *ngFor="let col of displayedColumns; let idx = index" [matColumnDef]="col" [ngSwitch]="col">
       <th *matHeaderCellDef mat-header-cell mat-sort-header cdkDrag cdkDragLockAxis="x">
         {{ columnsMap.get(col)?.friendlyName }}
       </th>
-      <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
+      <ng-container *ngSwitchCase="'pubMedId'">
+        <td mat-cell *matCellDef="let element" [innerHTML]="element[col] | linkify: 'https://pubmed.ncbi.nlm.nih.gov/@id/'"></td>
+      </ng-container>
+      <ng-container *ngSwitchDefault="">
+        <td mat-cell *matCellDef="let element">{{ element[col] }}</td>
+      </ng-container>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="allColumns; sticky: true"></tr>

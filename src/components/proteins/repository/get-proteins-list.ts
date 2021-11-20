@@ -49,6 +49,7 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
   const columns = filterSelectedColumns(columnsSchema, req.columns);
   const sortColumns = columns.map((c) => c.columnName);
   const selectColumns = columns.map((c) => c.aliasName).join(',\n');
+  const columnsSet = new Set(sortColumns);
   const { orderBy, skip, limit, orderDirection } = parseListReqOptions<ProteinClient>(req, sortColumns);
 
   const values: string[] = [];
@@ -60,21 +61,22 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
 
   const text = `
   SELECT ${selectColumns},
-          COUNT(*) OVER() AS total
+         COUNT(*) OVER() AS total
   FROM (
       SELECT ptn.*,
-            STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases",
-            STRING_AGG(DISTINCT loc."methodId", '; ') AS "methodId",
-            STRING_AGG(DISTINCT loc."pubMedId", '; ') AS "pubMedId",
-            STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",
-            STRING_AGG(DISTINCT d."name", '; ') AS "domainName",
-            STRING_AGG(DISTINCT d."id", '; ') AS "domainId",
-            STRING_AGG(DISTINCT rxn."id", '; ') AS "reactionId",
-            STRING_AGG(DISTINCT rxn."name", '; ') AS "reactionName",
-            STRING_AGG(DISTINCT rxn."ecNumber", '; ') AS "reactionECNumber",
-            STRING_AGG(DISTINCT rxn."metaDomain", '; ') AS "reactionMetaDomain",
-            STRING_AGG(DISTINCT pwy."id", '; ') AS "pathwayId",
-            STRING_AGG(DISTINCT pwy."name", '; ') AS "pathwayName"
+             ${columnsSet.has('proteinAliases') ? `STRING_AGG(DISTINCT tag."name", '; ') AS "proteinAliases",` : ``}
+             ${columnsSet.has('methodId') ? `STRING_AGG(DISTINCT loc."methodId", '; ') AS "methodId",` : ``}
+             ${columnsSet.has('pubMedId') ? `ARRAY_AGG(DISTINCT loc."pubMedId") AS "pubMedId",` : ``}
+             ${columnsSet.has('organelleId') ? `STRING_AGG(DISTINCT loc."organelleId", '; ') AS "organelleId",` : ``}
+             ${columnsSet.has('domainName') ? `STRING_AGG(DISTINCT d."name", '; ') AS "domainName",` : ``}
+             ${columnsSet.has('domainId') ? `STRING_AGG(DISTINCT d."id", '; ') AS "domainId",` : ``}
+             ${columnsSet.has('reactionId') ? `STRING_AGG(DISTINCT rxn."id", '; ') AS "reactionId",` : ``}
+             ${columnsSet.has('reactionName') ? `STRING_AGG(DISTINCT rxn."name", '; ') AS "reactionName",` : ``}
+             ${columnsSet.has('reactionECNumber') ? `STRING_AGG(DISTINCT rxn."ecNumber", '; ') AS "reactionECNumber",` : ``}
+             ${columnsSet.has('reactionMetaDomain') ? `STRING_AGG(DISTINCT rxn."metaDomain", '; ') AS "reactionMetaDomain",` : ``}
+             ${columnsSet.has('pathwayId') ? `STRING_AGG(DISTINCT pwy."id", '; ') AS "pathwayId",` : ``}
+             ${columnsSet.has('pathwayName') ? `STRING_AGG(DISTINCT pwy."name", '; ') AS "pathwayName",` : ``}
+            0 as total
       FROM "public"."proteins" as ptn
       LEFT JOIN "public"."localization" as loc ON loc."proteinId" = ptn."accession"
       LEFT JOIN "public"."rxnprnpwy" as rpp ON rpp."proteinId" = ptn."accession"

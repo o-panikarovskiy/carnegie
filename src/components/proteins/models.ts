@@ -17,7 +17,7 @@ export type ProteinClient = Protein & {
   readonly domainName?: string | null;
   readonly domainId?: string | null;
   readonly methodId?: string | null;
-  readonly pubMedId?: string | null;
+  readonly pubMedId?: readonly string[] | null;
   readonly reactionId?: string | null;
   readonly reactionName?: string | null;
   readonly reactionECNumber?: string | null;

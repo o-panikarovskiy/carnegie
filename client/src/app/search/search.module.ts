@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { LinkifyPipe } from 'src/app/search/pipes/linkify.pipe';
 import { ViewParamsResolver } from 'src/app/search/resolvers/view-params.resolver';
 import { ActiveFiltersSelectComponent } from 'src/app/search/search-form/filter-select/active-filters-select.component';
 import { TableColumnsSelectComponent } from 'src/app/search/search-form/table-columns-select/table-columns-select.component';
@@ -31,6 +32,7 @@ import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
+    LinkifyPipe,
     SearchComponent,
     SearchFormComponent,
     SearchResultsComponent, //

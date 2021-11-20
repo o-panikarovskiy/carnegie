@@ -32,6 +32,17 @@
     max-width: 60px;
     padding: 0 20px;
   }
+
+  .mat-column-pubMedId {
+    max-width: unset;
+
+    a {
+      color: var(--color-primary);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .cdk-drag-preview ::ng-deep {
