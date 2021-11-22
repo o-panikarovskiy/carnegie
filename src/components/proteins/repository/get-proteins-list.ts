@@ -55,8 +55,25 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
   const values: string[] = [];
   const whereAgg = buildWhere(aggFiltersSchema, values, [], req);
 
+  const len = values.length + 1;
   const mainConditions: string[] = [];
-  buildMainLike(req.term || '', values, mainConditions);
+
+  const like = `(
+                  p."name" ILIKE $${len}
+              OR  p."uniProtId" ILIKE $${len}
+              OR  p."description" ILIKE $${len}
+              OR  g."name" ILIKE $${len}
+              OR  g."accession" ILIKE $${len}
+              ${columnsSet.has('domainId') ? `OR  p."domainId" ILIKE $${len}` : ``}
+              ${columnsSet.has('domainName') ? `OR  p."domainName" ILIKE $${len}` : ``}
+              ${columnsSet.has('proteinAliases') ? `OR  p."proteinAliases" ILIKE $${len}` : ``}
+  )`;
+
+  if (req.term) {
+    values.push(`%${req.term}%`);
+    mainConditions.push(like);
+  }
+
   const whereMain = buildWhere(mainFiltersSchema, values, mainConditions, req);
 
   const text = `
@@ -87,13 +104,7 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
       ${whereAgg}
       GROUP BY ptn."accession"
   ) as p
-  LEFT JOIN (
-      SELECT gen.*,
-            STRING_AGG(DISTINCT tag."name", '; ') AS "geneAliases"
-      FROM "public"."genes" as gen
-      LEFT JOIN "public"."tags" as tag ON tag."geneId" = gen."accession"
-      GROUP BY gen."accession"
-  ) as g ON g."accession" = p."geneId"
+  LEFT JOIN "public"."genes" as g ON g."accession" = p."geneId"
   ${whereMain}
   ORDER BY "${orderBy}" ${orderDirection}
   LIMIT ${limit | 0}
@@ -109,26 +120,6 @@ const getProteinsList = async (req: ProteinRequest, client?: DbClient): Promise<
 const filterSelectedColumns = (schema: readonly ColumnsSchema[], columns: readonly TableColumn[] = []): readonly ColumnsSchema[] => {
   const set = new Set<TableColumn>(columns);
   return schema.filter((s) => s.alwaysInclude || set.has(s.columnName) || (set.size === 0 && s.isDefault));
-};
-
-const buildMainLike = (term: string, values: string[] = [], conditions: string[] = []) => {
-  const len = values.length + 1;
-  const like = `(
-                  p."name" ILIKE $${len}
-              OR  p."uniProtId" ILIKE $${len}
-              OR  p."proteinAliases" ILIKE $${len}
-              OR  p."description" ILIKE $${len}
-              OR  p."domainName" ILIKE $${len}
-              OR  p."domainId" ILIKE $${len}
-              OR  g."name" ILIKE $${len}
-              OR  g."geneAliases" ILIKE $${len}
-              OR  g."accession" ILIKE $${len}
-  )`;
-
-  if (term) {
-    values.push(`%${term}%`);
-    conditions.push(like);
-  }
 };
 
 const buildWhere = (schema: readonly FiltersSchema[], values: string[], conditions: string[], filters?: StringAnyMap): string => {
