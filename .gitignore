@@ -23,6 +23,7 @@ node_modules/
 
 # server config files
 /app.*.json
+!/app.sample.config.json
 
 # App
 src/**/*.js

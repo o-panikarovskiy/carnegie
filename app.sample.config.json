@@ -1,0 +1,16 @@
+{
+  "env": "dev",
+  "auth": {
+    "tokenSign": "some token sign string",
+    "expiresIn": "7d",
+    "cookieName": "crng",
+    "masterpassword": "some master password"
+  },
+  "postreSql": {
+    "host": "ip adddress",
+    "port": 5432,
+    "database": "db name",
+    "user": "user name",
+    "password": "user password"
+  }
+}
